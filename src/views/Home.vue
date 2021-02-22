@@ -16,12 +16,12 @@ export default {
           userRole:"管理员"
         },
         imgArray:[    //图片数组
-          {id:0,idView:require('../assets/img/01.jpg'),title:'梧州'},
-          {id:1,idView:require('../assets/img/02.jpg'),title:'梧州'},
-          {id:2,idView:require('../assets/img/03.jpg'),title:'梧州'},
-          {id:3,idView:require('../assets/img/04.jpg'),title:'梧州'},
-          {id:4,idView:require('../assets/img/05.jpg'),title:'梧州'},
-          {id:5,idView:require('../assets/img/06.jpg'),title:'梧州'}
+          {id:0,idView:require('../assets/img/01.jpg'),title:'广东'},
+          {id:1,idView:require('../assets/img/02.jpg'),title:'广西'},
+          {id:2,idView:require('../assets/img/03.jpg'),title:'河南'},
+          {id:3,idView:require('../assets/img/04.jpg'),title:'河北'},
+          {id:4,idView:require('../assets/img/05.jpg'),title:'湖南'},
+          {id:5,idView:require('../assets/img/06.jpg'),title:'湖北'}
         ],
         hotelArray:[
           {id:0,areaId: 0,areaName:'梧州',idView:require('../assets/img/h1.jpg')},
