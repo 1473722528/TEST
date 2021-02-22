@@ -8,6 +8,7 @@
             style="width: 100%"
             row-key="id"
             border
+            height="250"
             lazy
             :load="load"
             :tree-props="{children: 'children' ,hasChildren: 'hasChildren'}">
