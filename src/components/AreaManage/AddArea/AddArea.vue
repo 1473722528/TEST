@@ -1,32 +1,20 @@
 <template>
-  <div class="addarea">
-    <el-row type="flex" class="row-bg" justify="center">
+  <div>
+    <el-row  class="mymsg" type="flex"  justify="center" >
       <el-col :span="10">
-        <div>
-          <el-table
-            :data="tableData"
-            style="width: 100%"
-            row-key="id"
-            border
-            lazy
-            :load="load"
-            :tree-props="{ hasChildren: 'hasChildren'}">
-            <el-table-column
-              prop="areaid"
-              label="地区代码"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="areaname"
-              label="地区名"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="address"
-              label="地址">
-            </el-table-column>
-          </el-table>
-        </div>
+        <h3>添加地区</h3>
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-position="top" label-width="100px" class="demo-ruleForm" >
+          <el-form-item style="text-align:left" label="地区ID" prop="areaId">
+            <el-input v-model="ruleForm.areaId"></el-input>
+          </el-form-item>
+          <el-form-item style="text-align:left" label="地区名称" prop="areaName">
+            <el-input v-model="ruleForm.areaName"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm')">保存数据</el-button>
+            <el-button style="text-align:right" @click="resetForm('ruleForm')">重置数据</el-button>
+          </el-form-item>
+        </el-form>
       </el-col>
     </el-row>
   </div>
@@ -36,42 +24,36 @@
   export default {
     data() {
       return {
-        tableData: [{
-          id: 1,
-          areaid: 1111,
-          areaname: '广东',
-          address: '上海市普陀区金沙江路 1518 弄',
-          hasChildren: true,
-          child:[{
-            id:11,
-            areaid:11111,
-            areaname: '广州市'
-          }]
-        }, {
-          id: 2,
-          areaid: 2222,
-          areaname: '广西',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          id: 3,
-          areaid: 3333,
-          areaname: '河北',
-          address: '上海市普陀区金沙江路 1519 弄',
-          hasChildren: true
-        }, {
-          id: 4,
-          areaid: 4444,
-          areaname: '河南',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }]
-      } 
+        ruleForm: {
+          areaId: '',
+          areaName: '',
+        },
+        rules: {
+          areaName: [
+            { required: true, message: '请输入地区名称', trigger: 'blur' },
+            { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+          ],
+          areaId: [
+            { required: true, message: '请输入地区ID', trigger: 'blur' },
+            { min: 2, max: 5, message: '长度在 2 到 5 个数字', trigger: 'blur' }
+          ]
+        }
+      };
     },
     methods: {
-      load(tree, treeNode, resolve) {
-        setTimeout(() => {
-          resolve(tree.child)
-        }, 1000)
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       }
-    },
+    }
   }
 </script>
