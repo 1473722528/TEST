@@ -21,9 +21,9 @@ const routes = [
     component: () => import('../views/Login/Login.vue')
   },
   {
-    path: '/hotelmanage',
-    name: 'HotelManage',
-    component:() => import('../views/HotelManage/HotelManage.vue')
+    path: '/totalmanage',
+    name: 'TotalManage',
+    component:() => import('../views/TotalManage/TotalManage.vue')
   }
 ]
 

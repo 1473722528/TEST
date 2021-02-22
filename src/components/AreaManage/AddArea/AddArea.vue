@@ -1,28 +1,31 @@
 <template>
   <div class="addarea">
-    <el-button type="info">信息按钮</el-button>
     <el-row type="flex" class="row-bg" justify="center">
       <el-col :span="10">
         <div>
           <el-table
             :data="tableData"
+            style="width: 100%"
+            row-key="id"
             border
-            style="width: 100%">
+            lazy
+            :load="load"
+            :tree-props="{ hasChildren: 'hasChildren'}">
             <el-table-column
-              prop="date"
-              label="日期"
+              prop="areaid"
+              label="地区代码"
               width="180">
             </el-table-column>
             <el-table-column
-              prop="name"
-              label="姓名"
+              prop="areaname"
+              label="地区名"
               width="180">
             </el-table-column>
             <el-table-column
               prop="address"
               label="地址">
             </el-table-column>
-            </el-table>
+          </el-table>
         </div>
       </el-col>
     </el-row>
@@ -34,23 +37,41 @@
     data() {
       return {
         tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          id: 1,
+          areaid: 1111,
+          areaname: '广东',
+          address: '上海市普陀区金沙江路 1518 弄',
+          hasChildren: true,
+          child:[{
+            id:11,
+            areaid:11111,
+            areaname: '广州市'
+          }]
         }, {
-          date: '2016-05-04',
-          name: '王小虎',
+          id: 2,
+          areaid: 2222,
+          areaname: '广西',
           address: '上海市普陀区金沙江路 1517 弄'
         }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
+          id: 3,
+          areaid: 3333,
+          areaname: '河北',
+          address: '上海市普陀区金沙江路 1519 弄',
+          hasChildren: true
         }, {
-          date: '2016-05-03',
-          name: '王小虎',
+          id: 4,
+          areaid: 4444,
+          areaname: '河南',
           address: '上海市普陀区金沙江路 1516 弄'
         }]
+      } 
+    },
+    methods: {
+      load(tree, treeNode, resolve) {
+        setTimeout(() => {
+          resolve(tree.child)
+        }, 1000)
       }
-    }
+    },
   }
 </script>

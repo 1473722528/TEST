@@ -30,7 +30,7 @@
             <router-link to='/registe'>注册</router-link>
           </div>
           <div class="head-content" v-if="this.$store.state.userrole=='管理员'">
-            <router-link to='/hotelmanage'>酒店管理</router-link>
+            <router-link to='/totalmanage'>酒店管理</router-link>
           </div>
         </el-col>
       </el-row> 
