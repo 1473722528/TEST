@@ -1,7 +1,8 @@
 <template>
   <div>
-  <Carousel :imgArray='imgArray'></Carousel>  <!-- 走马灯展示 -->
-  <DateSelect/>
+  <Carousel_Card :imgArray='imgArray'></Carousel_Card>  <!-- 走马灯展示 -->
+  <AreaSelect/> <!--地区选择-->
+  <DateSelect/> <!--日期选择-->
   <ItemBox :itemArray='hotelArray' />  <!-- 酒店商品 -->
   </div>
 </template>

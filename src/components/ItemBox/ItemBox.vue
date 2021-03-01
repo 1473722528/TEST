@@ -2,7 +2,7 @@
   <div id="item-box">
     <el-row type="flex" class="row-bg" justify="center">
       <el-col :span="4">
-        <div class="box-content" v-for="item in itemArray" :key="item">  <!--第一列-->
+        <div class="box-content" v-for="item in itemArray" :key="item.index">  <!--第一列-->
           <el-image 
             lazy
             style="width: 300px; height: 250px"
@@ -14,7 +14,7 @@
         </div>
       </el-col>
       <el-col :span="4">
-        <div class="box-content" v-for="item in itemArray" :key="item">  <!--第一列-->
+        <div class="box-content" v-for="item in itemArray" :key="item.index">  <!--第一列-->
           <el-image 
             lazy
             style="width: 300px; height: 250px"
@@ -26,7 +26,7 @@
         </div>
       </el-col>
       <el-col :span="4">
-        <div class="box-content" v-for="item in itemArray" :key="item">  <!--第一列-->
+        <div class="box-content" v-for="(item,index) in itemArray" :key="index">  <!--第一列-->
           <el-image 
             lazy
             style="width: 300px; height: 250px"
@@ -38,7 +38,7 @@
         </div>
       </el-col>
       <el-col :span="4">
-        <div class="box-content" v-for="item in itemArray" :key="item">  <!--第一列-->
+        <div class="box-content" v-for="item in itemArray" :key="item.index">  <!--第一列-->
           <el-image 
             lazy
             style="width: 300px; height: 250px"
@@ -56,7 +56,7 @@
 <script>
 export default {
   props:{
-    itemArray : String,
+    itemArray : Array,
   }
 }
 </script>

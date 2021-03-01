@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-carousel :interval="4000"  type="card" height="400px">
-    <el-carousel-item v-for="item in imgArray" :key="item">
+    <el-carousel-item v-for="item in imgArray" :key="item.index">
         <img :src="item.idView" class="image" lazy>
         <span class="homepagetitle" style="position: absolute; top: 10px; left: 10px;color:#FFFFFF" >{{item.title}}</span>
     </el-carousel-item>

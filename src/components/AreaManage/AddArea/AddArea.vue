@@ -4,6 +4,9 @@
       <el-col :span="10">
         <h3>添加地区</h3>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-position="top" label-width="100px" class="demo-ruleForm" >
+          <el-form-item style="text-align:left" label="ID" prop="id">
+            <el-input v-model="ruleForm.id"></el-input>
+          </el-form-item>
           <el-form-item style="text-align:left" label="地区ID" prop="areaId">
             <el-input v-model="ruleForm.areaId"></el-input>
           </el-form-item>
@@ -25,6 +28,7 @@
     data() {
       return {
         ruleForm: {
+          id: '',
           areaId: '',
           areaName: '',
         },

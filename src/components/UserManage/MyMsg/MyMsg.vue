@@ -5,24 +5,23 @@
                 <div class="id">
                     <el-table
                       :data="tableData"
-                      style="width: 100%"
-                      row-key="id"
+                      style="width: 100%"        
                       border
                       height="250"
                       lazy
-                      :load="load"
-                      :tree-props="{children: 'children' ,hasChildren: 'hasChildren'}">
-                      <el-table-column v-for="item in tableKey" :key="item"
+                      >
+                      <el-table-column v-for="(item,index) in tableKey" :key="index"
                         :prop="item.prop"
                         :label="item.label"
                         :width="item.width">
                       </el-table-column>
-                      <el-table-column v-for="item in tableKey2" :key="item"
+                      <el-table-column v-for="item in tableKey2" :key="item.index"
                         :prop="item.prop"
                         :label="item.label"
                         :width="item.width">
                       </el-table-column>
-                    </el-table>
+                      
+                    </el-table><button @click="test()">test</button>
                 </div>           
             </el-col>
         </el-row>
@@ -33,10 +32,11 @@
 export default {
     data(){
         return{
+            userData:[],
             tableData:[{
-                userId:1226,
+                userId: 1226,
                 userName: '张三',
-                userAge: '18',
+                userAge: 18,
                 userPhone: 133233433
             }],
             tableKey:[{
@@ -56,7 +56,20 @@ export default {
         }
     },
     methods:{
-
+        test(){
+            this.$axios({
+              method: 'get',
+              url: "/api/mymsg"
+            }).then((response)=> {
+                const {data}=response.data;
+                this.tableData=data;
+                console.log(response.data);   
+            })
+            .catch(function(error) {
+                console.log(error);
+              });
+            console.log(this.tableData);  
+        }
     }
 }
 </script>

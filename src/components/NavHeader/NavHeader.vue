@@ -25,7 +25,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="head-content" v-if="this.$store.state.username==NULL">
+          <div class="head-content" v-if="this.$store.state.username==''">
             <router-link to='/login'>登录</router-link> |
             <router-link to='/registe'>注册</router-link>
           </div>
@@ -54,6 +54,7 @@ export default {
 <style>
 .nav{
   height: 90px;
+  text-align: center;
 }
 .logo {
   text-align: right;
