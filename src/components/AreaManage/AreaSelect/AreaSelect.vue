@@ -1,16 +1,15 @@
 <template>
     <div class="areaselect">  
-        <el-row  type="flex" class="row-bg" justify="center">
-            <el-col :span="1">
+        <el-row  type="flex" class="row-bg" justify="center" >
+            <el-col :span="2">
                 <div class="allarea">
                     地区:
                 </div>           
             </el-col>
             <el-col :span="1"  v-for="item in areaArray" :key="item.index">
-                    <el-button  type="text">
-                        {{item.areaName}}
-                    </el-button>
-
+                <el-button  type="text">
+                    {{item.areaName}}
+                </el-button>
             </el-col>
         </el-row>
     </div>
@@ -45,9 +44,10 @@ export default {
 }
 .areabox{
     display: flex;
-    flex-wrap: wrap;
+ 
 }
 .areaselect{
     align-items: center;
+    flex-wrap: wrap;
 }
 </style>

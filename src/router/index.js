@@ -24,6 +24,11 @@ const routes = [
     path: '/totalmanage',
     name: 'TotalManage',
     component:() => import('../views/TotalManage/TotalManage.vue')
+  },
+  {
+    path: '/hotelview',
+    name: 'HotelView',
+    component:() => import('../views/HotelView/HotelView.vue')
   }
 ]
 

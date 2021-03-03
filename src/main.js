@@ -13,11 +13,15 @@ import TableMsg from './components/TableMsg/index.js'
 import MyMsg from './components/UserManage/MyMsg/index.js'
 import Mock from './mock/mock.js'
 import AreaSelect from './components/AreaManage/AreaSelect/index.js'
+import Card from './components/Card/index.js'
+import BackTop from './components/BackTop/index.js'
 
 import axios from 'axios'             // 新增
 Vue.prototype.$axios = axios    // 新增
 
 Vue.config.productionTip = false;
+Vue.use(BackTop);
+Vue.use(Card);
 Vue.use(AreaSelect);
 Vue.use(Carousel_Card);
 Vue.use(ItemBox);

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NavHeader/>
-    <el-divider  class="divider" content-position="right">酒店预约</el-divider>
+    <el-divider class="divider" content-position="right"></el-divider>
     <div>
       <router-view/>
     </div>
