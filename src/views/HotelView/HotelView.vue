@@ -4,14 +4,18 @@
             <el-col :span="14">
                 <div>
                     <el-container>
-                        <el-header>{{hotelArray.titel}}</el-header>
+                        <el-header>酒店名：{{hotelArray.titel}}</el-header>
                         <el-container>
                           <el-aside width="500px" >
-                              <el-image :src="hotelArray.idView" class="imgview" lazy></el-image>
+                              <Carousel/>
                           </el-aside>
                           <el-container>
-                            <el-main>Main</el-main>
-                            <el-footer>button</el-footer>
+                            <el-main>酒店详情：</el-main>
+                            <el-footer>
+                                <el-button>
+                                    立即预定
+                                </el-button>
+                            </el-footer>
                           </el-container>
                         </el-container>
                     </el-container>

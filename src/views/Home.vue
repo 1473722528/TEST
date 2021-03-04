@@ -1,6 +1,6 @@
 <template>
   <div>
-  <Carousel_Card :imgArray='imgArray'></Carousel_Card>  <!-- 走马灯展示 -->
+  <Carousel_Card :carouselCardArray='carouselCardArray'></Carousel_Card>  <!-- 走马灯展示 -->
   <AreaSelect/> <!--地区选择-->
   <DateSelect/> <!--日期选择-->
   <Card :cardArray='hotelArray' />
@@ -19,7 +19,7 @@ export default {
           userName:"ABC",
           userRole:"管理员"
         },
-        imgArray:[    //图片数组
+        carouselCardArray:[    //图片数组
           {id:0,idView:require('../assets/img/01.jpg'),title:'广东'},
           {id:1,idView:require('../assets/img/02.jpg'),title:'广西'},
           {id:2,idView:require('../assets/img/03.jpg'),title:'河南'},

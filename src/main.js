@@ -15,11 +15,13 @@ import Mock from './mock/mock.js'
 import AreaSelect from './components/AreaManage/AreaSelect/index.js'
 import Card from './components/Card/index.js'
 import BackTop from './components/BackTop/index.js'
+import Carousel from './components/Carousel/index.js'
 
 import axios from 'axios'             // 新增
 Vue.prototype.$axios = axios    // 新增
 
 Vue.config.productionTip = false;
+Vue.use(Carousel);
 Vue.use(BackTop);
 Vue.use(Card);
 Vue.use(AreaSelect);

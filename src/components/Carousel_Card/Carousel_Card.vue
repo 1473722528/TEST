@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-carousel :interval="4000"  type="card" height="400px">
-    <el-carousel-item v-for="item in imgArray" :key="item.index">
+    <el-carousel-item v-for="item in carouselCardArray" :key="item.index">
         <a href=""> <!--图片跳转-->
           <img :src="item.idView"  lazy>
         </a>
@@ -15,7 +15,7 @@
 <script>
 export default {
   props:{
-    imgArray : Array
+    carouselCardArray : Array
   }
 }
 
