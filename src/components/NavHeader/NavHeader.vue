@@ -55,6 +55,11 @@ export default {
       var c=document.getElementById("myCanvas");
       var ctx=c.getContext("2d");
 
+      var grd=ctx.createLinearGradient(0,0,0,80);
+      grd.addColorStop(0,"black");
+      grd.addColorStop(1,"white");
+      ctx.fillStyle=grd;
+
       ctx.font="30px Arial";
       ctx.fillText("Hotel Reservation",10,50);
 
