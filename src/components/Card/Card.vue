@@ -3,21 +3,20 @@
         <div class="cardbox">
             <el-col :span="6" v-for="item in cardArray" :key="item.index" >
               <el-card :body-style="{ padding: '0px' }" shadow="hover" class="card">
-                  <a href="http://localhost:8080/hotelview"> 
-                      <el-image :src="item.idView" class="cardimg" lazy></el-image>
-                  </a>     
-                  <div style="padding: 14px;">
-                      <div class="bottom clearfix">
-                            <router-link :to="{
-                                name: 'HotelView',     
-                                params: {   
-                                    viewArray: item, 
-                                }
-                            }">
-                              <el-button type="text" class="button" >{{item.areaName}}</el-button>
-                          </router-link>
+                <router-link :to="{
+                    name: 'HotelView',     
+                    params: {   
+                        viewArray: item, 
+                    }
+                }">
+                    <el-image :src="item.idView" class="cardimg" lazy></el-image>
+                <div style="padding: 14px;">
+                    <div class="bottom clearfix">
+
+                            <el-button type="text" class="button" >{{item.areaName}}</el-button>
                       </div>
                   </div>
+                </router-link>    
               </el-card>
             </el-col>
         </div>
