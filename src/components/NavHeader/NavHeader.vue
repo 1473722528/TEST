@@ -55,7 +55,7 @@ export default {
       var c=document.getElementById("myCanvas");
       var ctx=c.getContext("2d");
 
-      var grd=ctx.createLinearGradient(0,0,0,80);
+      var grd=ctx.createLinearGradient(0,0,0,80);     //设置渐变
       grd.addColorStop(0,"black");
       grd.addColorStop(1,"white");
       ctx.fillStyle=grd;
@@ -63,7 +63,7 @@ export default {
       ctx.font="30px Arial";
       ctx.fillText("Hotel Reservation",10,50);
 
-      ctx.beginPath();
+      ctx.beginPath();                                 
       ctx.moveTo(6,6);
       ctx.quadraticCurveTo(6,30,66,6);
       ctx.moveTo(126,17);
