@@ -29,7 +29,8 @@ const routes = [
     path: '/hotelview',
     name: 'HotelView',
     component:() => import('../views/HotelView/HotelView.vue')
-  }
+  },
+
 ]
 
 const router = new VueRouter({

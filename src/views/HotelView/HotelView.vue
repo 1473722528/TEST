@@ -7,12 +7,12 @@
                         <el-header>酒店名：{{hotelArray.title}}</el-header>
                         <el-container>
                           <el-aside width="550px" >
-                              <Carousel/>
+                              <Carousel :carouselArray='carouselArray' />
                           </el-aside>
                           <el-container>
                             <el-main>酒店详情：<br/> {{hotelArray.message}}</el-main>
                             <el-footer>
-                                <el-button @click="getitem()">
+                                <el-button>
                                     立即预定
                                 </el-button>
                             </el-footer>
@@ -29,14 +29,46 @@
 export default {
     data(){
         return{
-            hotelArray:{id:0,areaId: 0,areaName:'梧州',title:'梧州君悦酒店',message:'本酒店位于梧州，是附近富有名气的酒店之一.',idView:require('../../assets/img/h1.jpg')},
-            
+            hotelArray:[],
+            hotelImg:[
+              [
+                {idView:require('../../assets/img/h1.jpg')},
+                {idView:require('../../assets/img/h1.jpg')},
+                {idView:require('../../assets/img/h1.jpg')}
+              ],
+              [
+                {idView:require('../../assets/img/h2.jpg')},
+                {idView:require('../../assets/img/h2.jpg')},
+                {idView:require('../../assets/img/h2.jpg')},
+              ],
+              [
+                {idView:require('../../assets/img/h3.jpg')},
+                {idView:require('../../assets/img/h3.jpg')},
+                {idView:require('../../assets/img/h3.jpg')},
+              ],
+              [
+                {idView:require('../../assets/img/h4.jpg')},
+                {idView:require('../../assets/img/h4.jpg')},
+                {idView:require('../../assets/img/h4.jpg')},
+              ],
+            ],
+            carouselArray:[]
         }
+    },
+    created(){
+        this.getitem();
+        this.getimg();     
+    },
+    mounted(){
+
     },
     methods:{
         getitem(){
-            this.hotelArray=this.$route.params.viewArray;
-            console.log(this.$route.params.viewArray)
+            this.hotelArray=this.$route.query.viewArray;
+            console.log(this.$route.query.viewArray)
+        },
+        getimg(){
+            this.carouselArray=this.hotelImg[this.hotelArray.id]
         }
     }
 }

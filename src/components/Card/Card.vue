@@ -5,7 +5,7 @@
               <el-card :body-style="{ padding: '0px' }" shadow="hover" class="card">
                 <router-link :to="{
                     name: 'HotelView',     
-                    params: {   
+                    query: {   
                         viewArray: item, 
                     }
                 }">

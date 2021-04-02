@@ -10,15 +10,9 @@
 
 <script>
 export default {
-    data(){
-        return{
-            carouselArray:[
-                {idView:require('../../assets/img/h1.jpg')},
-                {idView:require('../../assets/img/h2.jpg')},
-            ],
- 
-        }
-    }
+  props:{
+    carouselArray: Array
+  }
 }
 </script>
 

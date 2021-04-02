@@ -48,10 +48,10 @@ export default {
   }
  },
  mounted(){
-   this.canvas1()
+   this.canvas()
  },
  methods:{
-   canvas1(){
+   canvas(){
       var c=document.getElementById("myCanvas");
       var ctx=c.getContext("2d");
 
