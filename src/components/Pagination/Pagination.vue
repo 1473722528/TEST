@@ -4,11 +4,11 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage4"
-            :page-sizes="[10, 20, 30, 40]"
+            :page-sizes="[10, 20, 30, 50]"
             :page-size="10"
-            hide-on-single-page="true"
+            :hide-on-single-page="true"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="100">
+            :total="40">
         </el-pagination>
   </div>
 </template>

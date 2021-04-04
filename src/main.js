@@ -18,11 +18,13 @@ import Carousel from './components/Carousel/index.js'
 import AreaManage from './components/Area/AreaManage/index.js'
 import Pagination from './components/Pagination/index.js'
 import Link from './components/Link/index.js'
+import DialogFrom from './components/DialogFrom/index.js'
 
 import axios from 'axios'             // 新增
 Vue.prototype.$axios = axios    // 新增
 
 Vue.config.productionTip = false;
+Vue.use(DialogFrom);
 Vue.use(Link);
 Vue.use(Pagination);
 Vue.use(AreaManage);

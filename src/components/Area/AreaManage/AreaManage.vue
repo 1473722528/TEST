@@ -5,14 +5,14 @@
           <div>
             <el-container>
               <el-aside>
-                <Link />
+                <Link :fun="addArea" />
               </el-aside>
               <el-container>
                 <el-header style="height:40px">
                     <el-input placeholder="请输入搜索内容" v-model="input" class="input-with-select" clearable>
                     <el-select v-model="select" slot="prepend" placeholder="请选择">
                     <el-option label="地点" value="1"></el-option>
-                    <el-option label="酒店" value="2"></el-option>
+                    <el-option label="ID" value="2"></el-option>
                     </el-select>
                     <el-button slot="append" icon="el-icon-search"></el-button>
                     </el-input>
@@ -28,9 +28,7 @@
           </div>
         </el-col>
       </el-row>
-
-            
-        
+      <DialogFrom :openDialogVisible="openDialogVisible" :fun="closeAdd" /> 
     </div>
 </template>
 
@@ -42,6 +40,10 @@
         tableKey:[],
         activeIndex: '1',
         currentView: 'MyMsg',
+
+        input:'222',
+        select:'',
+        openDialogVisible: false,
 
         areaKey:[{
           prop:'id',
@@ -106,7 +108,15 @@
       load(tree, treeNode, resolve) {   //加载树节点
         setTimeout(() => {
           resolve(tree.child)
-        }, 1000)
+        }, 100)
+      },
+      addArea(){
+        this.openDialogVisible=true;
+        console.log(this.input);
+      },
+      closeAdd(){
+        this.openDialogVisible=false;
+        console.log("close")
       }
     }
   }
