@@ -1,40 +1,41 @@
 <template>
     <el-dialog
-        title="提示"
+        :title="formTitle"
         :show-close='false'
         :close-on-press-escape='false'
         :close-on-click-modal='false'
         :visible.sync="openDialogVisible"
+        width="30%"
         center>
-        <el-form :model="form" label-width="80px">
-            <el-form-item label="活动名称"  label-width='120px'>
-              <el-input v-model="form.name" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="活动区域"  label-width='120px'>
-              <el-select v-model="form.region" placeholder="请选择活动区域">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
-            </el-form-item>
+
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-position="top" v-for="item in formKey" :key="item.index">
+          <el-form-item :label="item.label" >
+            <el-input v-model="item.data" autocomplete="off" ></el-input>
+          </el-form-item>
         </el-form>
+
         <span slot="footer" class="dialog-footer">
         <el-button @click="fun">取 消</el-button>
+        <el-button @click="resetForm('ruleForm')">重 置</el-button>
         <el-button type="primary" @click="fun">确 定</el-button>
         </span>
+
 </el-dialog>
 </template>
 
 <script>
   export default {
     props:{
-        openDialogVisible:Boolean,
-        fun:{
-            type:Function
-        }
+      formTitle:String,
+      formKey:Array,
+      openDialogVisible:Boolean,
+      fun:{
+        type:Function
+      }
     },
     data(){
         return{
-            form: {
+            ruleform: {
                 name: '',
                 region: '',
                 date1: '',
@@ -42,9 +43,15 @@
                 delivery: false,
                 type: [],
                 resource: '',
-                desc: ''
-            }
+                desc: '',
+            },
+  
         }
     }
   }
 </script>
+<style>
+.el-button{
+  font-size: 14px;
+}
+</style>

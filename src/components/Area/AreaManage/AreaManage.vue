@@ -28,7 +28,7 @@
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openDialogVisible" :fun="closeAdd" /> 
+      <DialogFrom :openDialogVisible="openDialogVisible" :fun="closeAdd" :formTitle="formTitle" :formKey="formKey"/> 
     </div>
 </template>
 
@@ -44,6 +44,15 @@
         input:'222',
         select:'',
         openDialogVisible: false,
+
+        formTitle:'添加地区',
+        formKey:[{
+          label:'地区ID',
+          data: ''
+        },{
+          label:'地区名称',
+          data:''
+        }],
 
         areaKey:[{
           prop:'id',

@@ -2,23 +2,22 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index.js'
 import Element from './plugins/element.js'
-import './assets/css/base.css'
-import Carousel_Card from './components/Carousel_Card/index.js'
-import DateSelect from './components/DateSelect/index.js'
-import store from './store/index.js'
-import NavHeader from './components/NavHeader/index.js'
-import AddArea from './components/Area/AddArea/index.js'
-import TableMsg from './components/TableMsg/index.js'
-import MyMsg from './components/UserManage/MyMsg/index.js'
-import Mock from './mock/mock.js'
-import AreaSelect from './components/Area/AreaSelect/index.js'
-import Card from './components/Card/index.js'
-import BackTop from './components/BackTop/index.js'
-import Carousel from './components/Carousel/index.js'
-import AreaManage from './components/Area/AreaManage/index.js'
-import Pagination from './components/Pagination/index.js'
-import Link from './components/Link/index.js'
-import DialogFrom from './components/DialogFrom/index.js'
+import './assets/css/base.css'    
+import Carousel_Card from './components/Carousel_Card/index.js'   //卡片走马灯
+import DateSelect from './components/DateSelect/index.js'   //日期选择
+import store from './store/index.js'    //vuex
+import NavHeader from './components/NavHeader/index.js'   //顶部导航
+import TableMsg from './components/TableMsg/index.js'   //表格信息
+import MyMsg from './components/UserManage/MyMsg/index.js'    //我的信息页面
+import Mock from './mock/mock.js'   //模拟数据
+import AreaSelect from './components/Area/AreaSelect/index.js'    //地区选择
+import Card from './components/Card/index.js'   //卡片
+import BackTop from './components/BackTop/index.js'   //返回顶部
+import Carousel from './components/Carousel/index.js'   //走马灯
+import AreaManage from './components/Area/AreaManage/index.js'    //地区管理页面
+import Pagination from './components/Pagination/index.js'   //分页
+import Link from './components/Link/index.js'   //文字链接
+import DialogFrom from './components/DialogFrom/index.js'   //对话框表单
 
 import axios from 'axios'             // 新增
 Vue.prototype.$axios = axios    // 新增
@@ -35,7 +34,6 @@ Vue.use(AreaSelect);
 Vue.use(Carousel_Card);
 Vue.use(DateSelect);
 Vue.use(NavHeader);
-Vue.use(AddArea);
 Vue.use(TableMsg);
 Vue.use(MyMsg);
 Vue.use(Mock);
