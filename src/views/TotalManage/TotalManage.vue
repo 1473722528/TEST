@@ -13,7 +13,7 @@
         <template slot="title">我的管理台</template>
           <el-menu-item index="2-1" @click="RoomManage()">房间管理</el-menu-item>
           <el-menu-item index="2-2" @click="AreaManage()">地区管理</el-menu-item>
-          <el-menu-item index="2-3" @click="MyMsg()">用户管理</el-menu-item>
+          <el-menu-item index="2-3" @click="UsersManage()">用户管理</el-menu-item>
       </el-submenu>
       <el-menu-item index="3" >订单管理</el-menu-item>
     </el-menu>
@@ -117,11 +117,8 @@
       AreaManage(){    //赋予组件值，加载增加地区组件
         return this.currentView='AreaManage';
       },
-      AreaMsg(){    //赋予组件值，加载地区信息组件
-        return this.currentView='TableMsg',this.tableData=this.areaData,this.tableKey=this.areaKey;
-      },
-      UserMsg(){
-        return this.currentView='TableMsg',this.tableData=this.userData,this.tableKey=this.userKey;
+      UsersManage(){
+        return this.currentView='UsersManage';
       },
       load(tree, treeNode, resolve) {   //加载树节点
         setTimeout(() => {

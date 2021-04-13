@@ -28,7 +28,7 @@
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openDialogVisible" :fun="closeAdd" :formTitle="formTitle" :formKey="formKey"/> 
+      <DialogFrom :openDialogVisible="openDialogVisible" :fun="closeAdd" :formTitle="formTitle1" :formKey="formKey1"/> 
     </div>
 </template>
 
@@ -39,14 +39,13 @@
         tableData:[],
         tableKey:[],
         activeIndex: '1',
-        currentView: 'MyMsg',
 
         input:'222',
         select:'',
         openDialogVisible: false,
 
-        formTitle:'添加地区',
-        formKey:[{
+        formTitle1:'添加地区',
+        formKey1:[{
           label:'地区ID',
           data: ''
         },{
@@ -132,9 +131,11 @@
 </script>
 <style>
  .el-header,.el-footer{
-
    text-align: center;
    padding: 0px;
+   margin: 0px;
+   height: 40px;
+   line-height: 40ox;
  }
  
  .el-aside {
@@ -149,6 +150,7 @@
    color: #333;
    text-align: center;
    padding: 0px;
+   margin: 0px;
  }
  .areamanage{
    margin-top: 50px;
