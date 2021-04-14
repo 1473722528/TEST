@@ -4,8 +4,8 @@
         <el-col :span="13">
           <div>
             <el-container>
-              <el-aside>
-                <Link :fun="addArea" :linktitle='linktitle1'/>
+              <el-aside style="height:100%">
+                <Link :fun="addOpen" :linktitle='linktitle1'/>
               </el-aside>
               <el-container>
                 <el-header style="height:40px">
@@ -18,7 +18,7 @@
                     </el-input>
                 </el-header>
                 <el-main >
-                  <TableMsg :tableData='areaData' :tableKey='areaKey' />
+                  <TableMsg :tableData='roomData' :tableKey='roomKey' />
                 </el-main>
                 <el-footer style="height:33px">
                   <Pagination />
@@ -28,7 +28,7 @@
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openDialogVisible" :fun="closeAdd" :formTitle="formTitle1" :formKey="formKey1"/> 
+      <DialogFrom :openDialogVisible="openDialogVisible" :fun="addClose" :formTitle="formTitle1" :formKey="formKey1"/> 
     </div>
 </template>
 
@@ -40,7 +40,7 @@
         tableKey:[],
         activeIndex: '1',
 
-        input:'222',
+        input:'111111',
         select:'',
         openDialogVisible: false,
 
@@ -48,26 +48,37 @@
 
         formTitle1:'添加房间',
         formKey1:[{
-          label:'房间ID',
-          data: ''
+            label:'房间ID',
+            data: ''
         },{
-          label:'房价名称',
-          data:''
+            label:'房间名称',
+            data:''
         }],
 
-        areaKey:[{
-          prop:'id',
-          label:'ID',
-          width: 220
+        roomKey:[{
+            prop:'roomId',
+            label:'房间ID'
         },{
-          prop:'areaId',
-          label:'地区代码'
+            prop:'roomName',
+            label:'房间名'
         },{
-          prop:'areaName',
-          label:'地区名'
+            prop:'roomPrice',
+            label:''
+        },{
+            prop:'roomNum',
+            label:''
+        },{
+            prop:'hotelId',
+            label:''
+        },{
+            prop:'hotelArea',
+            label:''
+        },{
+            prop:'',
+            label:''
         }
         ],
-        areaData: [{
+        roomData: [{
           id: 1,
           areaId: 1111,
           areaName: '广东',
@@ -115,16 +126,11 @@
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
-      load(tree, treeNode, resolve) {   //加载树节点
-        setTimeout(() => {
-          resolve(tree.child)
-        }, 100)
-      },
-      addArea(){
+      addOpen(){
         this.openDialogVisible=true;
         console.log(this.input);
       },
-      closeAdd(){
+      addClose(){
         this.openDialogVisible=false;
         console.log("close")
       }

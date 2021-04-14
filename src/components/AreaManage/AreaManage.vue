@@ -4,8 +4,8 @@
         <el-col :span="13">
           <div>
             <el-container>
-              <el-aside>
-                <Link :fun="addArea" :linktitle='linktitle1' />
+              <el-aside style="height:100%">
+                <Link :fun="addOpen" :linktitle='linktitle1' />
               </el-aside>
               <el-container>
                 <el-header style="height:40px">
@@ -28,7 +28,7 @@
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openDialogVisible" :fun="closeAdd" :formTitle="formTitle1" :formKey="formKey1"/> 
+      <DialogFrom :openDialogVisible="openDialogVisible" :fun="addClose" :formTitle="formTitle1" :formKey="formKey1"/> 
     </div>
 </template>
 
@@ -40,7 +40,7 @@
         tableKey:[],
         activeIndex: '1',
 
-        input:'222',
+        input:'222222',
         select:'',
         openDialogVisible: false,
 
@@ -115,16 +115,11 @@
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
-      load(tree, treeNode, resolve) {   //加载树节点
-        setTimeout(() => {
-          resolve(tree.child)
-        }, 100)
-      },
-      addArea(){
+      addOpen(){
         this.openDialogVisible=true;
         console.log(this.input);
       },
-      closeAdd(){
+      addClose(){
         this.openDialogVisible=false;
         console.log("close")
       }

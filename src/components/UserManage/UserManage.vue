@@ -4,8 +4,10 @@
         <el-col :span="13">
           <div>
             <el-container>
-              <el-aside>
-                <Link :fun="addArea" :linktitle='linktitle1'/>
+              <el-aside style="height:100%">
+                <Link :fun="addOpen" :linktitle='linktitle1'/>
+                <Link :fun="addOpen" :linktitle='linktitle1'/>
+                <Link :fun="addOpen" :linktitle='linktitle1'/>
               </el-aside>
               <el-container>
                 <el-header style="height:40px">
@@ -17,18 +19,18 @@
                     <el-button slot="append" icon="el-icon-search"></el-button>
                     </el-input>
                 </el-header>
-                <el-main >
-                  <TableMsg :tableData='areaData' :tableKey='areaKey' />
+                <el-main> 
+                  <TableMsg :tableData='userData' :tableKey='userKey'/>
                 </el-main>
                 <el-footer style="height:33px">
-                  <Pagination />
+                  <Pagination v-model="userData" />
                 </el-footer>
               </el-container>
             </el-container>
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openDialogVisible" :fun="closeAdd" :formTitle="formTitle1" :formKey="formKey1"/> 
+      <DialogFrom :openDialogVisible="openDialogVisible" :fun="addClose" :formTitle="formTitle1" :formKey="formKey1"/> 
     </div>
 </template>
 
@@ -40,7 +42,7 @@
         tableKey:[],
         activeIndex: '1',
 
-        input:'222',
+        input:'3333333',
         select:'',
         openDialogVisible: false,
 
@@ -55,58 +57,60 @@
           data:''
         }],
 
-        areaKey:[{
-          prop:'id',
-          label:'ID',
-          width: 180
+        userKey:[{
+          prop:'userId',
+          label:'用户ID',
+          width:100
         },{
-          prop:'areaId',
-          label:'地区代码'
+          prop:'userName',
+          label:'用户名',
+          width:100
         },{
-          prop:'areaName',
-          label:'地区名'
+          prop:'userPassword',
+          label:'用户密码',
+          width:120
+        },{
+          prop:'userPhone',
+          label:'用户手机号',
+          width:150
+        },{
+          prop:'userEmail',
+          label:'用户邮箱',
+          width:160
+        },{
+          prop:'userRole',
+          label:'用户权限',
+         
         }
         ],
-        areaData: [{
-          id: 1,
-          areaId: 1111,
-          areaName: '广东',
-          hasChildren: true,
-          child:[{
-            id:11,
-            areaId:1112,
-            areaName: '广州市'
-          }]
+        userData: [{
+          userId: 2017001,
+          userName: '张伟',
+          userPassword:'12345',
+          userPhone:13322331122,
+          userEmail:'1222222@qq.com',
+          userRole:'管理员'
         }, {
-          id: 2,
-          areaId: 2222,
-          areaName: '广西',
-          hasChildren:true,
-          child:[{
-              id:21,
-              areaId:2223,
-              areaName:'柳州市'
-          }]
+          userId: 2017002,
+          userName: '李刚',
+          userPassword:'12345',
+          userPhone:13322331122,
+          userEmail:'1222222@qq.com',
+          userRole:'管理员'
         }, {
-          id: 3,
-          areaId: 3333,
-          areaName: '河北',
-          hasChildren: true,
-          child:[{
-              id:31,
-              areaId:3334,
-              areaName:'唐山市'
-          }]
+          userId: 2017003,
+          userName: '葫芦侠',
+          userPassword:'12345',
+          userPhone:13322331122,
+          userEmail:'1222222@qq.com',
+          userRole:'管理员'
         }, {
-          id: 4,
-          areaId: 4444,
-          areaName: '河南',
-          hasChildren:true,
-          child:[{
-              id:41,
-              areaId:4445,
-              areaName:'开封市'
-          }]
+          userId: 2017004,
+          userName: '必胜客',
+          userPassword:'12345',
+          userPhone:13322331122,
+          userEmail:'1222222@qq.com',
+          userRole:'管理员'
         }]
 
       }
@@ -115,16 +119,11 @@
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
-      load(tree, treeNode, resolve) {   //加载树节点
-        setTimeout(() => {
-          resolve(tree.child)
-        }, 100)
-      },
-      addArea(){
+      addOpen(){
         this.openDialogVisible=true;
         console.log(this.input);
       },
-      closeAdd(){
+      addClose(){
         this.openDialogVisible=false;
         console.log("close")
       }
@@ -152,6 +151,7 @@
    text-align: center;
    padding: 0px;
    margin: 0px;
+    
  }
  .usersmanage{
    margin-top: 50px;

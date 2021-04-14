@@ -2,7 +2,7 @@
   <div class="tablemsg">
     <el-table
       :data="tableData"
-      style="width: 100%"
+      style="width: 100%;height:100%"
       row-key="id"
       border
       lazy
@@ -32,3 +32,10 @@
     }
   }
 </script>
+
+<style>
+.tablemsg{
+  margin: 0px;
+  padding: 0px;
+}
+</style>
