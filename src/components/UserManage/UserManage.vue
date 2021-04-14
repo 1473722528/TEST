@@ -1,17 +1,17 @@
 <template>
     <div>
-      <el-row type="flex" class="areamanage" justify="center">
+      <el-row type="flex" class="usersmanage" justify="center">
         <el-col :span="13">
           <div>
             <el-container>
               <el-aside>
-                <Link :fun="addArea" :linktitle='linktitle1' />
+                <Link :fun="addArea" :linktitle='linktitle1'/>
               </el-aside>
               <el-container>
                 <el-header style="height:40px">
                     <el-input placeholder="请输入搜索内容" v-model="input" class="input-with-select" clearable>
                     <el-select v-model="select" slot="prepend" placeholder="请选择">
-                    <el-option label="地点" value="1"></el-option>
+                    <el-option label="姓名" value="1"></el-option>
                     <el-option label="ID" value="2"></el-option>
                     </el-select>
                     <el-button slot="append" icon="el-icon-search"></el-button>
@@ -44,14 +44,14 @@
         select:'',
         openDialogVisible: false,
 
-        linktitle1:'新增地区',
+        linktitle1:'新增用户',
 
-        formTitle1:'添加地区',
+        formTitle1:'添加用户',
         formKey1:[{
-          label:'地区ID',
+          label:'用户ID',
           data: ''
         },{
-          label:'地区名称',
+          label:'用户名',
           data:''
         }],
 
@@ -136,6 +136,7 @@
    text-align: center;
    padding: 0px;
    margin: 0px;
+
  }
  
  .el-aside {
@@ -152,7 +153,7 @@
    padding: 0px;
    margin: 0px;
  }
- .areamanage{
+ .usersmanage{
    margin-top: 50px;
  }
 </style>
