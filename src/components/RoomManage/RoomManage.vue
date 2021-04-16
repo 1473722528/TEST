@@ -5,7 +5,7 @@
           <div>
             <el-container>
               <el-aside style="height:100%">
-                <Link :fun="addOpen" :linktitle='linktitle1'/>
+                <Link :fun="addOpen" :linkTitle='linkTitle1'/>
               </el-aside>
               <el-container>
                 <el-header style="height:40px">
@@ -44,7 +44,7 @@
         select:'',
         openDialogVisible: false,
 
-        linktitle1:'新增房间',
+        linkTitle1:'新增房间',
 
         formTitle1:'添加房间',
         formKey1:[{
@@ -161,5 +161,9 @@
  }
  .usersmanage{
    margin-top: 50px;
+ }
+  .el-input{
+   margin: 0px;
+   padding: 0px;
  }
 </style>

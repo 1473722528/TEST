@@ -51,60 +51,6 @@
           userAge: '20'
         }],
 
-        areaKey:[{
-          prop:'id',
-          label:'ID',
-          width: 180
-        },{
-          prop:'areaId',
-          label:'地区代码'
-        },{
-          prop:'areaName',
-          label:'地区名'
-        }
-        ],
-        areaData: [{
-          id: 1,
-          areaId: 1111,
-          areaName: '广东',
-          hasChildren: true,
-          child:[{
-            id:11,
-            areaId:1112,
-            areaName: '广州市'
-          }]
-        }, {
-          id: 2,
-          areaId: 2222,
-          areaName: '广西',
-          hasChildren:true,
-          child:[{
-              id:21,
-              areaId:2223,
-              areaName:'柳州市'
-          }]
-        }, {
-          id: 3,
-          areaId: 3333,
-          areaName: '河北',
-          hasChildren: true,
-          child:[{
-              id:31,
-              areaId:3334,
-              areaName:'唐山市'
-          }]
-        }, {
-          id: 4,
-          areaId: 4444,
-          areaName: '河南',
-          hasChildren:true,
-          child:[{
-              id:41,
-              areaId:4445,
-              areaName:'开封市'
-          }]
-        }]
-
       }
     },
     methods: {
@@ -126,7 +72,7 @@
       load(tree, treeNode, resolve) {   //加载树节点
         setTimeout(() => {
           resolve(tree.child)
-        }, 1000)
+        }, 100)
       }
     }
   }

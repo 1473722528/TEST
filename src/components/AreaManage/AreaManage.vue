@@ -5,7 +5,7 @@
           <div>
             <el-container>
               <el-aside style="height:100%">
-                <Link :fun="addOpen" :linktitle='linktitle1' />
+                <Link :fun="addOpen" :linkTitle='linkTitle1' />
               </el-aside>
               <el-container>
                 <el-header style="height:40px">
@@ -44,7 +44,7 @@
         select:'',
         openDialogVisible: false,
 
-        linktitle1:'新增地区',
+        linkTitle1:'新增地区',
 
         formTitle1:'添加地区',
         formKey1:[{
@@ -149,5 +149,9 @@
  }
  .areamanage{
    margin-top: 50px;
+ }
+  .el-input{
+   margin: 0px;
+   padding: 0px;
  }
 </style>

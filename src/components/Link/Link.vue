@@ -1,14 +1,15 @@
 <template>      <!--文字链接组件-->
     <div >
         <el-link @click="fun">  
-            <h1><i class="el-icon-edit"></i>{{linktitle}}</h1>
+            <h1><i :class="linkIcon"></i>{{linkTitle}}</h1>
         </el-link><br/>
     </div>
 </template>
 <script>
 export default {
     props:{
-        linktitle:String,
+        linkIcon:String,
+        linkTitle:String,
         fun:{
             type: Function
         }

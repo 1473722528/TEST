@@ -1,4 +1,4 @@
-<template>
+<template slot-scope="scope">
     <el-dialog
         :title="formTitle"
         :show-close='false'
@@ -8,9 +8,9 @@
         width="30%"
         center>
 
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-position="top" v-for="item in formKey" :key="item.index">
+        <el-form :model="ruleForm" :rules="rules"  ref="ruleForm"  label-position="top" v-for="item in formKey" :key="item.index">
           <el-form-item :label="item.label" >
-            <el-input v-model="item.data" autocomplete="off" ></el-input>
+            <el-input v-model="ruleForm[item.data]"  autocomplete="off" ></el-input>
           </el-form-item>
         </el-form>
 
@@ -26,6 +26,7 @@
 <script>
   export default {
     props:{
+      ruleForm:Object,
       formTitle:String,
       formKey:Array,
       openDialogVisible:Boolean,
@@ -35,17 +36,7 @@
     },
     data(){
         return{
-            ruleform: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: '',
-            },
-  
+
         }
     }
   }
