@@ -8,15 +8,15 @@
         width="30%"
         center>
 
-        <el-form :model="ruleForm" :rules="rules"  ref="ruleForm"  label-position="top" v-for="item in formKey" :key="item.index">
+        <el-form :model="ruleForm" :rules="rules" status-icon ref="ruleForm"  label-position="top" v-for="item in formKey" :key="item.index">
           <el-form-item :label="item.label" :prop="item.data" >
             <el-input v-model="ruleForm[item.data]"  autocomplete="off" ></el-input>
           </el-form-item>
         </el-form>
 
         <span slot="footer" class="dialog-footer" >
-        <el-button @click="fun2">取 消</el-button>
-        <el-button type="primary" @click="successAddDialog('ruleForm')">确 定</el-button>
+        <el-button @click="cancelDo()">取 消</el-button>
+        <el-button type="primary" @click="successDo('ruleForm')">确 定</el-button>
         </span>
 
 </el-dialog>
@@ -24,41 +24,60 @@
 
 <script>
   export default {
+    
     props:{
+      
       ruleForm:Object,
       rules:Object,
       formTitle:String,
       formKey:Array,
       openDialogVisible:Boolean,
-      fun1:{
+      fun:{
         type:Function
       },
-      fun2:{
-        type:Function
-      }
+
     },
     data(){
-        return{
-          
-        }
+      return{
+        
+      }
     },
     methods:{
-      successAddDialog(formName){
-        console.log(formName);
-        this.$refs[formName].validate((valid) => {
-          
-          if (valid) {
-            this.openAddDialog=false;
-            this.$notify({
-              title: '提交成功',
-              message: '已成功提交信息',
-              type: 'success'
-            });
-            alert('submit!');
+      successDo(formName){
+        var x=0,y=0;
+        for (let key in this.ruleForm) {
+          y=y+1;
+          console.log(y);
+          console.log(key, this.ruleForm[key]);
+            
+        }
+        for(var i=0;i<y;i++){
+          this.$refs[formName][i].validate((valid) => {
+          if (valid) {  
+            x++;
+            console.log(x);
           } else {
             console.log('error submit!!');
             return false;
           }
+        }); 
+        }
+        if(x==y){i
+          this.fun();
+          this.$notify({
+          title: '提交成功',
+          message: '已成功提交信息',
+          type: 'warning'
+        });
+        }
+        
+      },
+      cancelDo(){
+        this.fun();
+        this.$notify({
+          title: '取消提交',
+          message: '已取消提交信息',
+          type: 'warning'
         });
       },
     }

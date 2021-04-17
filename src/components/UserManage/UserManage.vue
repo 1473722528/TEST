@@ -36,7 +36,7 @@
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :rules="rules" :fun1="successAddDialog" :fun2="cancelAddDialog" :formTitle="formTitle1" :formKey="formKey1"/> 
+      <DialogFrom :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :rules="rules" :fun="dialogClose"  :formTitle="formTitle1" :formKey="formKey1"/> 
     </div>
 </template>
 
@@ -167,30 +167,10 @@
         this.openAddDialog=true;
         console.log("open");
       },
-      successAddDialog(formName){
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.openAddDialog=false;
-            this.$notify({
-              title: '提交成功',
-              message: '已成功提交信息',
-              type: 'success'
-            });
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      cancelAddDialog(){
+      dialogClose(){
         this.openAddDialog=false;
-        this.$notify({
-          title: '取消提交',
-          message: '已取消提交信息',
-          type: 'warning'
-        });
       },
+
       editOpen(){
         this.editShow=!this.editShow;
         this.deleteShow=false;
