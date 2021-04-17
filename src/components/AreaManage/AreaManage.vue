@@ -134,15 +134,12 @@
  }
  
  .el-aside {
-   background-color: #D3DCE6;
-   color: #333;
+
    text-align: center;
    padding: 0px;
  }
  
  .el-main {
-   background-color: #E9EEF3;
-   color: #333;
    text-align: center;
    padding: 0px;
    margin: 0px;

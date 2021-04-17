@@ -9,15 +9,14 @@
         center>
 
         <el-form :model="ruleForm" :rules="rules"  ref="ruleForm"  label-position="top" v-for="item in formKey" :key="item.index">
-          <el-form-item :label="item.label" >
+          <el-form-item :label="item.label" :prop="item.data" >
             <el-input v-model="ruleForm[item.data]"  autocomplete="off" ></el-input>
           </el-form-item>
         </el-form>
 
-        <span slot="footer" class="dialog-footer">
-        <el-button @click="fun">取 消</el-button>
-        <el-button @click="resetForm('ruleForm')">重 置</el-button>
-        <el-button type="primary" @click="fun">确 定</el-button>
+        <span slot="footer" class="dialog-footer" >
+        <el-button @click="fun2">取 消</el-button>
+        <el-button type="primary" @click="successAddDialog('ruleForm')">确 定</el-button>
         </span>
 
 </el-dialog>
@@ -27,17 +26,41 @@
   export default {
     props:{
       ruleForm:Object,
+      rules:Object,
       formTitle:String,
       formKey:Array,
       openDialogVisible:Boolean,
-      fun:{
+      fun1:{
+        type:Function
+      },
+      fun2:{
         type:Function
       }
     },
     data(){
         return{
-
+          
         }
+    },
+    methods:{
+      successAddDialog(formName){
+        console.log(formName);
+        this.$refs[formName].validate((valid) => {
+          
+          if (valid) {
+            this.openAddDialog=false;
+            this.$notify({
+              title: '提交成功',
+              message: '已成功提交信息',
+              type: 'success'
+            });
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
     }
   }
 </script>
