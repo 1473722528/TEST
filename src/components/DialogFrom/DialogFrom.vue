@@ -15,7 +15,7 @@
         </el-form>
 
         <span slot="footer" class="dialog-footer" >
-        <el-button @click="cancelDo()">取 消</el-button>
+        <el-button @click="cancelDo('ruleForm')">取 消</el-button>
         <el-button type="primary" @click="successDo('ruleForm')">确 定</el-button>
         </span>
 
@@ -39,7 +39,7 @@
     },
     data(){
       return{
-        
+        ruleNum:[1,3]
       }
     },
     methods:{
@@ -49,9 +49,8 @@
           y=y+1;
           console.log(y);
           console.log(key, this.ruleForm[key]);
-            
         }
-        for(var i=0;i<y;i++){
+        for(let i=0;i<y;i++){
           this.$refs[formName][i].validate((valid) => {
           if (valid) {  
             x++;
@@ -62,18 +61,35 @@
           }
         }); 
         }
-        if(x==y){i
+        for (let key in this.ruleForm) {
+  
+          console.log(key, this.ruleForm[key]);
+        }
+        if(x==y){
           this.fun();
+          for(let i=0;i<y;i++){
+          this.$refs[formName][i].resetFields()
+          }
           this.$notify({
           title: '提交成功',
           message: '已成功提交信息',
-          type: 'warning'
+          type: 'success'
         });
         }
         
       },
-      cancelDo(){
+      cancelDo(formName){
+        var y=0;
+        for (let key in this.ruleForm) {
+          y=y+1;
+          console.log(y);
+          console.log(key, this.ruleForm[key]);
+            
+        }
         this.fun();
+        for(let i=0;i<y;i++){
+          this.$refs[formName][i].resetFields()
+        }
         this.$notify({
           title: '取消提交',
           message: '已取消提交信息',

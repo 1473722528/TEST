@@ -36,7 +36,7 @@
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :rules="rules" :fun="dialogClose"  :formTitle="formTitle1" :formKey="formKey1"/> 
+      <DialogFrom :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :rules="rules" :fun="addDialogClose"  :formTitle="formTitle1" :formKey="formKey1"/> 
     </div>
 </template>
 
@@ -71,6 +71,15 @@
         },{
           label:'用户名',
           data:'userName'
+        },{
+          label:'用户手机号',
+          data:'userPhone'
+        },{
+          label:'用户邮箱',
+          data:'userEmail'
+        },{
+          label:'身份证号码',
+          data:'userIdCard'
         }],
 
         ruleForm:{
@@ -167,7 +176,7 @@
         this.openAddDialog=true;
         console.log("open");
       },
-      dialogClose(){
+      addDialogClose(){
         this.openAddDialog=false;
       },
 

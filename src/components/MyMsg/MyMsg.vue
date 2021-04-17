@@ -1,23 +1,45 @@
 <template>
     <div>
         <el-row  class="mymsg" type="flex"  justify="center" >
-            <el-col :span="10">
-                <div class="id">
+            <el-col :span="14">
+                <div class="showmsg">
                     <el-container>
-                        <el-header>Header</el-header>
+                        <el-header style="line-height:10px">
+                            <h1>个人信息</h1>
+                        </el-header>
                         <el-main>
-                            <el-card class="box-card">
-                              <div slot="header" class="clearfix">
-                                <span>卡片名称</span>
-                                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-                              </div>
-                              <div v-for="o in 4" :key="o" class="text item">
-                                {{'列表内容 ' + o }}
-                              </div>
-                            </el-card>
-
+                            <el-row class="msg-card" type="flex"  justify="space-around" >
+                                <el-divider class="divider-h" direction="vertical"></el-divider>
+                                <el-col :span="8">
+                                  <div>
+                                      <span>用户ID : </span><span>{{tableData.userId}}</span>
+                                      <el-divider></el-divider>
+                                      <span>用户邮箱 : </span><span>{{tableData.userEmail}}</span>
+                                  </div>
+                                </el-col>
+                                <el-divider class="divider-h" direction="vertical"></el-divider>
+                                <el-col :span="8">
+                                    <div>
+                                        <span>用户名 : </span><span>{{tableData.userName}}</span>
+                                        <el-divider></el-divider>
+                                        <span>年 龄 : </span><span>{{tableData.userAge}}</span>
+                                    </div>
+                                </el-col>
+                                <el-divider class="divider-h" direction="vertical"></el-divider>
+                                <el-col :span="8">
+                                  <div>
+                                      <span>用户手机号 : </span><span>{{tableData.userPhone}}</span>
+                                      <el-divider></el-divider>
+                                      <span>身份证号 : </span><span>{{tableData.userIdCard}}</span>
+                                  </div>
+                                </el-col>
+                                <el-divider class="divider-h" direction="vertical"></el-divider>
+                            </el-row> 
                         </el-main>
-                        <el-footer>Footer</el-footer>
+                        <el-footer>
+                            <el-button>修改密码</el-button>
+                            <el-button>修改资料</el-button>
+                        </el-footer>
                     </el-container>
                 </div>           
             </el-col>
@@ -30,14 +52,14 @@ export default {
     data(){
         return{
             userData:[],
-            tableData:[{
+            tableData:{
                 userId: 1226,
                 userName: '张三',
                 userAge: 18,
                 userPhone: 133233433,
                 userEmail:'1432422728@qq.com',
                 userIdCard:441226199909090009
-            }],
+            },
             tableKey:[{
                 prop: 'userId',
                 label: '用户ID',
@@ -78,14 +100,21 @@ export default {
 </script>
 
 <style>
-.id{
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
-}
-
 .mymsg{
     margin-top: 50px;
     border-radius: 4px;
-
+}
+.showmsg{
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    margin-right: 50px;
+}
+.msg-card {
+    margin: 50px;
+}
+.divider-h{
+    height: 110px;
 }
 </style>
