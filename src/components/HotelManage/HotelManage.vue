@@ -30,10 +30,10 @@
                     </el-input>
                 </el-header>
                 <el-main> 
-                  <TableMsg :tableData='userData' :tableKey='userKey' :editShow="editShow" :deleteShow="deleteShow"/>
+                  <TableMsg :tableData='hotelData' :tableKey='hotelKey' :editShow="editShow" :deleteShow="deleteShow" :showMsg="showMsg" :childTableKey="childhotelKey"/>
                 </el-main>
                 <el-footer style="height:33px">
-                  <Pagination v-model="userData" />
+                  <Pagination v-model="hotelData" />
                 </el-footer>
               </el-container>
             </el-container>
@@ -49,8 +49,6 @@
   export default {
     data() {
       return {
-        tableData:[],
-        tableKey:[],
         activeIndex: '1',
 
         input:'3333333',
@@ -84,13 +82,10 @@
         },{
           label:'酒店地址',
           data:'hotelAddress'
-        },{
-          label:'身份证号码',
-          data:'userIdCard'
         }],
         formKeyNum:5,
         formSign:'add',
-
+        showMsg:true,
 
         ruleForm:{
           userId:'',
@@ -98,69 +93,72 @@
         },
         rules: {
           userId: [
-            { required: true, message: '请输入用户ID', trigger: 'blur' },
+            { required: true, message: '请输入酒店ID', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
           userName: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
+            { required: true, message: '请输入酒店名', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
         },
 
-        userKey:[{
-          prop:'userId',
-          label:'用户ID',
-          width:110
+        hotelKey:[{
+          prop:'hotelId',
+          label:'酒店ID',
+          width:150
         },{
-          prop:'userName',
-          label:'用户名',
-          width:110
+          prop:'hotelName',
+          label:'酒店名',
+          width:220
         },{
-          prop:'userPassword',
-          label:'用户密码',
-          width:140
+          prop:'hotelArea',
+          label:'酒店地区',
+          width:150
         },{
-          prop:'userPhone',
-          label:'用户手机号',
-          width:180
+          prop:'hotelAddress',
+          label:'酒店地址',
+        }],
+        childhotelKey:[{
+          label:'房间ID',
+          data:'roomId'
         },{
-          prop:'userEmail',
-          label:'用户邮箱',
-         
+          label:'房间名',
+          data:'roomName'
         },{
-          prop:'userRole',
-          label:'用户权限',
-          width:100
-        }
-        ],
-        userData: [{
-          userId: 2017001,
-          userName: '张伟',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员'
+          label:'房间价格',
+          data:'roomPrice'
+        },{
+          label:'房间数量',
+          data:'roomNum'
+        }],
+        hotelData: [{
+          hotelId: 2017001,
+          hotelName: '龙珠',
+          hotelArea:'北京',
+          hotelAddress:'北京朝阳区十三号',
+          roomId:2000000,
+          roomName:'普通房',
+          roomPrice:200,
+          roomNum:10
         }, {
-          userId: 2017002,
-          userName: '李刚',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员'
+          hotelId: 2017011,
+          hotelName: '狗珠',
+          hotelArea:'南京',
+          hotelAddress:'南京朝阳区十三号',
+          roomId:2000111,
+          roomName:'普通房',
+          roomPrice:222,
+          roomNum:30
         }, {
-          userId: 2017003,
-          userName: '葫芦侠',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员'
+          hotelId: 2017111,
+          hotelName: '猪珠',
+          hotelArea:'广州',
+          hotelAddress:'广州朝阳区十三号',
         }, {
-          userId: 2017004,
-          userName: '必胜客',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员'
+          hotelId: 2017021,
+          hotelName: '牛珠',
+          hotelArea:'上海',
+          hotelAddress:'上海朝阳区十三号',
         }]
 
       }

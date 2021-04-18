@@ -4,11 +4,21 @@
       :data="tableData"
       style="width: 100%;height:100%"
       row-key="id"
-      
       border
       lazy
       :load="load"
       :tree-props="{children: 'children' ,hasChildren: 'hasChildren'}">
+
+      <el-table-column type="expand" v-if="this.showMsg==true">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand" >
+            <el-form-item :label="item2.label" v-for="item2 in childTableKey" :key="item2.index">
+              <span>{{ props.row[item2.data] }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+
       <el-table-column v-for="item in tableKey" :key="item.index"
         align="center"
         :prop="item.prop"
@@ -38,6 +48,8 @@
 <script>
   export default {
     props:{
+      childTableKey:Array,
+      showMsg:Boolean,
       deleteShow:Boolean,
       editShow:Boolean,
       tableData: Array,
@@ -107,4 +119,16 @@
 .tb{
   padding: 0px;
 }
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
 </style>
