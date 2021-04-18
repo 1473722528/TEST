@@ -1,27 +1,30 @@
 <template>
     <div>
-      <el-row type="flex" class="usermanage" justify="center">
+      <el-row type="flex" class="roommanage" justify="center">
         <el-col :span="13">
           <div>
-            <h2>用户管理</h2>
+            <h2>酒店管理</h2>
             <el-container>
               <el-aside style="height:100%;width:100px">
-                <el-tooltip class="item" effect="dark" content="点击打开增加用户表单" placement="left">
+                <el-tooltip class="item" effect="dark" content="点击打开增加酒店表单" placement="left">
                   <Link :fun="addDialogOpen" :linkTitle='linkTitle1' :linkIcon='linkIcon1'/>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="点击打开或关闭编辑用户按钮" placement="left">
+                <el-tooltip class="item" effect="dark" content="点击打开或关闭编辑酒店按钮" placement="left">
                   <Link :fun="editOpen" :linkTitle='linkTitle2' :linkIcon='linkIcon2'/>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="点击打开或关闭删除用户按钮" placement="left">
+                <el-tooltip class="item" effect="dark" content="点击打开或关闭删除酒店按钮" placement="left">
                   <Link :fun="deleteOpen" :linkTitle='linkTitle3' :linkIcon='linkIcon3'/>
                 </el-tooltip>  
+                <el-tooltip class="item" effect="dark" content="点击打开或关闭酒店房间管理按钮" placement="left">
+                  <Link :fun="deleteOpen" :linkTitle='linkTitle4' :linkIcon='linkIcon4'/>
+                </el-tooltip> 
               </el-aside>
               <el-container>
                 <el-header style="height:40px">
                     <el-input placeholder="请输入搜索内容" v-model="input" class="input-with-select" clearable>
                       <el-select v-model="select" slot="prepend" placeholder="请选择">
-                      <el-option label="姓名" value="1"></el-option>
-                      <el-option label="ID" value="2"></el-option>
+                      <el-option label="酒店ID" value="1"></el-option>
+                      <el-option label="酒店名" value="2"></el-option>
                     </el-select>
                     <el-button slot="append" icon="el-icon-search"></el-button>
                     </el-input>
@@ -59,26 +62,28 @@
         editShow:false,
         deleteShow:false,
 
-        linkTitle1:'新增用户',
+        linkTitle1:'新增酒店',
         linkIcon1:'el-icon-plus',
-        linkTitle2:'编辑用户',
+        linkTitle2:'编辑酒店',
         linkIcon2:'el-icon-edit',
-        linkTitle3:'删除用户',
+        linkTitle3:'删除酒店',
         linkIcon3:'el-icon-delete',
+        linkTitle4:'房间管理',
+        linkIcon4:'el-icon-setting',
 
-        formTitle:'添加用户',
+        formTitle:'添加酒店',
         formKey:[{
-          label:'用户ID',
-          data:'userId'
+          label:'酒店ID',
+          data:'hotelId'
         },{
-          label:'用户名',
-          data:'userName'
+          label:'酒店名',
+          data:'hotelName'
         },{
-          label:'用户手机号',
-          data:'userPhone'
+          label:'酒店地区',
+          data:'hotelArea'
         },{
-          label:'用户邮箱',
-          data:'userEmail'
+          label:'酒店地址',
+          data:'hotelAddress'
         },{
           label:'身份证号码',
           data:'userIdCard'
@@ -165,14 +170,14 @@
         if(value==true){
           this.linkTitle2="退出编辑";
         }else{
-          this.linkTitle2="编辑用户";
+          this.linkTitle2="编辑酒店";
         }
       },
       deleteShow(value){
         if(value==true){
           this.linkTitle3="退出删除";
         }else{
-          this.linkTitle3="删除用户";
+          this.linkTitle3="删除酒店";
         }
       }
     },
@@ -219,7 +224,7 @@
    margin: 0px;
     
  }
- .usermanage{
+ .roommanage{
    margin-top: 10px;
    
  }

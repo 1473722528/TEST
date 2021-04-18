@@ -27,7 +27,7 @@
               class="tb"
               type="text"
               @click.native.prevent="deleteData(scope.$index, tableData)">删除</el-button>
-            <DialogFrom :openDialogVisible="openEditDialog" :ruleForm="ruleForm"  :fun="editDialogClose"  :formTitle="formTitle1" :formKey="formKey1"/> 
+            <DialogFrom :openDialogVisible="openEditDialog" :ruleForm="ruleForm"  :fun="editDialogClose" :formKeyNum="formKeyNum" :formTitle="formTitle1" :formKey="formKey1"/> 
         </template>
       </el-table-column>
     </el-table>
@@ -59,7 +59,7 @@
           confirmButtonText: '确定删除',
           cancelButtonText: '取消删除',
           center: true,
-          type: 'warning'
+          type: 'error'
         }).then(() => {
           row.splice(index,1);
           this.$message({
@@ -91,6 +91,7 @@
           label:'用户名',
           data:'userName'
         }],
+        formKeyNum:2,
 
         ruleForm:{
           userId:'',

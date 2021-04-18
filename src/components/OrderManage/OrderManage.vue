@@ -1,9 +1,9 @@
 <template>
     <div>
-      <el-row type="flex" class="usermanage" justify="center">
+      <el-row type="flex" class="ordermanage" justify="center">
         <el-col :span="13">
           <div>
-            <h2>用户管理</h2>
+            <h2>订单管理</h2>
             <el-container>
               <el-aside style="height:100%;width:100px">
                 <el-tooltip class="item" effect="dark" content="点击打开增加用户表单" placement="left">
@@ -219,7 +219,7 @@
    margin: 0px;
     
  }
- .usermanage{
+ .ordermanage{
    margin-top: 10px;
    
  }

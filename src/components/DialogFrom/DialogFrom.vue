@@ -15,8 +15,8 @@
         </el-form>
 
         <span slot="footer" class="dialog-footer" >
-        <el-button @click="cancelDo('ruleForm')">取 消</el-button>
-        <el-button type="primary" @click="successDo('ruleForm')">确 定</el-button>
+        <el-button @click="cancelDo('ruleForm')">取消提交</el-button>
+        <el-button type="primary" @click="successDo('ruleForm')">确定提交</el-button>
         </span>
 
 </el-dialog>
@@ -24,13 +24,13 @@
 
 <script>
   export default {
-    
     props:{
-      
+      formKeyNum:Number,
       ruleForm:Object,
       rules:Object,
       formTitle:String,
       formKey:Array,
+      formSign:String,
       openDialogVisible:Boolean,
       fun:{
         type:Function
@@ -39,17 +39,11 @@
     },
     data(){
       return{
-        ruleNum:[1,3]
       }
     },
     methods:{
       successDo(formName){
-        var x=0,y=0;
-        for (let key in this.ruleForm) {
-          y=y+1;
-          console.log(y);
-          console.log(key, this.ruleForm[key]);
-        }
+        var x=0,y=this.formKeyNum;
         for(let i=0;i<y;i++){
           this.$refs[formName][i].validate((valid) => {
           if (valid) {  
@@ -61,14 +55,15 @@
           }
         }); 
         }
-        for (let key in this.ruleForm) {
-  
+        for (let key in this.ruleForm) {            //输出表单信息
           console.log(key, this.ruleForm[key]);
         }
         if(x==y){
           this.fun();
-          for(let i=0;i<y;i++){
-          this.$refs[formName][i].resetFields()
+          if(this.formSign=='add'){
+            for(let i=0;i<y;i++){
+            this.$refs[formName][i].resetFields()
+            }
           }
           this.$notify({
           title: '提交成功',
@@ -79,17 +74,13 @@
         
       },
       cancelDo(formName){
-        var y=0;
-        for (let key in this.ruleForm) {
-          y=y+1;
-          console.log(y);
-          console.log(key, this.ruleForm[key]);
-            
-        }
+        var y=this.formKeyNum;
         this.fun();
-        for(let i=0;i<y;i++){
-          this.$refs[formName][i].resetFields()
-        }
+        if(this.formSign=='add'){
+            for(let i=0;i<y;i++){
+            this.$refs[formName][i].resetFields()
+            }
+          }
         this.$notify({
           title: '取消提交',
           message: '已取消提交信息',

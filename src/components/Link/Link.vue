@@ -2,7 +2,7 @@
     <div >
         <el-link @click="fun">  
             <h1><i :class="linkIcon"></i>{{linkTitle}}</h1>
-        </el-link><br/>
+        </el-link>
     </div>
 </template>
 <script>

@@ -12,38 +12,44 @@
                                 <el-divider class="divider-h" direction="vertical"></el-divider>
                                 <el-col :span="8">
                                   <div>
-                                      <span>用户ID : </span><span>{{tableData.userId}}</span>
+                                      <span>用户ID : </span><span>{{userData.userId}}</span>
                                       <el-divider></el-divider>
-                                      <span>用户邮箱 : </span><span>{{tableData.userEmail}}</span>
+                                      <span>用户邮箱 : </span><span>{{userData.userEmail}}</span>
                                   </div>
                                 </el-col>
                                 <el-divider class="divider-h" direction="vertical"></el-divider>
                                 <el-col :span="8">
                                     <div>
-                                        <span>用户名 : </span><span>{{tableData.userName}}</span>
+                                        <span>用户名 : </span><span>{{userData.userName}}</span>
                                         <el-divider></el-divider>
-                                        <span>年 龄 : </span><span>{{tableData.userAge}}</span>
+                                        <span>用户手机号 : </span><span>{{userData.userPhone}}</span>
                                     </div>
                                 </el-col>
                                 <el-divider class="divider-h" direction="vertical"></el-divider>
                                 <el-col :span="8">
                                   <div>
-                                      <span>用户手机号 : </span><span>{{tableData.userPhone}}</span>
+                                      <span>年 龄 : </span><span>{{userData.userAge}}</span>
                                       <el-divider></el-divider>
-                                      <span>身份证号 : </span><span>{{tableData.userIdCard}}</span>
+                                      <span>身份证号 : </span><span>{{userData.userIdCard}}</span>
                                   </div>
                                 </el-col>
                                 <el-divider class="divider-h" direction="vertical"></el-divider>
                             </el-row> 
                         </el-main>
                         <el-footer>
-                            <el-button>修改密码</el-button>
-                            <el-button>修改资料</el-button>
+                            <el-row type="flex" justify="center">
+                              <el-col :span="6"><div><Link :fun="editPwDialogOpen" :linkTitle='linkTitle1' :linkIcon='linkIcon1'/></div></el-col>
+                              <el-col :span="6"><div><Link :fun="editMsgDialogOpen" :linkTitle='linkTitle2' :linkIcon='linkIcon2'/></div></el-col>
+                            </el-row>  
                         </el-footer>
                     </el-container>
                 </div>           
             </el-col>
         </el-row>
+        <DialogFrom :openDialogVisible="openEditPwDialog" :ruleForm="ruleForm1" :formSign="formSign" :rules="rules1" :fun="editPwDialogClose" 
+      :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" /> 
+        <DialogFrom :openDialogVisible="openEditMsgDialog" :ruleForm="ruleForm2" :formSign="formSign" :rules="rules2" :fun="editMsgDialogClose" 
+      :formKeyNum="formKeyNum2"  :formTitle="formTitle2" :formKey="formKey2" /> 
     </div>
 </template>
 
@@ -51,8 +57,50 @@
 export default {
     data(){
         return{
-            userData:[],
-            tableData:{
+            formTitle1:'修改密码',
+            formKey1:[{
+                label:'旧密码',
+                data:'oldPassword'
+            },{
+                label:'新密码',
+                data:'newPassword1'
+            },{
+                label:'再次输入新密码',
+                data: 'newPassword2'
+            }],
+            formSign:'edit',
+            ruleForm1:{
+                oldPassword:'',
+                newPassword1:'',
+                newPassword2:'',
+            },
+            formKeyNum1:3,
+            rules1:{
+                oldPassword: [
+                    { required: true, message: '请输入旧密码', trigger: 'blur' },
+                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                ],
+            },
+
+            formTitle2:'修改资料',
+            formKey2:[{
+                label:'用户名',
+                data:'userId'
+            },{
+                label:'年 龄',
+                data:'userAge'
+            },{
+                label:'用户手机号',
+                data:'userPhone'
+            }
+            ,{
+                label:'用户邮箱',
+                data: 'userEmail'
+            },{
+                label:'身份证号码',
+                data:'userIdCard'
+            }],
+            ruleForm2:{
                 userId: 1226,
                 userName: '张三',
                 userAge: 18,
@@ -60,24 +108,28 @@ export default {
                 userEmail:'1432422728@qq.com',
                 userIdCard:441226199909090009
             },
-            tableKey:[{
-                prop: 'userId',
-                label: '用户ID',
-            },{
-                prop: 'userName',
-                label: '用户名',
-            }],
-            tableKey2:[{
-                prop: 'userAge',
-                label: '年龄'
-            },{
-                prop: 'userPhone',
-                label: '手机号码'
-            },{
-                prop:'userIdCard',
-                label:'身份证号',
-                width:200
-            }]
+            formKeyNum2:3,
+            rules2:{
+                oldPassword: [
+                    { required: true, message: '请输入旧密码', trigger: 'blur' },
+                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                ],
+            },
+
+            linkTitle1:'修改密码',
+            linkIcon1:'el-icon-edit',
+            linkTitle2:'修改资料',
+            linkIcon2:'el-icon-edit',
+            userData:{
+                userId: 1226,
+                userName: '张三',
+                userAge: 18,
+                userPhone: 133233433,
+                userEmail:'1432422728@qq.com',
+                userIdCard:441226199909090009
+            },
+            openEditPwDialog:false,
+            openEditMsgDialog:false,
         }
     },
     methods:{
@@ -94,7 +146,19 @@ export default {
                 console.log(error);
               });
             console.log(this.tableData);  
-        }
+        },
+        editPwDialogOpen(){
+            this.openEditPwDialog=true;console.log(this.openEditPwDialog);
+        },
+        editPwDialogClose(){
+             this.openEditPwDialog=false;console.log(this.openEditPwDialog);
+        },
+        editMsgDialogOpen(){
+            this.openEditMsgDialog=true;console.log(this.openEditMsgDialog);
+        },
+        editMsgDialogClose(){
+             this.openEditMsgDialog=false;console.log(this.openEditMsgDialog);
+        },
     }
 }
 </script>
