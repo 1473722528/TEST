@@ -3,7 +3,7 @@
     <el-table
       :data="tableData"
       style="width: 100%;height:100%"
-      row-key="id"
+      :row-key="rowKey"
       border
       lazy
       :load="load"
@@ -11,10 +11,10 @@
 
       <el-table-column type="expand" v-if="this.showMsg==true">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand" >
+          <el-form label-position="left" inline class="demo-table-expand" v-for="item3 in props.row.childNum" :key="item3.index">
             <el-form-item :label="item2.label" v-for="item2 in childTableKey" :key="item2.index">
-              <span>{{ props.row[item2.data] }}</span>
-            </el-form-item>
+              <span>{{ props.row.children[item3-1][item2.data] }}</span>
+            </el-form-item><el-divider></el-divider>
           </el-form>
         </template>
       </el-table-column>
@@ -48,6 +48,7 @@
 <script>
   export default {
     props:{
+      childNum:Number,
       childTableKey:Array,
       showMsg:Boolean,
       deleteShow:Boolean,
@@ -129,6 +130,6 @@
   .demo-table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
-    width: 50%;
+    width: 25%;
   }
 </style>

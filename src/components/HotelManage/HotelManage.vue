@@ -30,7 +30,8 @@
                     </el-input>
                 </el-header>
                 <el-main> 
-                  <TableMsg :tableData='hotelData' :tableKey='hotelKey' :editShow="editShow" :deleteShow="deleteShow" :showMsg="showMsg" :childTableKey="childhotelKey"/>
+                  <TableMsg :tableData='hotelData' :tableKey='hotelKey' :editShow="editShow" :deleteShow="deleteShow"
+                   :showMsg="showMsg" :childTableKey="childhotelKey" :rowKey="rowKey" :childNum="childNum"/>
                 </el-main>
                 <el-footer style="height:33px">
                   <Pagination v-model="hotelData" />
@@ -83,6 +84,7 @@
           label:'酒店地址',
           data:'hotelAddress'
         }],
+
         formKeyNum:5,
         formSign:'add',
         showMsg:true,
@@ -131,24 +133,42 @@
           label:'房间数量',
           data:'roomNum'
         }],
+        rowKey:'hotelKey',
+        
         hotelData: [{
           hotelId: 2017001,
           hotelName: '龙珠',
           hotelArea:'北京',
           hotelAddress:'北京朝阳区十三号',
-          roomId:2000000,
-          roomName:'普通房',
-          roomPrice:200,
-          roomNum:10
+          childNum:3,
+          children:[{
+            roomId:2000000,
+            roomName:'普通房',
+            roomPrice:200,
+            roomNum:10
+          },{
+            roomId:2111111,
+            roomName:'高级房',
+            roomPrice:400,
+            roomNum:20
+          },{
+            roomId:2111333,
+            roomName:'豪华房',
+            roomPrice:1400,
+            roomNum:2
+          }]
         }, {
           hotelId: 2017011,
           hotelName: '狗珠',
           hotelArea:'南京',
           hotelAddress:'南京朝阳区十三号',
-          roomId:2000111,
+          childNum:1,
+          children:[{
+            roomId:2000111,
           roomName:'普通房',
           roomPrice:222,
           roomNum:30
+          }]  
         }, {
           hotelId: 2017111,
           hotelName: '猪珠',

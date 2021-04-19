@@ -30,7 +30,11 @@ const routes = [
     name: 'HotelView',
     component:() => import('../views/HotelView/HotelView.vue')
   },
-
+  {
+    path: '/searchview',
+    name: 'SearchView',
+    component:() => import('../views/SearchView/SearchView.vue')
+  },
 ]
 
 const router = new VueRouter({

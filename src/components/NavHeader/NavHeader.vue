@@ -17,11 +17,11 @@
         <div >
           <div style="margin-top: 22px;">
             <el-input placeholder="请输入搜索内容" v-model="input" class="input-with-select" clearable>
-            <el-select v-model="select" slot="prepend" placeholder="请选择">
-            <el-option label="地点" value="1"></el-option>
-            <el-option label="酒店" value="2"></el-option>
-            </el-select>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+              <el-select v-model="select" slot="prepend" placeholder="请选择">
+                <el-option label="地点" value="1"></el-option>
+                <el-option label="酒店" value="2"></el-option>
+              </el-select>
+              <el-button slot="append" icon="el-icon-search" @click="goSearchView()"></el-button>
             </el-input>
           </div>
         </div>
@@ -51,8 +51,11 @@ export default {
    this.canvas()
  },
  methods:{
+   goSearchView(){
+     this.$router.push({path:'/searchview',query:{setid:123456}});
+   },
    canvas(){
-      var c=document.getElementById("myCanvas");
+      var c=document.getElementById("myCanvas");      //画笔画图标
       var ctx=c.getContext("2d");
 
       var grd=ctx.createLinearGradient(0,0,0,80);     //设置渐变
