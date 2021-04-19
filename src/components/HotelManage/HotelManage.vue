@@ -30,8 +30,8 @@
                     </el-input>
                 </el-header>
                 <el-main> 
-                  <TableMsg :tableData='hotelData' :tableKey='hotelKey' :editShow="editShow" :deleteShow="deleteShow"
-                   :showMsg="showMsg" :childTableKey="childhotelKey" :rowKey="rowKey" :childNum="childNum"/>
+                  <TableMsg :tableData='hotelData' :tableKey='hotelKey' :editShow="editShow" :deleteShow="deleteShow" :formKeyNum="formKeyNum2"
+                   :showchildMsg="showchildMsg" :childTableKey="childhotelKey"   :formTitle="formTitle2" :formKey="formKey2"/>
                 </el-main>
                 <el-footer style="height:33px">
                   <Pagination v-model="hotelData" />
@@ -42,7 +42,7 @@
         </el-col>
       </el-row>
       <DialogFrom :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules" :fun="addDialogClose" 
-      :formKeyNum="formKeyNum"  :formTitle="formTitle" :formKey="formKey" /> 
+      :formKeyNum="formKeyNum"  :formTitle="formTitle1" :formKey="formKey1" /> 
     </div>
 </template>
 
@@ -70,8 +70,8 @@
         linkTitle4:'房间管理',
         linkIcon4:'el-icon-setting',
 
-        formTitle:'添加酒店',
-        formKey:[{
+        formTitle1:'添加酒店',
+        formKey1:[{
           label:'酒店ID',
           data:'hotelId'
         },{
@@ -85,9 +85,24 @@
           data:'hotelAddress'
         }],
 
-        formKeyNum:5,
+        formTitle2:'编辑酒店',
+        formKey2:[{
+          label:'酒店ID',
+          data:'hotelId'
+        },{
+          label:'酒店名',
+          data:'hotelName'
+        },{
+          label:'酒店地区',
+          data:'hotelArea'
+        },{
+          label:'酒店地址',
+          data:'hotelAddress'
+        }],
+        formKeyNum2:4,
+        formKeyNum:4,
         formSign:'add',
-        showMsg:true,
+        showchildMsg:true,
 
         ruleForm:{
           userId:'',
@@ -133,7 +148,6 @@
           label:'房间数量',
           data:'roomNum'
         }],
-        rowKey:'hotelKey',
         
         hotelData: [{
           hotelId: 2017001,

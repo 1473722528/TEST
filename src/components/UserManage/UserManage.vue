@@ -27,7 +27,8 @@
                     </el-input>
                 </el-header>
                 <el-main> 
-                  <TableMsg :tableData='userData' :tableKey='userKey' :editShow="editShow" :deleteShow="deleteShow"/>
+                  <TableMsg :tableData='userData' :tableKey='userKey' :editShow="editShow" :deleteShow="deleteShow" :formTitle="formTitle2" :formKey="formKey2"
+                  :formKeyNum="formKeyNum2" />
                 </el-main>
                 <el-footer style="height:33px">
                   <Pagination v-model="userData" />
@@ -37,8 +38,8 @@
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules" :fun="addDialogClose" 
-      :formKeyNum="formKeyNum"  :formTitle="formTitle" :formKey="formKey" /> 
+      <DialogFrom :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules1" :fun="addDialogClose" 
+      :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" /> 
     </div>
 </template>
 
@@ -66,8 +67,8 @@
         linkTitle3:'删除用户',
         linkIcon3:'el-icon-delete',
 
-        formTitle:'添加用户',
-        formKey:[{
+        formTitle1:'添加用户',
+        formKey1:[{
           label:'用户ID',
           data:'userId'
         },{
@@ -83,15 +84,33 @@
           label:'身份证号码',
           data:'userIdCard'
         }],
-        formKeyNum:5,
+        formKeyNum1:5,
         formSign:'add',
 
+        formTitle2:'编辑用户',
+        formKey2:[{
+          label:'用户ID',
+          data:'userId'
+        },{
+          label:'用户名',
+          data:'userName'
+        },{
+          label:'用户手机号',
+          data:'userPhone'
+        },{
+          label:'用户邮箱',
+          data:'userEmail'
+        },{
+          label:'身份证号码',
+          data:'userIdCard'
+        }],
+        formKeyNum2:5,
 
         ruleForm:{
           userId:'',
           userName:'',
         },
-        rules: {
+        rules1: {
           userId: [
             { required: true, message: '请输入用户ID', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
@@ -109,19 +128,22 @@
         },{
           prop:'userName',
           label:'用户名',
-          width:110
+          width:80
         },{
           prop:'userPassword',
           label:'用户密码',
-          width:140
+          width:120
         },{
           prop:'userPhone',
           label:'用户手机号',
-          width:180
+          width:120
         },{
           prop:'userEmail',
           label:'用户邮箱',
          
+        },{
+          prop:'userIdCard',
+          label:'身份证号码'
         },{
           prop:'userRole',
           label:'用户权限',
@@ -134,28 +156,32 @@
           userPassword:'12345',
           userPhone:13322331122,
           userEmail:'1222222@qq.com',
-          userRole:'管理员'
+          userRole:'管理员',
+          userIdCard:441226199901010011
         }, {
           userId: 2017002,
           userName: '李刚',
           userPassword:'12345',
           userPhone:13322331122,
           userEmail:'1222222@qq.com',
-          userRole:'管理员'
+          userRole:'管理员',
+          userIdCard:441226199901010012
         }, {
           userId: 2017003,
           userName: '葫芦侠',
           userPassword:'12345',
           userPhone:13322331122,
           userEmail:'1222222@qq.com',
-          userRole:'管理员'
+          userRole:'管理员',
+          userIdCard:441226199901010022
         }, {
           userId: 2017004,
           userName: '必胜客',
           userPassword:'12345',
           userPhone:13322331122,
           userEmail:'1222222@qq.com',
-          userRole:'管理员'
+          userRole:'管理员',
+          userIdCard:441226199901010033
         }]
 
       }

@@ -9,6 +9,7 @@ import store from './store/index.js'    //vuex
 import NavHeader from './components/NavHeader/index.js'   //顶部导航
 import TableMsg from './components/TableMsg/index.js'   //表格信息
 import MyMsg from './components/MyMsg/index.js'    //我的信息页面
+import MyOrder from './components/MyOrder/index.js'   //我的订单页面
 import Mock from './mock/mock.js'   //模拟数据
 import AreaSelect from './components/AreaSelect/index.js'    //地区选择
 import Card from './components/Card/index.js'   //卡片
@@ -42,6 +43,7 @@ Vue.use(DateSelect);
 Vue.use(NavHeader);
 Vue.use(TableMsg);
 Vue.use(MyMsg);
+Vue.use(MyOrder);
 Vue.use(Mock);
 
 new Vue({

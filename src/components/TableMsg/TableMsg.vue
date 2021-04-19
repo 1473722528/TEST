@@ -3,13 +3,12 @@
     <el-table
       :data="tableData"
       style="width: 100%;height:100%"
-      :row-key="rowKey"
       border
       lazy
       :load="load"
-      :tree-props="{children: 'children' ,hasChildren: 'hasChildren'}">
+      >
 
-      <el-table-column type="expand" v-if="this.showMsg==true">
+      <el-table-column type="expand" v-if="this.showchildMsg==true">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand" v-for="item3 in props.row.childNum" :key="item3.index">
             <el-form-item :label="item2.label" v-for="item2 in childTableKey" :key="item2.index">
@@ -37,37 +36,38 @@
               class="tb"
               type="text"
               @click.native.prevent="deleteData(scope.$index, tableData)">删除</el-button>
-            <DialogFrom :openDialogVisible="openEditDialog" :ruleForm="ruleForm"  :fun="editDialogClose" :formKeyNum="formKeyNum" :formTitle="formTitle1" :formKey="formKey1"/> 
+            <DialogFrom :openDialogVisible="openEditDialog" :ruleForm="ruleForm"  :fun="editDialogClose" :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey"/> 
         </template>
       </el-table-column>
     </el-table>
-    
   </div>
 </template>
 
 <script>
   export default {
     props:{
-      childNum:Number,
-      childTableKey:Array,
-      showMsg:Boolean,
-      deleteShow:Boolean,
-      editShow:Boolean,
-      tableData: Array,
-      tableKey: Array
+      formTitle:String,           //表单标题
+      formKey:Array,              //表单关键字
+      formKeyNum:Number,          //表单关键字个数
+      childTableKey:Array,        //子表单关键字
+      showchildMsg:Boolean,            //是否显示子信息标志
+      deleteShow:Boolean,         //是否显示删除按钮
+      editShow:Boolean,           //是否显示编辑按钮
+      tableData: Array,           //表格数据
+      tableKey: Array               //表格关键字
     },
     methods: {
-      editDialogOpen(row){
+      editDialogOpen(row){                      //打开编辑按钮
         this.openEditDialog=true;
         this.ruleForm=row;
         console.log(this.ruleForm);
         console.log(this.openEditDialog);
       },
-      editDialogClose(){
+      editDialogClose(){                        //关闭编辑按钮
         this.openEditDialog=false;
         console.log(this.openEditDialog);
-      },
-      deleteData(index,row){
+      },  
+      deleteData(index,row){                        //确认删除数据提示
         this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
           confirmButtonText: '确定删除',
           cancelButtonText: '取消删除',
@@ -86,7 +86,7 @@
           });          
         });
       },
-      load(tree, treeNode, resolve) {
+      load(tree, treeNode, resolve) {                 //加载树节点
         setTimeout(() => {
           resolve(tree.child)
         }, 100)
@@ -95,16 +95,6 @@
     data(){
       return{
         openEditDialog:false,
-
-        formTitle1:'添加用户',
-        formKey1:[{
-          label:'用户ID',
-          data:'userId'
-        },{
-          label:'用户名',
-          data:'userName'
-        }],
-        formKeyNum:2,
 
         ruleForm:{
           userId:'',
