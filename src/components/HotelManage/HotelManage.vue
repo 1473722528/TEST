@@ -6,16 +6,16 @@
             <h2>酒店管理</h2>
             <el-container>
               <el-aside style="height:100%;width:100px">
-                <el-tooltip class="item" effect="dark" content="点击打开增加酒店表单" placement="left">
+                <el-tooltip effect="dark" content="点击打开增加酒店表单" placement="left">
                   <Link :fun="addDialogOpen" :linkTitle='linkTitle1' :linkIcon='linkIcon1'/>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="点击打开或关闭编辑酒店按钮" placement="left">
+                <el-tooltip effect="dark" content="点击打开或关闭编辑酒店按钮" placement="left">
                   <Link :fun="editOpen" :linkTitle='linkTitle2' :linkIcon='linkIcon2'/>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="点击打开或关闭删除酒店按钮" placement="left">
+                <el-tooltip effect="dark" content="点击打开或关闭删除酒店按钮" placement="left">
                   <Link :fun="deleteOpen" :linkTitle='linkTitle3' :linkIcon='linkIcon3'/>
                 </el-tooltip>  
-                <el-tooltip class="item" effect="dark" content="点击打开或关闭酒店房间管理按钮" placement="left">
+                <el-tooltip  effect="dark" content="点击打开或关闭酒店房间管理按钮" placement="left">
                   <Link :fun="deleteOpen" :linkTitle='linkTitle4' :linkIcon='linkIcon4'/>
                 </el-tooltip> 
               </el-aside>
@@ -152,24 +152,32 @@
         hotelData: [{
           hotelId: 2017001,
           hotelName: '龙珠',
+          hotelInfo:'这里是龙珠酒店',
           hotelArea:'北京',
           hotelAddress:'北京朝阳区十三号',
+          hotelView:require('../../assets/img/h1.jpg'),
           childNum:3,
           children:[{
             roomId:2000000,
             roomName:'普通房',
+            roomDate:20210402,
             roomPrice:200,
-            roomNum:10
+            roomNum:10,
+            roomView:require('../../assets/img/h1.jpg'),
           },{
             roomId:2111111,
             roomName:'高级房',
             roomPrice:400,
-            roomNum:20
+            roomDate:20210402,
+            roomNum:20,
+            roomView:require('../../assets/img/h1.jpg'),
           },{
             roomId:2111333,
             roomName:'豪华房',
             roomPrice:1400,
-            roomNum:2
+            roomDate:20210402,
+            roomNum:2,
+            roomView:require('../../assets/img/h1.jpg'),
           }]
         }, {
           hotelId: 2017011,

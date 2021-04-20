@@ -55,9 +55,18 @@
         </el-row>
     <el-dialog title="订单详情" :visible.sync="orderMsgDialogOpen">
       <el-table :data="orderMsg">
-        <el-table-column property="userId" label="用户ID" width="150"></el-table-column>
-        <el-table-column property="userName" label="用户名" width="200"></el-table-column>
-        <el-table-column property="orderId" label="订单号"></el-table-column>
+          <el-table-column property="orderId" label="订单号" ></el-table-column> 
+          <el-table-column property="userId" label="用户ID" ></el-table-column>  
+          <el-table-column property="userName" label="用户名" ></el-table-column>
+          <el-table-column property="orderPrice" label="订单金额（元）" ></el-table-column>
+      </el-table>
+      <el-table :data="orderMsg[0].children">
+        <el-table-column property="hotelId" label="酒店ID" ></el-table-column>  
+        <el-table-column property="hotelName" label="酒店名"></el-table-column> 
+        <el-table-column property="roomId" label="房间ID"></el-table-column>    
+        <el-table-column property="roomName" label="房间名"></el-table-column>  
+        <el-table-column property="roomNum" label="房间个数（间）"></el-table-column> 
+        <el-table-column property="roomDate" label="预定日期"></el-table-column>
       </el-table>
     </el-dialog>    
     </div>
@@ -88,12 +97,12 @@ export default {
                 orderOwner:'里斯',
                 childNum:1,
                 children:[{
-                    hotelName:'广州龙珠酒店',
-                    roomId:2019001,
-                    roomName:'普通房',
-                    roomNum:2,
-                    hotelId:2017001001,
-                    roomDate:20210402,
+                  roomId:2019001,
+                  roomName:'普通房',
+                  hotelId:2017001001,
+                  hotelName:'广州龙珠酒店',   
+                  roomNum:2,
+                  roomDate:20210402,
                 },],  
             },{
                 orderName:'狗珠酒店订单',
@@ -156,7 +165,8 @@ export default {
   }
 
   .item {
-    margin-bottom: 18px;
+    margin-bottom: 10px;
+    margin-top: 15px;
   }
 
   .clearfix:before,
@@ -170,6 +180,6 @@ export default {
 
   .box-card {
     width:99%;
-    margin-top: 20px;
+    margin-top: 15px;
   }
 </style>

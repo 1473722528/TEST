@@ -9,13 +9,14 @@
                         viewArray: item, 
                     }
                 }">
-                    <el-image :src="item.idView" class="cardimg" lazy></el-image>
-                <div style="padding: 14px;">
-                    <div class="bottom clearfix">
-
-                            <el-button type="text" class="button" >{{item.areaName}}</el-button>
-                      </div>
-                  </div>
+                    <el-image :src="item.hotelView" class="cardimg" lazy></el-image>
+                    <div style="padding: 14px;">
+                        <div class="bottom clearfix">
+                            <el-button type="text" class="button" >
+                                <h3>{{item.hotelArea}}</h3>
+                            </el-button>
+                        </div>
+                    </div>
                 </router-link>    
               </el-card>
             </el-col>

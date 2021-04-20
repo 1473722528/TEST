@@ -3,7 +3,7 @@
     <el-carousel :interval="4000"  type="card" height="400px">
     <el-carousel-item v-for="item in carouselCardArray" :key="item.index">
         <a href=""> <!--图片跳转-->
-          <img :src="item.idView"  lazy>
+          <img :src="item.hotelView"  lazy>
         </a>
         <span class="homepagetitle" style="position: absolute; top: 10px; left: 10px;color:#FFFFFF" >{{item.title}}</span>
     </el-carousel-item>

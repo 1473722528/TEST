@@ -6,13 +6,13 @@
             <h2>用户管理</h2>
             <el-container>
               <el-aside style="height:100%;width:100px">
-                <el-tooltip class="item" effect="dark" content="点击打开增加用户表单" placement="left">
+                <el-tooltip  effect="dark" content="点击打开增加用户表单" placement="left">
                   <Link :fun="addDialogOpen" :linkTitle='linkTitle1' :linkIcon='linkIcon1'/>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="点击打开或关闭编辑用户按钮" placement="left">
+                <el-tooltip  effect="dark" content="点击打开或关闭编辑用户按钮" placement="left">
                   <Link :fun="editOpen" :linkTitle='linkTitle2' :linkIcon='linkIcon2'/>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="点击打开或关闭删除用户按钮" placement="left">
+                <el-tooltip  effect="dark" content="点击打开或关闭删除用户按钮" placement="left">
                   <Link :fun="deleteOpen" :linkTitle='linkTitle3' :linkIcon='linkIcon3'/>
                 </el-tooltip>  
               </el-aside>
