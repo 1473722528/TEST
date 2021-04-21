@@ -2,7 +2,7 @@
   <div class="carousel">
     <el-carousel height="360px">
       <el-carousel-item v-for="item in carouselArray" :key="item.index" >
-          <el-image  fit='contain' :src="item.idView" ></el-image>
+          <el-image  fit='contain' :src="item.roomView" ></el-image>
       </el-carousel-item>
     </el-carousel>
   </div>

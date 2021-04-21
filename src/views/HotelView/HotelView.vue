@@ -22,7 +22,7 @@
                             <el-main class="hotelmain">
                                 <el-card class="box-card2">
                                   <div slot="header" class="clearfix">
-                                    <span>酒店详情见下文 : </span>
+                                    <span>酒店详情 : </span>
                                   </div>
                                   <div class="hotelmsg">
                                      <h4>{{hotelArray.hotelInfo}}</h4>
@@ -35,16 +35,16 @@
                                     style="width:100%;height:100%"
                                     :hit="true"
                                     effect="plain">
-                                    <el-radio-group v-model="hotelArray.children" v-for="item in hotelArray.children" :key="item.index">
+                                    <el-radio-group v-model="orderRoomName" v-for="item in hotelArray.children" :key="item.index">
                                         <el-radio-button :label="item.roomName"></el-radio-button>
                                     </el-radio-group>
                                     <el-input-number v-model="orderRoomNum" controls-position="right" @change="handleChange"
-                                     :min="1" :max="hotelArray.children[0].roomNum" style="width:80px">
+                                     :min="1" :max="haveRoomNum" style="width:80px">
                                      </el-input-number> 
                                      <el-tag
                                         type="success"
                                         effect="plain">
-                                        剩余 : {{ hotelArray.children[0].roomNum }} 间
+                                        价格 : ￥{{200}} /间  <span v-if="this.haveRoomNum!=0">剩余 : {{ haveRoomNum }} 间</span>
                                     </el-tag>
                                     <div>
                                         <span>点击以上按钮预览房间</span>
@@ -63,7 +63,7 @@
                                   </el-date-picker>
                                 </div>
                                 <div> 
-                                    <el-button type="danger" plain>立 即 预 定</el-button>
+                                    <el-button type="danger" plain :disabled="orderDisable" @click="getdate()">立 即 预 定</el-button>
                                 </div> 
                             </el-footer>
                           </el-container>
@@ -85,36 +85,89 @@ export default {
                   return time.getTime() < Date.now() || time.getTime() > Date.now()+7 * 24 * 3600 * 1000;
                 }
             },
+            orderDisable:true,
+            orderDisableKey1:false,
+            orderDisableKey2:false,
             orderRoomNum:1,
+            orderRoomName:'',
+            haveRoomNum:0,
+            tempRoomData:[],
             hotelArray:[],
-            hotelImg:[
-              [
-                {idView:require('../../assets/img/h1.jpg')},
-                {idView:require('../../assets/img/h1.jpg')},
-                {idView:require('../../assets/img/h1.jpg')}
-              ],
-              [
-                {idView:require('../../assets/img/h2.jpg')},
-                {idView:require('../../assets/img/h2.jpg')},
-                {idView:require('../../assets/img/h2.jpg')},
-              ],
-              [
-                {idView:require('../../assets/img/h3.jpg')},
-                {idView:require('../../assets/img/h3.jpg')},
-                {idView:require('../../assets/img/h3.jpg')},
-              ],
-              [
-                {idView:require('../../assets/img/h4.jpg')},
-                {idView:require('../../assets/img/h4.jpg')},
-                {idView:require('../../assets/img/h4.jpg')},
-              ],
-            ],
+            hotelImg:[],
             carouselArray:[]
         }
     },
     created(){
         this.getitem();
         this.getimg();     
+        this.orderRoomName=this.hotelArray.children[0].roomName;           //设置默认房间名
+    },
+    watch:{
+        orderRoomName(value){
+            if(value!=null){
+                for(let i=0;i<this.hotelArray.childNum;i++){
+                    if(value==this.hotelArray.children[i].roomName){
+                        this.hotelImg[0]=this.hotelArray.children[i].roomImg;
+                        this.tempRoomData=this.hotelArray.children[i];
+                        this.getimg();
+                        var dateExist=false;
+                        for (var item of this.tempRoomData.roomDate) {
+                            if(this.date==item.date){
+                                this.haveRoomNum=item.roomNum;
+                                dateExist=true;
+                            }
+                        }
+                        if(dateExist==false&&this.date!=null){
+                            this.tempRoomData.roomDate.push({roomNum:this.tempRoomData.roomNum,date:this.date});
+                            this.haveRoomNum=item.roomNum;
+                        }
+                        console.log(dateExist);
+                        console.log(this.hotelImg);
+                        console.log(this.tempRoomData);
+                    }
+                }
+                this.orderDisableKey1=true;
+                this.orderRoomNum=1;
+            }
+        },
+        date(value){
+            if(value!=null){
+                this.orderDisableKey2=true;
+                this.orderRoomNum=1;
+                var dateExist=false;
+                for (var item of this.tempRoomData.roomDate) {
+                    if(this.date==item.date){
+                        this.haveRoomNum=item.roomNum;
+                        dateExist=true;
+                    }
+                }
+                if(dateExist==false){
+                    this.tempRoomData.roomDate.push({roomNum:this.tempRoomData.roomNum,date:value});
+                    this.haveRoomNum=item.roomNum;
+                }
+                console.log(dateExist);
+            }
+            else if(value==null){
+                this.orderDisableKey2=false; 
+                this.haveRoomNum=0;
+            }
+        },
+        orderDisableKey1(value){
+            if(value==true&&this.orderDisableKey2==true){
+                this.orderDisable=false;
+            }
+            else if(value==false){
+                this.orderDisable=true;
+            }
+        },
+        orderDisableKey2(value){
+            if(value==true&&this.orderDisableKey1==true){
+                this.orderDisable=false;
+            }
+            else if(value==false){
+                this.orderDisable=true;
+            }
+        }
     },
     mounted(){
 
@@ -126,6 +179,12 @@ export default {
         },
         getimg(){
             this.carouselArray=this.hotelImg[0];
+        },
+        handleChange(value) {
+            console.log(value);
+        },
+        getdate(){
+            console.log(this.date);
         }
     }
 }
