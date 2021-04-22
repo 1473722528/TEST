@@ -36,7 +36,7 @@
               class="tb"
               type="text"
               @click.native.prevent="deleteData(scope.$index, tableData)">删除</el-button>
-            <DialogFrom :openDialogVisible="openEditDialog" :ruleForm="ruleForm"  :fun="editDialogClose" :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey"/> 
+            <DialogForm :openDialogVisible="openEditDialog" :ruleForm="ruleForm"  :fun="editDialogClose" :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey"/> 
         </template>
       </el-table-column>
     </el-table>

@@ -46,9 +46,9 @@
                 </div>           
             </el-col>
         </el-row>
-        <DialogFrom :openDialogVisible="openEditPwDialog" :ruleForm="ruleForm1" :formSign="formSign" :rules="rules1" :fun="editPwDialogClose" 
+        <DialogForm :openDialogVisible="openEditPwDialog" :ruleForm="ruleForm1" :formSign="formSign" :rules="rules1" :fun="editPwDialogClose" 
       :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" /> 
-        <DialogFrom :openDialogVisible="openEditMsgDialog" :ruleForm="ruleForm2" :formSign="formSign" :rules="rules2" :fun="editMsgDialogClose" 
+        <DialogForm :openDialogVisible="openEditMsgDialog" :ruleForm="ruleForm2" :formSign="formSign" :rules="rules2" :fun="editMsgDialogClose" 
       :formKeyNum="formKeyNum2"  :formTitle="formTitle2" :formKey="formKey2" /> 
     </div>
 </template>

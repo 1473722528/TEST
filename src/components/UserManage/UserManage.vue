@@ -38,7 +38,7 @@
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules1" :fun="addDialogClose" 
+      <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules1" :fun="addDialogClose" 
       :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" /> 
     </div>
 </template>

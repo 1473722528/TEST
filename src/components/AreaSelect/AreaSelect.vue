@@ -3,12 +3,12 @@
         <el-row  type="flex" class="row-bg" justify="center" >
             <el-col :span="2">
                 <div class="allarea">
-                    地区:
+                    <h5>地区 : </h5>
                 </div>           
             </el-col>
             <el-col :span="1"  v-for="item in areaArray" :key="item.index">
-                <el-button  type="text">
-                    {{item.areaName}}
+                <el-button  type="text" style="margin:20px">
+                    <h3>{{item.areaName}}</h3>
                 </el-button>
             </el-col>
         </el-row>
@@ -40,7 +40,7 @@ export default {
 
 }
 .allarea{
-    margin-top: 8px;
+    margin: 44px;
 }
 .areabox{
     display: flex;

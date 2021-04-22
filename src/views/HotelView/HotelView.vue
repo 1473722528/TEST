@@ -1,12 +1,12 @@
 <template>
-    <div class="hotelview">
+    <div class="hotelview" >
         <el-row type="flex" class="row-bg" justify="center">
             <el-col :span="14">
                 <div>
                     <el-container>
                         <el-header>
-                            <div>
-                                <h2>
+                            <div >
+                                <h2 >
                                     <el-divider direction="vertical"></el-divider>
                                         {{hotelArray.hotelName}}
                                     <el-divider direction="vertical"></el-divider>
@@ -44,26 +44,25 @@
                                      <el-tag
                                         type="success"
                                         effect="plain">
-                                        价格 : ￥{{200}} /间  <span v-if="this.haveRoomNum!=0">剩余 : {{ haveRoomNum }} 间</span>
+                                        <span>价格 : ￥{{showRoomPrice}} /间</span>  <span v-if="this.haveRoomNum!=0"> , 剩余 : {{ haveRoomNum }} 间</span>
+                                        <span v-if="this.haveRoomNum==0"> , 暂无房间</span>
                                     </el-tag>
                                     <div>
-                                        <span>点击以上按钮预览房间</span>
+                                        <span>点击以上按钮预览房间 , 选择日期获取房间数量</span>
                                     </div>   
                                 </el-tag>
                                 </div>
-                                <div class="block">
-                                  <el-date-picker
-                                    v-model="date"
-                                    align="right"
-                                    type="date"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd"
-                                    placeholder="选择日期"
-                                    :picker-options="pickerOptions">
-                                  </el-date-picker>
-                                </div>
-                                <div> 
-                                    <el-button type="danger" plain :disabled="orderDisable" @click="getdate()">立 即 预 定</el-button>
+                                <el-date-picker
+                                  v-model="orderDate"
+                                  align="right"
+                                  type="date"
+                                  format="yyyy 年 MM 月 dd 日"
+                                  value-format="yyyy-MM-dd"
+                                  placeholder="选择日期"
+                                  :picker-options="pickerOptions">
+                                </el-date-picker>
+                                <div style="margin:20px" > 
+                                    <el-button type="danger" plain :disabled="orderDisable" @click="orderFormOpen()">立 即 预 定</el-button>
                                 </div> 
                             </el-footer>
                           </el-container>
@@ -72,6 +71,7 @@
                 </div>
             </el-col>
         </el-row>
+        <OrderForm :openDialogVisible="openOrderForm"  :ruleForm="ruleForm" :fun="orderFormClose"/>
     </div>
 </template>
 
@@ -79,18 +79,30 @@
 export default {
     data(){
         return{
-            date:'',
-            pickerOptions: {
+            openOrderForm:false,
+            ruleForm:{
+                orderId:200000000,
+                userId:2015002,
+                userName:'张三',
+                userAge:18,
+                userIdCard:441226199909090009
+            },
+
+            
+            pickerOptions: {                            //日期选择器限定在一周内
                 disabledDate(time) {
                   return time.getTime() < Date.now() || time.getTime() > Date.now()+7 * 24 * 3600 * 1000;
                 }
             },
+
+            orderDate:null,
             orderDisable:true,
             orderDisableKey1:false,
             orderDisableKey2:false,
             orderRoomNum:1,
             orderRoomName:'',
-            haveRoomNum:0,
+            haveRoomNum:0,                     //显示出来的房间数量
+            showRoomPrice:Number,             //显示出来的房间价格
             tempRoomData:[],
             hotelArray:[],
             hotelImg:[],
@@ -109,17 +121,21 @@ export default {
                     if(value==this.hotelArray.children[i].roomName){
                         this.hotelImg[0]=this.hotelArray.children[i].roomImg;
                         this.tempRoomData=this.hotelArray.children[i];
+                        this.showRoomPrice=this.tempRoomData.roomPrice;
+                        this.ruleForm.roomId=this.tempRoomData.roomId;
+                        this.ruleForm.hotelId=this.hotelArray.hotelId;
+                        this.ruleForm.hotelName=this.hotelArray.hotelName;
                         this.getimg();
                         var dateExist=false;
                         for (var item of this.tempRoomData.roomDate) {
-                            if(this.date==item.date){
+                            if(this.orderDate==item.date&&this.orderDate!=null){
                                 this.haveRoomNum=item.roomNum;
                                 dateExist=true;
                             }
                         }
-                        if(dateExist==false&&this.date!=null){
-                            this.tempRoomData.roomDate.push({roomNum:this.tempRoomData.roomNum,date:this.date});
-                            this.haveRoomNum=item.roomNum;
+                        if(dateExist==false&&this.orderDate!=null){
+                            this.tempRoomData.roomDate.push({roomNum:this.tempRoomData.roomNum,date:this.orderDate});
+                            this.haveRoomNum=this.tempRoomData.roomNum;
                         }
                         console.log(dateExist);
                         console.log(this.hotelImg);
@@ -128,22 +144,23 @@ export default {
                 }
                 this.orderDisableKey1=true;
                 this.orderRoomNum=1;
+                
             }
         },
-        date(value){
+        orderDate(value){ 
             if(value!=null){
                 this.orderDisableKey2=true;
                 this.orderRoomNum=1;
                 var dateExist=false;
                 for (var item of this.tempRoomData.roomDate) {
-                    if(this.date==item.date){
+                    if(this.orderDate==item.date&&this.orderDate!=null){
                         this.haveRoomNum=item.roomNum;
                         dateExist=true;
                     }
                 }
-                if(dateExist==false){
+                if(dateExist==false&&this.orderDate!=null){
                     this.tempRoomData.roomDate.push({roomNum:this.tempRoomData.roomNum,date:value});
-                    this.haveRoomNum=item.roomNum;
+                    this.haveRoomNum=this.tempRoomData.roomNum
                 }
                 console.log(dateExist);
             }
@@ -153,19 +170,27 @@ export default {
             }
         },
         orderDisableKey1(value){
-            if(value==true&&this.orderDisableKey2==true){
+            if(value==true&&this.orderDisableKey2==true&&this.haveRoomNum!=0){
                 this.orderDisable=false;
             }
-            else if(value==false){
+            else if(value==false||this.haveRoomNum==0){
                 this.orderDisable=true;
             }
         },
         orderDisableKey2(value){
-            if(value==true&&this.orderDisableKey1==true){
+            if(value==true&&this.orderDisableKey1==true&&this.haveRoomNum!=0){
                 this.orderDisable=false;
             }
-            else if(value==false){
+            else if(value==false||this.haveRoomNum==0){
                 this.orderDisable=true;
+            }
+        },
+        haveRoomNum(value){
+            if(value==0){
+                this.orderDisable=true;
+            }
+            else{
+                this.orderDisable=false;
             }
         }
     },
@@ -173,6 +198,16 @@ export default {
 
     },
     methods:{
+        orderFormOpen(){
+            this.openOrderForm=true;
+            this.ruleForm.roomDate=this.orderDate;
+            this.ruleForm.roomName=this.orderRoomName;
+            this.ruleForm.roomNum=this.orderRoomNum;
+            this.ruleForm.orderPrice=this.orderRoomNum*this.showRoomPrice;
+        },
+        orderFormClose(){
+            this.openOrderForm=false;
+        },
         getitem(){
             this.hotelArray=this.$route.query.viewArray;               //接收路由数据
             console.log(this.$route.query.viewArray)
@@ -191,6 +226,10 @@ export default {
 </script>
 
 <style>
+.title{
+    border-radius: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+}
   .text {
     font-size: 14px;
   }
@@ -204,7 +243,8 @@ export default {
     margin: 0;
     height: 99%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-    border-radius: 30px
+    border-radius: 30px;
+    background-color: rgb(211, 224, 248);
   }
 .hotelview{
     margin-top: 20px;

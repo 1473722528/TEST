@@ -37,18 +37,20 @@ export default {
             hotelView: require('../assets/img/h1.jpg'),
             children:[
               {
+                roomId:20001,
                 roomName:'普通房',
                 roomNum:5,
                 roomPrice:200,
                 roomImg:[{roomView:require('../assets/img/h2.jpg'),},{roomView:require('../assets/img/h2.jpg')}],
-                roomDate:[{roomNum:4,date:'2021-04-23'},{roomNum:5,date:'2021-04-24'}]
+                roomDate:[{roomNum:4,date:'2021-04-26'},{roomNum:0,date:'2021-04-27'}]
               },
               {
+                roomId:20002,
                 roomName:'双人房',
                 roomNum:8,
                 roomPrice:400,
                 roomImg:[{roomView:require('../assets/img/h4.jpg'),},{roomView:require('../assets/img/h4.jpg')}],
-                roomDate:[{roomNum:7,date:'2021-04-23'},{roomNum:8,date:'2021-04-24'}]
+                roomDate:[{roomNum:7,date:'2021-04-26'},{roomNum:0,date:'2021-04-27'}]
               }
             ]
           },
@@ -62,6 +64,7 @@ export default {
             hotelView: require('../assets/img/h2.jpg'),
             children:[
               {
+                roomId:200021,
                 roomName:'普通房',
                 roomNum:5,
                 roomPrice:200,
@@ -69,6 +72,7 @@ export default {
                 roomDate:[{roomNum:5,date:''},{roomNum:5,date:''}]
               },
               {
+                roomId:20054,
                 roomName:'双人房',
                 roomNum:8,
                 roomPrice:400,

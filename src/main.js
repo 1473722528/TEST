@@ -4,7 +4,6 @@ import router from './router/index.js'
 import Element from './plugins/element.js'
 import './assets/css/base.css'    
 import Carousel_Card from './components/Carousel_Card/index.js'   //卡片走马灯
-import DateSelect from './components/DateSelect/index.js'   //日期选择
 import store from './store/index.js'    //vuex
 import NavHeader from './components/NavHeader/index.js'   //顶部导航
 import TableMsg from './components/TableMsg/index.js'   //表格信息
@@ -21,13 +20,15 @@ import HotelManage from './components/HotelManage/index.js'   //房间管理页�
 import OrderManage from './components/OrderManage/index.js'   //订单管理页面
 import Pagination from './components/Pagination/index.js'   //分页
 import Link from './components/Link/index.js'   //文字链接
-import DialogFrom from './components/DialogFrom/index.js'   //对话框表单
+import DialogForm from './components/DialogForm/index.js'   //对话框表单
+import OrderForm from './components/OrderForm/index.js'     //订单表单
 
 import axios from 'axios'             // 新增
 Vue.prototype.$axios = axios    // 新增
 
 Vue.config.productionTip = false;
-Vue.use(DialogFrom);
+Vue.use(OrderForm);
+Vue.use(DialogForm);
 Vue.use(Link);
 Vue.use(Pagination);
 Vue.use(UserManage);
@@ -39,7 +40,6 @@ Vue.use(BackTop);
 Vue.use(Card);
 Vue.use(AreaSelect);
 Vue.use(Carousel_Card);
-Vue.use(DateSelect);
 Vue.use(NavHeader);
 Vue.use(TableMsg);
 Vue.use(MyMsg);
