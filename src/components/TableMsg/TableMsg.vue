@@ -35,8 +35,9 @@
               v-if="deleteShow==true"
               class="tb"
               type="text"
-              @click.native.prevent="deleteData(scope.$index, tableData)">删除</el-button>
-            <DialogForm :openDialogVisible="openEditDialog" :ruleForm="ruleForm"  :fun="editDialogClose" :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey"/> 
+              @click="deleteData(scope.row)">删除</el-button>
+            <DialogForm :openDialogVisible="openEditDialog" :ruleForm="ruleForm" :editfun="postEditForm"  :closefun="editDialogClose"  
+             :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey"/> 
         </template>
       </el-table-column>
     </el-table>
@@ -44,6 +45,7 @@
 </template>
 
 <script>
+import { editUserData,deleteUserData} from '@/api/authority.js'
   export default {
     props:{
       formTitle:String,           //表单标题
@@ -54,7 +56,21 @@
       deleteShow:Boolean,         //是否显示删除按钮
       editShow:Boolean,           //是否显示编辑按钮
       tableData: Array,           //表格数据
-      tableKey: Array               //表格关键字
+      tableKey: Array,               //表格关键字
+      dataKey:String,               //表明是什么表的数据
+      getData:{
+        type:Function
+      }
+    },
+    data(){
+      return{
+        openEditDialog:false,
+        
+        ruleForm:{
+          userId:'',
+          userName:''
+        }
+      }
     },
     methods: {
       editDialogOpen(row){                      //打开编辑按钮
@@ -66,15 +82,33 @@
       editDialogClose(){                        //关闭编辑按钮
         this.openEditDialog=false;
         console.log(this.openEditDialog);
-      },  
-      deleteData(index,row){                        //确认删除数据提示
+      }, 
+      postEditForm(){
+        if(this.dataKey=="user"){
+          editUserData(this.ruleForm).then(response=>{
+            this.$message.success(response.msg)
+          }).catch(error=>{
+            console.log(error);
+          })
+        }else if(this.dataKey=="hotel"){
+          console.log(this.dataKey);
+        }
+        
+      },
+      deleteData(row){         
+        console.log(row);               //确认删除数据提示
         this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
           confirmButtonText: '确定删除',
           cancelButtonText: '取消删除',
           center: true,
           type: 'error'
         }).then(() => {
-          row.splice(index,1);
+          deleteUserData(row).then(()=>{
+            this.getData();
+            console.log(row);
+          }).catch(error=>{
+            console.log(error);
+          })
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -85,21 +119,12 @@
             message: '已取消删除！'
           });          
         });
+        
       },
       load(tree, treeNode, resolve) {                 //加载树节点
         setTimeout(() => {
           resolve(tree.child)
         }, 100)
-      }
-    },
-    data(){
-      return{
-        openEditDialog:false,
-
-        ruleForm:{
-          userId:'',
-          userName:''
-        }
       }
     }
   }

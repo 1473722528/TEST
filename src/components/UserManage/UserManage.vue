@@ -20,15 +20,18 @@
                 <el-header style="height:40px">
                     <el-input placeholder="请输入搜索内容" v-model="input" class="input-with-select" clearable>
                       <el-select v-model="select" slot="prepend" placeholder="请选择">
-                      <el-option label="姓名" value="1"></el-option>
-                      <el-option label="ID" value="2"></el-option>
+                      <el-option label="用户ID" value="userId"></el-option>
+                      <el-option label="用户名" value="userName"></el-option>
+                      <el-option label="用户电话" value="userPhone"></el-option>
+                      <el-option label="用户邮箱" value="userEmail"></el-option>
+                      <el-option label="身份证号码" value="userIdCard"></el-option>
                     </el-select>
-                    <el-button slot="append" icon="el-icon-search"></el-button>
+                    <el-button @click="searchUserData()" slot="append" icon="el-icon-search"></el-button>
                     </el-input>
                 </el-header>
                 <el-main> 
-                  <TableMsg :tableData='userData' :tableKey='userKey' :editShow="editShow" :deleteShow="deleteShow" :formTitle="formTitle2" :formKey="formKey2"
-                  :formKeyNum="formKeyNum2" />
+                  <TableMsg :tableData='userData' :tableKey='userKey' :editShow='editShow' :deleteShow='deleteShow' :formTitle='formTitle2' :formKey='formKey2'
+                  :formKeyNum='formKeyNum2'  :dataKey='dataKey' :getData='getAllUserData'/>
                 </el-main>
                 <el-footer style="height:33px">
                   <Pagination v-model="userData" />
@@ -38,20 +41,23 @@
           </div>
         </el-col>
       </el-row>
-      <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules1" :fun="addDialogClose" 
-      :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" /> 
+      <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules1" :closefun="addDialogClose" 
+      :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" :addfun="register"/> 
     </div>
 </template>
 
 <script>
+import { getAllUserData,searchUserData,register} from '@/api/authority.js'
   export default {
     data() {
       return {
         tableData:[],
         tableKey:[],
+
+        dataKey:"user",
         activeIndex: '1',
 
-        input:'3333333',
+        input:'',
         select:'',
 
         openAddDialog:false,
@@ -75,6 +81,9 @@
           label:'用户名',
           data:'userName'
         },{
+          label:'用户密码',
+          data:'userPassword'
+        },{
           label:'用户手机号',
           data:'userPhone'
         },{
@@ -83,8 +92,11 @@
         },{
           label:'身份证号码',
           data:'userIdCard'
+        },{
+          label:'年 龄',
+          data:'userAge'
         }],
-        formKeyNum1:5,
+        formKeyNum1:7,
         formSign:'add',
 
         formTitle2:'编辑用户',
@@ -106,18 +118,51 @@
         }],
         formKeyNum2:5,
 
+        searchInput:{
+          userId:null,
+          userName:null,
+          userPhone:null,
+          userEmail:null,
+          userIdCard:null,
+        },
+
         ruleForm:{
-          userId:'',
-          userName:'',
+          userId:null,
+          userName:null,
+          userPassword:null,
+          userPhone:null,
+          userEmail:null,
+          userIdCard:null,
+          userAge:null
         },
         rules1: {
           userId: [
             { required: true, message: '请输入用户ID', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { min: 7, max: 7, message: '请输入 7 个数字长度的ID', trigger: 'blur' }
           ],
           userName: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 2, max: 10, message: '用户名长度在 2 到 10 个字符', trigger: 'blur' }
+          ],
+          userPassword: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
+          ],
+          userPhone: [
+            { required: true, message: '请输入手机号码', trigger: 'blur' },
+            { min: 11, max: 11, message: '请输入11位手机号码', trigger: 'blur' }
+          ],
+          userEmail: [
+            { required: true, message: '请输入邮箱', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          ],
+          userIdCard: [
+            { required: true, message: '请输入身份证号码', trigger: 'blur' },
+            { min: 18, max: 18, message: '请输入18位的身份证号码', trigger: 'blur' }
+          ],
+          userAge: [
+            { required: true, message: '请输入年龄', trigger: 'blur' },
+            { min: 2, max: 3, message: '请输入正确年龄段的数字', trigger: 'blur' }
           ],
         },
 
@@ -150,7 +195,7 @@
           width:100
         }
         ],
-        userData: [{
+        mydata:{
           userId: 2017001,
           userName: '张伟',
           userPassword:'12345',
@@ -158,33 +203,13 @@
           userEmail:'1222222@qq.com',
           userRole:'管理员',
           userIdCard:441226199901010011
-        }, {
-          userId: 2017002,
-          userName: '李刚',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员',
-          userIdCard:441226199901010012
-        }, {
-          userId: 2017003,
-          userName: '葫芦侠',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员',
-          userIdCard:441226199901010022
-        }, {
-          userId: 2017004,
-          userName: '必胜客',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员',
-          userIdCard:441226199901010033
-        }]
+        },
+        userData: []
 
       }
+    },
+    created(){
+      this.getAllUserData();
     },
     watch:{
       editShow(value){
@@ -203,6 +228,40 @@
       }
     },
     methods: {
+      getAllUserData(){
+        getAllUserData().then(response => {
+          console.log(response)
+          this.userData = response;
+          console.log(this.userData)
+        })
+      },
+      register(){
+        register(this.ruleForm).then(response=>{
+          if(response.state==200){
+            console.log("success add");
+          }
+        })
+      },
+      searchUserData(){
+        if(this.select=='userId'){
+          this.searchInput.userId=parseInt(this.input);
+          console.log(this.searchInput.userId);
+        }else if(this.select=='userName'){
+          this.searchInput.userName=this.input;
+        }else if(this.select=='userEmail'){
+          this.searchInput.userEmail=this.input;
+        }else if(this.select=='userPhone'){
+          this.searchInput.userPhone=this.input;
+        }else if(this.select=='userIdCard'){
+          this.searchInput.userIdCard=this.input;
+        }
+        searchUserData(this.searchInput).then((response)=>{
+          this.userData=response;
+          console.log(this.userData)
+        }).catch(error=>{
+            console.log(error);
+          })
+      },
       addDialogOpen(){
         this.openAddDialog=true;
         console.log("open");
@@ -210,11 +269,9 @@
       addDialogClose(){
         this.openAddDialog=false;
       },
-
       editOpen(){
         this.editShow=!this.editShow;
         this.deleteShow=false;
-
         console.log(this.editShow)
       },
       deleteOpen(){

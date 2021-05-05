@@ -32,10 +32,15 @@
       formKey:Array,
       formSign:String,
       openDialogVisible:Boolean,
-      fun:{
+      editfun:{
         type:Function
       },
-
+      closefun:{
+        type:Function
+      },
+      addfun:{
+        type:Function
+      }
     },
     data(){
       return{
@@ -58,12 +63,15 @@
         for (let key in this.ruleForm) {            //输出表单信息
           console.log(key, this.ruleForm[key]);
         }
-        if(x==y){
-          this.fun();
+        if(x==y){ 
+          this.closefun();
           if(this.formSign=='add'){
+            this.addfun();
             for(let i=0;i<y;i++){
             this.$refs[formName][i].resetFields()
             }
+          }else{
+            this.editfun();
           }
           this.$notify({
           title: '提交成功',
@@ -75,7 +83,7 @@
       },
       cancelDo(formName){
         var y=this.formKeyNum;
-        this.fun();
+        this.closefun();
         if(this.formSign=='add'){
             for(let i=0;i<y;i++){
             this.$refs[formName][i].resetFields()

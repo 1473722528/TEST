@@ -12,10 +12,9 @@
       <el-menu-item index="2" @click="MyOrder()">我的订单</el-menu-item>
       <el-submenu index="3">
         <template slot="title">管理中心</template>
-          <el-menu-item index="3-1" @click="HotelManage()">酒店管理</el-menu-item>
-          <el-menu-item index="3-2" @click="AreaManage()">地区管理</el-menu-item>
-          <el-menu-item index="3-3" @click="UserManage()">用户管理</el-menu-item>
-          <el-menu-item index="3-4" @click="OrderManage()">订单管理</el-menu-item>
+          <el-menu-item index="3-1" @click="UserManage()">用户管理</el-menu-item>
+          <el-menu-item index="3-2" @click="HotelManage()">酒店管理</el-menu-item>
+          <el-menu-item index="3-3" @click="OrderManage()">订单管理</el-menu-item>
       </el-submenu>
       
     </el-menu>
@@ -64,9 +63,6 @@
       },
       MyOrder(){                //赋予组件值，加载组件
         return this.currentView='MyOrder'
-      },
-      AreaManage(){           //赋予组件值，加载组件
-        return this.currentView='AreaManage';
       },
       UserManage(){         //赋予组件值，加载组件
         return this.currentView='UserManage';
