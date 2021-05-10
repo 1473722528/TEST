@@ -41,10 +41,64 @@ export function register(data){             //注册、新增用户
     })
 }
 
-export function login(query){
+export function login(query){               //用户登录
     return request({
         url:'/login',
         method:'GET',
         params:query
+    })
+}
+
+export function getAllHotelData(){      //获取全部酒店数据
+    return request({
+        url:'/getAllHotelData',
+        method:'GET'
+    })
+}
+
+export function getRoomData(query){       //获取指定酒店的房间数据
+    return request({
+        url:'/getRoomData',
+        method:'GET',
+        params:query
+    })
+}
+
+export function addHotel(data){     //新增酒店
+    return request({
+        url:'/addHotel',
+        method:'POST',
+        data
+    })
+}
+
+export function deleteHotelData(data){      //删除酒店数据
+    return request({
+        url:'/deleteHotelData',
+        method:'POST',
+        data
+    })
+}
+
+export function editHotelData(data){        //编辑酒店数据
+    return request({
+        url:'/editHotelData',
+        method:'POST',
+        data
+    })
+}
+
+export function searchHotelData(query){     //搜索酒店数据
+    return request({
+        url:'/searchHotelData',
+        method:'GET',
+        params:query
+    })
+}
+
+export function getAllOrderData(){
+    return request({
+        url:'/getAllOrderData',
+        method:'GET'
     })
 }

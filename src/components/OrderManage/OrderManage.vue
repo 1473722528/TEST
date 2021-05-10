@@ -1,33 +1,34 @@
 <template>
     <div>
-      <el-row type="flex" class="ordermanage" justify="center">
+      <el-row type="flex" class="usermanage" justify="center">
         <el-col :span="13">
           <div>
             <h2>订单管理</h2>
             <el-container>
               <el-aside style="height:100%;width:100px">
-                <el-tooltip class="item" effect="dark" content="点击打开增加用户表单" placement="left">
-                  <Link :fun="addDialogOpen" :linkTitle='linkTitle1' :linkIcon='linkIcon1'/>
+                <el-tooltip  effect="dark" content="点击打开或关闭编辑订单按钮" placement="left">
+                  <Link :fun="editOpen" :linkTitle='linkTitle1' :linkIcon='linkIcon1'/>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="点击打开或关闭编辑用户按钮" placement="left">
-                  <Link :fun="editOpen" :linkTitle='linkTitle2' :linkIcon='linkIcon2'/>
-                </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="点击打开或关闭删除用户按钮" placement="left">
-                  <Link :fun="deleteOpen" :linkTitle='linkTitle3' :linkIcon='linkIcon3'/>
+                <el-tooltip  effect="dark" content="点击打开或关闭删除订单按钮" placement="left">
+                  <Link :fun="deleteOpen" :linkTitle='linkTitle2' :linkIcon='linkIcon2'/>
                 </el-tooltip>  
               </el-aside>
               <el-container>
                 <el-header style="height:40px">
                     <el-input placeholder="请输入搜索内容" v-model="input" class="input-with-select" clearable>
                       <el-select v-model="select" slot="prepend" placeholder="请选择">
-                      <el-option label="姓名" value="1"></el-option>
-                      <el-option label="ID" value="2"></el-option>
+                      <el-option label="用户ID" value="userId"></el-option>
+                      <el-option label="用户名" value="userName"></el-option>
+                      <el-option label="用户电话" value="userPhone"></el-option>
+                      <el-option label="用户邮箱" value="userEmail"></el-option>
+                      <el-option label="身份证号码" value="userIdCard"></el-option>
                     </el-select>
-                    <el-button slot="append" icon="el-icon-search"></el-button>
+                    <el-button @click="searchUserData()" slot="append" icon="el-icon-search"></el-button>
                     </el-input>
                 </el-header>
                 <el-main> 
-                  <TableMsg :tableData='userData' :tableKey='userKey' :editShow="editShow" :deleteShow="deleteShow"/>
+                  <TableMsg :tableData='userData' :tableKey='userKey' :editShow='editShow' :deleteShow='deleteShow' :formTitle='formTitle2' :formKey='formKey2'
+                  :formKeyNum='formKeyNum2'  :dataKey='dataKey' :getData='getAllUserData'/>
                 </el-main>
                 <el-footer style="height:33px">
                   <Pagination v-model="userData" />
@@ -37,20 +38,23 @@
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules" :fun="addDialogClose" 
-      :formKeyNum="formKeyNum"  :formTitle="formTitle" :formKey="formKey" /> 
+      <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules1" :closefun="addDialogClose" 
+      :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" :addfun="register"/> 
     </div>
 </template>
 
 <script>
+import { getAllUserData,searchUserData,register} from '@/api/authority.js'
   export default {
     data() {
       return {
         tableData:[],
         tableKey:[],
+
+        dataKey:'order',
         activeIndex: '1',
 
-        input:'3333333',
+        input:'',
         select:'',
 
         openAddDialog:false,
@@ -59,124 +63,193 @@
         editShow:false,
         deleteShow:false,
 
-        linkTitle1:'新增用户',
-        linkIcon1:'el-icon-plus',
-        linkTitle2:'编辑用户',
-        linkIcon2:'el-icon-edit',
-        linkTitle3:'删除用户',
-        linkIcon3:'el-icon-delete',
+        linkTitle1:'编辑订单',
+        linkIcon1:'el-icon-edit',
+        linkTitle2:'删除订单',
+        linkIcon2:'el-icon-delete',
 
-        formTitle:'添加用户',
-        formKey:[{
-          label:'用户ID',
-          data:'userId'
+        formTitle1:'编辑订单',
+        formKey1:[{
+          label:'订单ID',
+          data:'orderId'
         },{
-          label:'用户名',
-          data:'userName'
+          label:'下单人',
+          data:'orderOwner'
         },{
-          label:'用户手机号',
-          data:'userPhone'
+          label:'预定日期',
+          data:'orderDate'
         },{
-          label:'用户邮箱',
-          data:'userEmail'
+          label:'酒店ID',
+          data:'orderHotelId'
         },{
-          label:'身份证号码',
-          data:'userIdCard'
+          label:'酒店名',
+          data:'orderHotelName'
+        },{
+          label:'房间ID',
+          data:'orderRoomId'
+        },{
+          label:'房间名',
+          data:'orderRoomName'
+        },{
+          label:'房间数量',
+          data:'orderRoomNum'
+        },{
+          label:'房间日期',
+          data:'orderRoomDate'
+        },{
+          label:'房间单价',
+          data:'orderRoomPrice'
+        },{
+          label:'房间使用者',
+          data:'roomUser'
+        },{
+          label:'使用者身份证',
+          data:'roomUserIdCard'
+        },{
+          label:'订单金额',
+          data:'orderPrice'
+        },{
+          label:'订单状态',
+          data:'orderState'
         }],
-        formKeyNum:5,
-        formSign:'add',
+        formKeyNum2:5,
 
+        searchInput:{
+          userId:null,
+          userName:null,
+          userPhone:null,
+          userEmail:null,
+          userIdCard:null,
+        },
 
         ruleForm:{
-          userId:'',
-          userName:'',
+          userId:null,
+          userName:null,
+          userPassword:null,
+          userPhone:null,
+          userEmail:null,
+          userIdCard:null,
+          userAge:null
         },
         rules: {
           userId: [
             { required: true, message: '请输入用户ID', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { min: 7, max: 7, message: '请输入 7 个数字长度的ID', trigger: 'blur' }
           ],
           userName: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 2, max: 10, message: '用户名长度在 2 到 10 个字符', trigger: 'blur' }
+          ],
+          userPassword: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
+          ],
+          userPhone: [
+            { required: true, message: '请输入手机号码', trigger: 'blur' },
+            { min: 11, max: 11, message: '请输入11位手机号码', trigger: 'blur' }
+          ],
+          userEmail: [
+            { required: true, message: '请输入邮箱', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          ],
+          userIdCard: [
+            { required: true, message: '请输入身份证号码', trigger: 'blur' },
+            { min: 18, max: 18, message: '请输入18位的身份证号码', trigger: 'blur' }
+          ],
+          userAge: [
+            { required: true, message: '请输入年龄', trigger: 'blur' },
+            { min: 2, max: 3, message: '请输入正确年龄段的数字', trigger: 'blur' }
           ],
         },
 
-        userKey:[{
-          prop:'userId',
-          label:'用户ID',
+        orderKey:[{
+          prop:'orderId',
+          label:'订单ID',
           width:110
         },{
-          prop:'userName',
-          label:'用户名',
-          width:110
+          prop:'orderOwner',
+          label:'下单人',
+          width:80
         },{
-          prop:'userPassword',
-          label:'用户密码',
-          width:140
+          prop:'orderHotelId',
+          label:'酒店ID',
+          width:120
         },{
           prop:'userPhone',
           label:'用户手机号',
-          width:180
+          width:120
         },{
           prop:'userEmail',
           label:'用户邮箱',
          
+        },{
+          prop:'userIdCard',
+          label:'身份证号码'
         },{
           prop:'userRole',
           label:'用户权限',
           width:100
         }
         ],
-        userData: [{
-          userId: 2017001,
-          userName: '张伟',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员'
-        }, {
-          userId: 2017002,
-          userName: '李刚',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员'
-        }, {
-          userId: 2017003,
-          userName: '葫芦侠',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员'
-        }, {
-          userId: 2017004,
-          userName: '必胜客',
-          userPassword:'12345',
-          userPhone:13322331122,
-          userEmail:'1222222@qq.com',
-          userRole:'管理员'
-        }]
+        orderData: []
 
       }
+    },
+    created(){
+      this.getAllUserData();
     },
     watch:{
       editShow(value){
         if(value==true){
-          this.linkTitle2="退出编辑";
+          this.linkTitle1="退出编辑";
         }else{
-          this.linkTitle2="编辑用户";
+          this.linkTitle1="编辑订单";
         }
       },
       deleteShow(value){
         if(value==true){
-          this.linkTitle3="退出删除";
+          this.linkTitle2="退出删除";
         }else{
-          this.linkTitle3="删除用户";
+          this.linkTitle2="删除订单";
         }
       }
     },
     methods: {
+      getAllUserData(){
+        getAllUserData().then(response => {
+          console.log(response)
+          this.userData = response;
+          console.log(this.userData)
+        })
+      },
+      register(){
+        register(this.ruleForm).then(response=>{
+          if(response.state==200){
+            console.log("success add");
+            this.getAllUserData();
+          }
+        })
+      },
+      searchUserData(){
+        if(this.select=='userId'){
+          this.searchInput.userId=parseInt(this.input);
+          console.log(this.searchInput.userId);
+        }else if(this.select=='userName'){
+          this.searchInput.userName=this.input;
+        }else if(this.select=='userEmail'){
+          this.searchInput.userEmail=this.input;
+        }else if(this.select=='userPhone'){
+          this.searchInput.userPhone=this.input;
+        }else if(this.select=='userIdCard'){
+          this.searchInput.userIdCard=this.input;
+        }
+        searchUserData(this.searchInput).then((response)=>{
+          this.userData=response;
+          console.log(this.userData)
+        }).catch(error=>{
+            console.log(error);
+          })
+      },
       addDialogOpen(){
         this.openAddDialog=true;
         console.log("open");
@@ -184,11 +257,9 @@
       addDialogClose(){
         this.openAddDialog=false;
       },
-
       editOpen(){
         this.editShow=!this.editShow;
         this.deleteShow=false;
-
         console.log(this.editShow)
       },
       deleteOpen(){
@@ -219,7 +290,7 @@
    margin: 0px;
     
  }
- .ordermanage{
+ .usermanage{
    margin-top: 10px;
    
  }

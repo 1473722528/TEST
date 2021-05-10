@@ -10,7 +10,7 @@
 
       <el-table-column type="expand" v-if="this.showchildMsg==true">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand" v-for="item3 in props.row.childNum" :key="item3.index">
+          <el-form label-position="left" inline class="demo-table-expand" v-for="item3 in props.row.children.length" :key="item3.index">
             <el-form-item :label="item2.label" v-for="item2 in childTableKey" :key="item2.index">
               <span>{{ props.row.children[item3-1][item2.data] }}</span>
             </el-form-item><el-divider></el-divider>
@@ -37,7 +37,7 @@
               type="text"
               @click="deleteData(scope.row)">删除</el-button>
             <DialogForm :openDialogVisible="openEditDialog" :ruleForm="ruleForm" :editfun="postEditForm"  :closefun="editDialogClose"  
-             :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey"/> 
+             :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey" :rules='rules'/> 
         </template>
       </el-table-column>
     </el-table>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { editUserData,deleteUserData} from '@/api/authority.js'
+import { editUserData,deleteUserData,editHotelData,deleteHotelData} from '@/api/authority.js'
   export default {
     props:{
       formTitle:String,           //表单标题
@@ -58,6 +58,7 @@ import { editUserData,deleteUserData} from '@/api/authority.js'
       tableData: Array,           //表格数据
       tableKey: Array,               //表格关键字
       dataKey:String,               //表明是什么表的数据
+      rules:Object,
       getData:{
         type:Function
       }
@@ -84,14 +85,20 @@ import { editUserData,deleteUserData} from '@/api/authority.js'
         console.log(this.openEditDialog);
       }, 
       postEditForm(){
-        if(this.dataKey=="user"){
-          editUserData(this.ruleForm).then(response=>{
-            this.$message.success(response.msg)
+        if(this.dataKey=='user'){
+          editUserData(this.ruleForm).then(Response=>{
+            this.$message.success(Response.msg)
           }).catch(error=>{
             console.log(error);
           })
-        }else if(this.dataKey=="hotel"){
-          console.log(this.dataKey);
+        }else if(this.dataKey=='hotel'){
+        //  delete this.ruleForm.children; 删除子属性
+          console.log(this.ruleForm);
+          editHotelData(this.ruleForm).then(Response=>{
+            this.$message.success(Response.msg)
+          }).catch(error=>{
+            console.log(error);
+          })
         }
         
       },
@@ -103,12 +110,21 @@ import { editUserData,deleteUserData} from '@/api/authority.js'
           center: true,
           type: 'error'
         }).then(() => {
-          deleteUserData(row).then(()=>{
-            this.getData();
-            console.log(row);
-          }).catch(error=>{
-            console.log(error);
-          })
+          if(this.dataKey=='user'){
+            deleteUserData(row).then(()=>{
+              this.getData();
+              console.log(row);
+            }).catch(error=>{
+              console.log(error);
+            })
+          }else if(this.dataKey=='hotel'){
+            deleteHotelData(row).then(()=>{
+              this.getData();
+              console.log(this.dataKey);
+            }).catch(error=>{
+              console.log(error);
+            })
+          }
           this.$message({
             type: 'success',
             message: '删除成功!'

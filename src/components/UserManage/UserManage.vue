@@ -31,7 +31,7 @@
                 </el-header>
                 <el-main> 
                   <TableMsg :tableData='userData' :tableKey='userKey' :editShow='editShow' :deleteShow='deleteShow' :formTitle='formTitle2' :formKey='formKey2'
-                  :formKeyNum='formKeyNum2'  :dataKey='dataKey' :getData='getAllUserData'/>
+                  :formKeyNum='formKeyNum2'  :dataKey='dataKey' :getData='getAllUserData' :rules='rules'/>
                 </el-main>
                 <el-footer style="height:33px">
                   <Pagination v-model="userData" />
@@ -41,7 +41,7 @@
           </div>
         </el-col>
       </el-row>
-      <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules1" :closefun="addDialogClose" 
+      <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules" :closefun="addDialogClose" 
       :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" :addfun="register"/> 
     </div>
 </template>
@@ -54,7 +54,7 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
         tableData:[],
         tableKey:[],
 
-        dataKey:"user",
+        dataKey:'user',
         activeIndex: '1',
 
         input:'',
@@ -115,6 +115,9 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
         },{
           label:'身份证号码',
           data:'userIdCard'
+        },{
+          label:'年 龄',
+          data:'userAge'
         }],
         formKeyNum2:5,
 
@@ -135,7 +138,7 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
           userIdCard:null,
           userAge:null
         },
-        rules1: {
+        rules: {
           userId: [
             { required: true, message: '请输入用户ID', trigger: 'blur' },
             { min: 7, max: 7, message: '请输入 7 个数字长度的ID', trigger: 'blur' }
@@ -239,6 +242,7 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
         register(this.ruleForm).then(response=>{
           if(response.state==200){
             console.log("success add");
+            this.getAllUserData();
           }
         })
       },

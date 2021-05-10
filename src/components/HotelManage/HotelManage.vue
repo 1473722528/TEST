@@ -31,7 +31,8 @@
                 </el-header>
                 <el-main> 
                   <TableMsg :tableData='hotelData' :tableKey='hotelKey' :editShow="editShow" :deleteShow="deleteShow" :formKeyNum="formKeyNum2"
-                   :showchildMsg="showchildMsg" :childTableKey="childhotelKey"   :formTitle="formTitle2" :formKey="formKey2"/>
+                   :showchildMsg="showchildMsg" :childTableKey="childhotelKey" :formTitle="formTitle2" :formKey="formKey2" :dataKey="dataKey"
+                   :getData='getAllHotelData' :rules='rules'/>
                 </el-main>
                 <el-footer style="height:33px">
                   <Pagination v-model="hotelData" />
@@ -41,23 +42,24 @@
           </div>
         </el-col>
       </el-row>
-      <DialogFrom :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules" :fun="addDialogClose" 
-      :formKeyNum="formKeyNum"  :formTitle="formTitle1" :formKey="formKey1" /> 
+      <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules" :closefun="addDialogClose" 
+      :formKeyNum="formKeyNum"  :formTitle="formTitle1" :formKey="formKey1" :addfun="addHotel"/> 
     </div>
 </template>
 
 <script>
+import {getAllHotelData,getRoomData,addHotel} from '@/api/authority.js'
   export default {
     data() {
       return {
         activeIndex: '1',
 
-        input:'3333333',
+        input:'',
         select:'',
 
         openAddDialog:false,
         
-
+        dataKey:'hotel',
         editShow:false,
         deleteShow:false,
 
@@ -72,9 +74,6 @@
 
         formTitle1:'添加酒店',
         formKey1:[{
-          label:'酒店ID',
-          data:'hotelId'
-        },{
           label:'酒店名',
           data:'hotelName'
         },{
@@ -83,13 +82,13 @@
         },{
           label:'酒店地址',
           data:'hotelAddress'
+        },{
+          label:'酒店详情',
+          data:'hotelInfo'
         }],
 
         formTitle2:'编辑酒店',
         formKey2:[{
-          label:'酒店ID',
-          data:'hotelId'
-        },{
           label:'酒店名',
           data:'hotelName'
         },{
@@ -98,6 +97,9 @@
         },{
           label:'酒店地址',
           data:'hotelAddress'
+        },{
+          label:'酒店详情',
+          data:'hotelInfo'
         }],
         formKeyNum2:4,
         formKeyNum:4,
@@ -109,13 +111,21 @@
           userName:'',
         },
         rules: {
-          userId: [
-            { required: true, message: '请输入酒店ID', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
-          userName: [
+          hotelName: [
             { required: true, message: '请输入酒店名', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { min: 5, max: 10, message: '长度在 5 到 10 个字符', trigger: 'blur' }
+          ],
+          hotelArea: [
+            { required: true, message: '请输入酒店地区', trigger: 'blur' },
+            { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+          ],
+          hotelAddress: [
+            { required: true, message: '请输入酒店地址', trigger: 'blur' },
+            { min: 6, max: 30, message: '长度在 6 到 30 个字符', trigger: 'blur' }
+          ],
+          hotelInfo: [
+            { required: true, message: '请输入酒店详情', trigger: 'blur' },
+            { min: 10, max: 255, message: '长度在 10 到 255 个字符', trigger: 'blur' }
           ],
         },
 
@@ -149,60 +159,7 @@
           data:'roomNum'
         }],
         
-        hotelData: [{
-          hotelId: 2017001,
-          hotelName: '龙珠',
-          hotelInfo:'这里是龙珠酒店',
-          hotelArea:'北京',
-          hotelAddress:'北京朝阳区十三号',
-          hotelView:require('../../assets/img/h1.jpg'),
-          childNum:3,
-          children:[{
-            roomId:2000000,
-            roomName:'普通房',
-            roomDate:20210402,
-            roomPrice:200,
-            roomNum:10,
-            roomView:require('../../assets/img/h1.jpg'),
-          },{
-            roomId:2111111,
-            roomName:'高级房',
-            roomPrice:400,
-            roomDate:20210402,
-            roomNum:20,
-            roomView:require('../../assets/img/h1.jpg'),
-          },{
-            roomId:2111333,
-            roomName:'豪华房',
-            roomPrice:1400,
-            roomDate:20210402,
-            roomNum:2,
-            roomView:require('../../assets/img/h1.jpg'),
-          }]
-        }, {
-          hotelId: 2017011,
-          hotelName: '狗珠',
-          hotelArea:'南京',
-          hotelAddress:'南京朝阳区十三号',
-          childNum:1,
-          children:[{
-            roomId:2000111,
-          roomName:'普通房',
-          roomPrice:222,
-          roomNum:30
-          }]  
-        }, {
-          hotelId: 2017111,
-          hotelName: '猪珠',
-          hotelArea:'广州',
-          hotelAddress:'广州朝阳区十三号',
-        }, {
-          hotelId: 2017021,
-          hotelName: '牛珠',
-          hotelArea:'上海',
-          hotelAddress:'上海朝阳区十三号',
-        }]
-
+        hotelData: []
       }
     },
     watch:{
@@ -221,6 +178,9 @@
         }
       }
     },
+    created(){
+      this.getAllHotelData();
+    },
     methods: {
       addDialogOpen(){
         this.openAddDialog=true;
@@ -229,11 +189,31 @@
       addDialogClose(){
         this.openAddDialog=false;
       },
-
+      getAllHotelData(){
+        getAllHotelData().then(Response=>{
+          this.hotelData=Response;
+          console.log(this.hotelData.length);
+          for(let i=0;i<this.hotelData.length;i++){
+            console.log(this.hotelData[i]);
+            getRoomData(this.hotelData[i]).then(Response=>{
+              this.hotelData[i].children=Response;
+              console.log(this.hotelData[i].children);
+            })
+          }
+          
+        })
+      },
+      addHotel(){
+        addHotel(this.ruleForm).then(Response=>{
+          console.log(Response);
+          this.getAllHotelData();
+        }).catch(error=>{
+          console.log(error);
+        })
+      },
       editOpen(){
         this.editShow=!this.editShow;
         this.deleteShow=false;
-
         console.log(this.editShow)
       },
       deleteOpen(){

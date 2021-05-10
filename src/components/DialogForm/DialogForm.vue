@@ -84,11 +84,9 @@
       cancelDo(formName){
         var y=this.formKeyNum;
         this.closefun();
-        if(this.formSign=='add'){
-            for(let i=0;i<y;i++){
-            this.$refs[formName][i].resetFields()
-            }
-          }
+        for(let i=0;i<y;i++){
+          this.$refs[formName][i].resetFields()
+        }
         this.$notify({
           title: '取消提交',
           message: '已取消提交信息',
