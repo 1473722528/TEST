@@ -1,7 +1,7 @@
 <template>
     <div>
       <el-row type="flex" class="usermanage" justify="center">
-        <el-col :span="13">
+        <el-col :span="15">
           <div>
             <h2>用户管理</h2>
             <el-container>
@@ -232,15 +232,15 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
     },
     methods: {
       getAllUserData(){
-        getAllUserData().then(response => {
-          console.log(response)
-          this.userData = response;
+        getAllUserData().then(Response => {
+          console.log(Response)
+          this.userData = Response;
           console.log(this.userData)
         })
       },
       register(){
-        register(this.ruleForm).then(response=>{
-          if(response.state==200){
+        register(this.ruleForm).then(Response=>{
+          if(Response.state==200){
             console.log("success add");
             this.getAllUserData();
           }
@@ -259,8 +259,8 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
         }else if(this.select=='userIdCard'){
           this.searchInput.userIdCard=this.input;
         }
-        searchUserData(this.searchInput).then((response)=>{
-          this.userData=response;
+        searchUserData(this.searchInput).then((Response)=>{
+          this.userData=Response;
           console.log(this.userData)
         }).catch(error=>{
             console.log(error);

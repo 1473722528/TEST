@@ -140,7 +140,7 @@ import {getAllHotelData,getRoomData,addHotel} from '@/api/authority.js'
         },{
           prop:'hotelArea',
           label:'酒店地区',
-          width:150
+          width:110
         },{
           prop:'hotelAddress',
           label:'酒店地址',

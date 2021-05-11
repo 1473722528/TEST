@@ -8,7 +8,7 @@
       :load="load"
       >
 
-      <el-table-column type="expand" v-if="this.showchildMsg==true">
+      <el-table-column type="expand" v-if="this.showchildMsg==true">             <!--子属性展开-->
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand" v-for="item3 in props.row.children.length" :key="item3.index">
             <el-form-item :label="item2.label" v-for="item2 in childTableKey" :key="item2.index">
@@ -20,6 +20,7 @@
 
       <el-table-column v-for="item in tableKey" :key="item.index"
         align="center"
+       
         :prop="item.prop"
         :label="item.label"
         :width="item.width">

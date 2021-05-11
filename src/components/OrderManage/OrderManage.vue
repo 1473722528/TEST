@@ -1,7 +1,7 @@
 <template>
     <div>
-      <el-row type="flex" class="usermanage" justify="center">
-        <el-col :span="13">
+      <el-row type="flex" class="ordermanage" justify="center">
+        <el-col :span="20">
           <div>
             <h2>订单管理</h2>
             <el-container>
@@ -17,34 +17,40 @@
                 <el-header style="height:40px">
                     <el-input placeholder="请输入搜索内容" v-model="input" class="input-with-select" clearable>
                       <el-select v-model="select" slot="prepend" placeholder="请选择">
-                      <el-option label="用户ID" value="userId"></el-option>
-                      <el-option label="用户名" value="userName"></el-option>
-                      <el-option label="用户电话" value="userPhone"></el-option>
-                      <el-option label="用户邮箱" value="userEmail"></el-option>
-                      <el-option label="身份证号码" value="userIdCard"></el-option>
+                      <el-option label="订单ID" value="orderId"></el-option>
+                      <el-option label="下单人" value="orderOwner"></el-option>
+                      <el-option label="酒店ID" value="orderHotelId"></el-option>
+                      <el-option label="酒店名" value="orderHotelName"></el-option>
+                      <el-option label="房间ID" value="orderRoomId"></el-option>
+                      <el-option label="房间名" value="orderRoomName"></el-option>
+                      <el-option label="房间日期" value="orderRoomDate"></el-option>
+                      <el-option label="使用者" value="roomUser"></el-option>
+                      <el-option label="身份证号" value="roomUserIdCard"></el-option>
+                      <el-option label="订单日期" value="orderDate"></el-option>
+                      <el-option label="订单状态" value="orderState"></el-option>
                     </el-select>
-                    <el-button @click="searchUserData()" slot="append" icon="el-icon-search"></el-button>
+                    <el-button @click="searchOrderData()" @keyup.enter.native="searchOrderData" slot="append" icon="el-icon-search"></el-button>
                     </el-input>
                 </el-header>
                 <el-main> 
-                  <TableMsg :tableData='userData' :tableKey='userKey' :editShow='editShow' :deleteShow='deleteShow' :formTitle='formTitle2' :formKey='formKey2'
-                  :formKeyNum='formKeyNum2'  :dataKey='dataKey' :getData='getAllUserData'/>
+                  <TableMsg :tableData='orderData' :tableKey='orderKey' :editShow='editShow' :deleteShow='deleteShow' :formTitle='formTitle1' :formKey='formKey1'
+                  :formKeyNum='formKeyNum1'  :dataKey='dataKey' :getData='getAllOrderData'/>
                 </el-main>
                 <el-footer style="height:33px">
-                  <Pagination v-model="userData" />
+                  <Pagination v-model="orderData" />
                 </el-footer>
               </el-container>
             </el-container>
           </div>
         </el-col>
       </el-row>
-      <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules1" :closefun="addDialogClose" 
-      :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" :addfun="register"/> 
+      <!-- <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :rules="rules" :closefun="addDialogClose" 
+      :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" :addfun="register"/>  -->
     </div>
 </template>
 
 <script>
-import { getAllUserData,searchUserData,register} from '@/api/authority.js'
+import { getAllOrderData,searchOrderData} from '@/api/authority.js'
   export default {
     data() {
       return {
@@ -112,14 +118,20 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
           label:'订单状态',
           data:'orderState'
         }],
-        formKeyNum2:5,
+        formKeyNum1:14,
 
         searchInput:{
-          userId:null,
-          userName:null,
-          userPhone:null,
-          userEmail:null,
-          userIdCard:null,
+          orderId:null,
+          orderOwner:null,
+          orderHotelId:null,
+          orderHotelName:null,
+          orderRoomId:null,
+          orderRoomName:null,
+          roomUser:null,
+          roomUserIdCard:null,
+          orderRoomDate:null,
+          orderDate:null,
+          orderState:null
         },
 
         ruleForm:{
@@ -165,38 +177,73 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
         orderKey:[{
           prop:'orderId',
           label:'订单ID',
-          width:110
+          width:80
         },{
           prop:'orderOwner',
           label:'下单人',
-          width:80
+          width:90
         },{
           prop:'orderHotelId',
           label:'酒店ID',
-          width:120
+          width:95
         },{
-          prop:'userPhone',
-          label:'用户手机号',
-          width:120
+          prop:'orderHotelName',
+          label:'酒店名',
+          width:130
         },{
-          prop:'userEmail',
-          label:'用户邮箱',
-         
+          prop:'orderRoomId',
+          label:'房间ID',
+          width:80
         },{
-          prop:'userIdCard',
-          label:'身份证号码'
-        },{
-          prop:'userRole',
-          label:'用户权限',
+          prop:'orderRoomName',
+          label:'房间名',
           width:100
-        }
-        ],
+        },{
+          prop:'orderRoomDate',
+          label:'房间日期',
+          width:110
+        },{
+          prop:'orderRoomNum',
+          label:'房间数量',
+          width: 80
+        },{
+          prop:'orderRoomPrice',
+          label:'房间单价',
+          width:95
+        },{
+          prop:'roomUser',
+          label:'房间使用者',
+          width:95
+        },{
+          prop:'roomUserIdCard',
+          label:'身份证号码',
+        },{
+          prop:'orderPrice',
+          label:'订单金额',
+          width:95
+        },{
+          prop:'orderDate',
+          label:'订单日期',
+          width:110
+        },{
+          prop:'orderState',
+          label:'订单状态',
+          width:80
+        }],
         orderData: []
 
       }
     },
     created(){
-      this.getAllUserData();
+      var that=this;
+      this.getAllOrderData();
+      document.onkeydown = function (e) {
+        console.log(e);
+        let key = window.event.keyCode;
+        if (key == 13) {
+          that.searchOrderData();
+        }
+      };
     },
     watch:{
       editShow(value){
@@ -215,37 +262,41 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
       }
     },
     methods: {
-      getAllUserData(){
-        getAllUserData().then(response => {
-          console.log(response)
-          this.userData = response;
-          console.log(this.userData)
+      getAllOrderData(){
+        getAllOrderData().then(Response => {
+          console.log(Response)
+          this.orderData = Response;
+          console.log(this.orderData)
         })
       },
-      register(){
-        register(this.ruleForm).then(response=>{
-          if(response.state==200){
-            console.log("success add");
-            this.getAllUserData();
-          }
-        })
-      },
-      searchUserData(){
-        if(this.select=='userId'){
-          this.searchInput.userId=parseInt(this.input);
-          console.log(this.searchInput.userId);
-        }else if(this.select=='userName'){
-          this.searchInput.userName=this.input;
-        }else if(this.select=='userEmail'){
-          this.searchInput.userEmail=this.input;
-        }else if(this.select=='userPhone'){
-          this.searchInput.userPhone=this.input;
-        }else if(this.select=='userIdCard'){
-          this.searchInput.userIdCard=this.input;
+      searchOrderData(){
+        if(this.select=='orderId'){
+          this.searchInput.orderId=parseInt(this.input);
+          console.log(this.searchInput.orderId);
+        }else if(this.select=='orderOwner'){
+          this.searchInput.orderOwner=this.input;
+        }else if(this.select=='orderHotelId'){
+          this.searchInput.orderHotelId=this.input;
+        }else if(this.select=='orderHotelName'){
+          this.searchInput.orderHotelName=this.input;
+        }else if(this.select=='orderRoomId'){
+          this.searchInput.orderRoomId=this.input;
+        }else if(this.select=='orderRoomName'){
+          this.searchInput.orderRoomName=this.input;
+        }else if(this.select=='roomUser'){
+          this.searchInput.roomUser=this.input;
+        }else if(this.select=='roomUserIdCard'){
+          this.searchInput.roomUserIdCard=this.input;
+        }else if(this.select=='orderRoomDate'){
+          this.searchInput.orderRoomDate=this.input;
+        }else if(this.select=='orderDate'){
+          this.searchInput.orderDate=this.input;
+        }else if(this.select=='orderState'){
+          this.searchInput.orderState=this.input;
         }
-        searchUserData(this.searchInput).then((response)=>{
-          this.userData=response;
-          console.log(this.userData)
+        searchOrderData(this.searchInput).then((Response)=>{
+          this.orderData=Response;
+          console.log(this.orderData)
         }).catch(error=>{
             console.log(error);
           })

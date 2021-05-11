@@ -96,9 +96,17 @@ export function searchHotelData(query){     //搜索酒店数据
     })
 }
 
-export function getAllOrderData(){
+export function getAllOrderData(){      //获取全部订单
     return request({
         url:'/getAllOrderData',
         method:'GET'
+    })
+}
+
+export function searchOrderData(query){
+    return request({
+        url:'/searchOrderData',
+        method:'GET',
+        params:query
     })
 }
