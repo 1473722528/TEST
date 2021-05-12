@@ -14,9 +14,9 @@ export default {
   name: 'Home',
   data(){
       return {
-        userData:{
-          userName:"ABC",
-          userRole:"管理员"
+        myData:{
+          userId:'',
+          userRole:''
         },
         carouselCardArray:[    //图片数组
           {id: 0,hotelView: require('../assets/img/01.jpg'),title: '广东'},

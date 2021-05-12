@@ -5,7 +5,7 @@
         </div>
         <div class="login-page">
             <el-form :model="loginForm" :rules="rules"
-                 status-icon
+                 
                  ref="loginForm" 
                  label-position="left" 
                  label-width="0px" 
@@ -30,7 +30,7 @@
                         class="rememberme"
                     >记住密码</el-checkbox>
                     <el-form-item style="width:100%;">
-                        <el-button type="primary" style="width:100%;" @click="handleSubmit" :loading="logining">登录</el-button>
+                        <el-button type="primary" style="width:100%;" @click="loginSubmit" :loading="logining">登录</el-button>
                     </el-form-item>
                 </el-form>
         </div>
@@ -40,6 +40,7 @@
 
 <script>
 import {login} from '@/api/authority.js' 
+ 
 export default {
     data(){
         return {
@@ -63,26 +64,34 @@ export default {
                 this.myData=Response;     
             })
         },
-        handleSubmit(){
+        loginSubmit(){
             this.$refs.loginForm.validate((valid) => {
                 if(valid){
                     this.logining = true;
                     login(this.loginForm).then(Response=>{
-                        this.myData=Response;
-                        sessionStorage.setItem("MyData",JSON.stringify(this.myData)); 
-                        console.log(this.myData);
-                    })
-                    if(this.loginForm.userId === 2017001 && 
-                       this.loginForm.userPassword === '123456'){
-                           this.logining = false;
-                           //sessionStorage.setItem('user', this.ruleForm2.username);
-                           this.$router.push({path: '/'});
-                    }else{
+                        console.log(Response);
+                        if(Response!=''){
+                            this.myData=Response;
+                            sessionStorage.setItem("MyData",JSON.stringify(this.myData));   //存进sessionStrong
+                            
+                            this.$store.commit('updateUser',this.myData);       //刷新Vuex状态
+                            console.log(this.$store.state.userRole);
+                            this.logining = false;
+                            this.$router.push({path:'/'});
+                            //window.location.reload();           //刷新页面
+                        }else if(Response==''){
+                            this.logining = false;
+                            this.$alert('登录出错！', 'info', {
+                                confirmButtonText: 'ok'
+                        })
+                        }
+                    }).catch(error=>{
                         this.logining = false;
                         this.$alert('登录出错！', 'info', {
                             confirmButtonText: 'ok'
                         })
-                    }
+                        console.log(error);
+                    })
                 }else{
                     console.log('error submit!');
                     return false;

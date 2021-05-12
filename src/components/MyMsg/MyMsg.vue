@@ -139,31 +139,23 @@ export default {
             linkTitle2:'修改资料',
             linkIcon2:'el-icon-edit',
             myData:{
-                userId: this.$store.state.userId,
-                userName: this.$store.state.userName,
-                userAge: this.$store.state.userAge,
-                userPhone: this.$store.state.userPhone,
-                userEmail:this.$store.state.userEmail,
-                userIdCard:this.$store.state.userIdCard
+                userId:null,
+                userName: null,
+                userAge:null,
+                userPhone:null,
+                userEmail:null,
+                userIdCard:null
             },
             openEditPwDialog:false,
             openEditMsgDialog:false,
         }
     },
+    created(){
+        this.getMyData()
+    },
     methods:{
-        test(){
-            this.$axios({
-              method: 'get',
-              url: "/api/mymsg"
-            }).then((response)=> {
-                const {data}=response.data;
-                this.tableData=data;
-                console.log(response.data);   
-            })
-            .catch(function(error) {
-                console.log(error);
-              });
-            console.log(this.tableData);  
+        getMyData(){
+            this.myData=JSON.parse(sessionStorage.getItem("MyData"));
         },
         editPwDialogOpen(){
             this.openEditPwDialog=true;console.log(this.openEditPwDialog);

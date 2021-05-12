@@ -27,12 +27,12 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="head-content" v-if="this.$store.state.userId==null">
+        <div class="head-content" v-if="this.$store.state.userId==''">
           <router-link to='/login'>登录</router-link> |
           <router-link to='/registe'>注册</router-link>
         </div>
-        <div class="head-content" v-if="this.$store.state.userRole=='管理员'">
-          <router-link to='/totalmanage'>酒店管理</router-link>
+        <div class="head-content" v-if="this.$store.state.userId!=''">
+          <router-link to='/totalmanage'>{{manageTitle}}</router-link>
         </div>
       </el-col>
     </el-row>   
@@ -44,13 +44,31 @@ export default {
   data() {
     return {
       input: '',
-      select: ''
+      select: '',
+      manageTitle:'酒店管理',
+      userRole:''
   }
+ },
+ created(){
+   this.getUserRole();
  },
  mounted(){
    this.canvas()
  },
+ watch:{
+   userRole(value){
+     if(value=='用户'){
+       this.manageTitle='个人中心';
+       console.log(value);
+     }else if(value=='管理员'){
+       this.manageTitle='管理中心'
+     }
+   }
+ },
  methods:{
+   getUserRole(){
+    this.userRole=this.$store.state.userRole;
+    },
    goSearchView(){
      this.$router.push({path:'/searchview',query:{setid:123456}});
    },

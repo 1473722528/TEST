@@ -16,8 +16,17 @@ export default {
   data(){
     return{
       input: '',
-      select: ''
+      select: '',
+      myData:{
+        userId:'',
+        userName:''
+      }
     }
+  },
+  created(){
+    if (sessionStorage.getItem("MyData")) {
+      this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(sessionStorage.getItem("MyData"))))
+    }  
   }
 }
 </script>

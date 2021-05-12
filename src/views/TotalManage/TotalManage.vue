@@ -10,7 +10,7 @@
       active-text-color="#ffd04b">
       <el-menu-item index="1" @click="MyMsg()">我的信息</el-menu-item>
       <el-menu-item index="2" @click="MyOrder()">我的订单</el-menu-item>
-      <el-submenu index="3">
+      <el-submenu index="3" v-if="this.$store.state.userRole=='管理员'">
         <template slot="title">管理中心</template>
           <el-menu-item index="3-1" @click="UserManage()">用户管理</el-menu-item>
           <el-menu-item index="3-2" @click="HotelManage()">酒店管理</el-menu-item>
@@ -31,7 +31,6 @@
         tableKey:[],
         activeIndex: '1',
         currentView: 'MyMsg',
-
         userKey:[{
           prop: 'id',
           label: 'ID',
@@ -56,6 +55,7 @@
     },
     methods: {
       handleSelect(key, keyPath) {
+        //console.log(this.$store.getters.getUserRole);
         console.log(key, keyPath);
       },
       MyMsg(){                  //赋予组件值，加载组件

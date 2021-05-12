@@ -111,7 +111,7 @@ export function searchOrderData(query){
     })
 }
 
-export function editOrerData(data){
+export function editOrderData(data){
     return request({
         url:'/editOrderData',
         method:'POST',
