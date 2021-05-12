@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { editUserData,deleteUserData,editHotelData,deleteHotelData} from '@/api/authority.js'
+import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData,deleteOrderData} from '@/api/authority.js'
   export default {
     props:{
       formTitle:String,           //表单标题
@@ -100,6 +100,13 @@ import { editUserData,deleteUserData,editHotelData,deleteHotelData} from '@/api/
           }).catch(error=>{
             console.log(error);
           })
+        }else if(this.dataKey=='order'){
+          console.log(this.ruleForm);
+          editOrderData(this.ruleForm).then(Response=>{
+            this.$message.success(Response.msg)
+          }).catch(error=>{
+            console.log(error);
+          })
         }
         
       },
@@ -120,6 +127,13 @@ import { editUserData,deleteUserData,editHotelData,deleteHotelData} from '@/api/
             })
           }else if(this.dataKey=='hotel'){
             deleteHotelData(row).then(()=>{
+              this.getData();
+              console.log(this.dataKey);
+            }).catch(error=>{
+              console.log(error);
+            })
+          }else if(this.dataKey=='order'){
+            deleteOrderData(row).then(()=>{
               this.getData();
               console.log(this.dataKey);
             }).catch(error=>{

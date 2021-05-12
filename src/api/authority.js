@@ -110,3 +110,19 @@ export function searchOrderData(query){
         params:query
     })
 }
+
+export function editOrerData(data){
+    return request({
+        url:'/editOrderData',
+        method:'POST',
+        data
+    })
+}
+
+export function deleteOrderData(data){
+    return request({
+        url:'/deleteOrderData',
+        method:'POST',
+        data
+    })
+}

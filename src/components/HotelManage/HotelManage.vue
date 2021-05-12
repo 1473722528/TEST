@@ -199,8 +199,7 @@ import {getAllHotelData,getRoomData,addHotel} from '@/api/authority.js'
               this.hotelData[i].children=Response;
               console.log(this.hotelData[i].children);
             })
-          }
-          
+          }      
         })
       },
       addHotel(){

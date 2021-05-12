@@ -72,6 +72,7 @@
     </div>
 </template>
 <script>
+import {searchOrderData} from '@/api/authority.js'
 export default {
     props:{
 
@@ -80,9 +81,9 @@ export default {
         return{
             orderMsgDialogOpen:false,
             orderIndex:Number,
-            userData:{
-                userName:'里斯',
-                orderNum:3,
+            myData:{
+                userName:this.$store.state.userName,
+  
             },
             
             orderMsg:[{}],
@@ -103,7 +104,7 @@ export default {
                   hotelName:'广州龙珠酒店',   
                   roomNum:2,
                   roomDate:20210402,
-                },],  
+                }],  
             },{
                 orderName:'狗珠酒店订单',
                 userId:2012021,
@@ -143,17 +144,26 @@ export default {
             }]
         }
     },
+    created(){
+      this.searchOrderData();
+    },
     methods:{
-        openOrderMsg(uid){
-            for(var i=0;i<this.userData.orderNum;i++){
-                if(this.myOrder[i].userId==uid){
-                    this.orderMsg[0]=this.myOrder[i];
-                }
-            }
-            console.log(this.orderMsg);
-            console.log(uid);
-            this.orderMsgDialogOpen=true;    
-        }
+      searchOrderData(){
+        searchOrderData(this.myData).then(Response=>{
+          this.myOrder=Response;
+          console.log(this.myData);
+        })
+      },
+      openOrderMsg(uid){
+          for(var i=0;i<this.userData.orderNum;i++){
+              if(this.myOrder[i].userId==uid){
+                  this.orderMsg[0]=this.myOrder[i];
+              }
+          }
+          console.log(this.orderMsg);
+          console.log(uid);
+          this.orderMsgDialogOpen=true;    
+      }
     }
 }
 </script>

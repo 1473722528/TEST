@@ -27,11 +27,11 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="head-content" v-if="this.$store.state.username==''">
+        <div class="head-content" v-if="this.$store.state.userId==null">
           <router-link to='/login'>登录</router-link> |
           <router-link to='/registe'>注册</router-link>
         </div>
-        <div class="head-content" v-if="this.$store.state.userrole=='管理员'">
+        <div class="head-content" v-if="this.$store.state.userRole=='管理员'">
           <router-link to='/totalmanage'>酒店管理</router-link>
         </div>
       </el-col>

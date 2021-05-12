@@ -34,7 +34,7 @@
                 </el-header>
                 <el-main> 
                   <TableMsg :tableData='orderData' :tableKey='orderKey' :editShow='editShow' :deleteShow='deleteShow' :formTitle='formTitle1' :formKey='formKey1'
-                  :formKeyNum='formKeyNum1'  :dataKey='dataKey' :getData='getAllOrderData'/>
+                  :formKeyNum='formKeyNum1'  :dataKey='dataKey' :getData='getAllOrderData' :rules='rules'/>
                 </el-main>
                 <el-footer style="height:33px">
                   <Pagination v-model="orderData" />
@@ -77,13 +77,16 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
         formTitle1:'编辑订单',
         formKey1:[{
           label:'订单ID',
-          data:'orderId'
+          data:'orderId',
+          disable:true
         },{
           label:'下单人',
-          data:'orderOwner'
+          data:'orderOwner',
+          disable:true
         },{
           label:'预定日期',
-          data:'orderDate'
+          data:'orderDate',
+          disable:true
         },{
           label:'酒店ID',
           data:'orderHotelId'
@@ -98,7 +101,8 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
           data:'orderRoomName'
         },{
           label:'房间数量',
-          data:'orderRoomNum'
+          data:'orderRoomNum',
+          disable:true
         },{
           label:'房间日期',
           data:'orderRoomDate'
@@ -144,33 +148,45 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
           userAge:null
         },
         rules: {
-          userId: [
-            { required: true, message: '请输入用户ID', trigger: 'blur' },
-            { min: 7, max: 7, message: '请输入 7 个数字长度的ID', trigger: 'blur' }
+          orderHotelId: [
+            { required: true, message: '请输入酒店ID', trigger: 'blur' },
+            { min: 8, max: 9,  message: '请输入 8 位数的数字ID', trigger: 'blur'}
           ],
-          userName: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 2, max: 10, message: '用户名长度在 2 到 10 个字符', trigger: 'blur' }
-          ],
-          userPassword: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
+          orderHotelName: [
+            { required: true, message: '请输入酒店名', trigger: 'blur' },
             { min: 6, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
           ],
-          userPhone: [
-            { required: true, message: '请输入手机号码', trigger: 'blur' },
-            { min: 11, max: 11, message: '请输入11位手机号码', trigger: 'blur' }
+          orderRoomId: [
+            { required: true, message: '请输入房间ID', trigger: 'blur' },
+            { min: 3, max: 4, message: '请输入 4 位数的ID', trigger: 'blur' }
           ],
-          userEmail: [
-            { required: true, message: '请输入邮箱', trigger: 'blur' },
+          orderRoomName: [
+            { required: true, message: '请输入房间名', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
-          userIdCard: [
-            { required: true, message: '请输入身份证号码', trigger: 'blur' },
-            { min: 18, max: 18, message: '请输入18位的身份证号码', trigger: 'blur' }
+          orderRoomDate: [
+            { required: true, message: '请输入YYYY-MM-DD格式的房间日期', trigger: 'blur' },
+            { min: 10, max: 10, message: '请输入 10 个字符的日期', trigger: 'blur' }
           ],
-          userAge: [
-            { required: true, message: '请输入年龄', trigger: 'blur' },
-            { min: 2, max: 3, message: '请输入正确年龄段的数字', trigger: 'blur' }
+          orderRoomPrice: [
+            { required: true, message: '请输入房间单价', trigger: 'blur' },
+            { min: 1, max: 10, message: '请输入两位数以上的金额', trigger: 'blur' }
+          ],
+          roomUser: [
+            { required: true, message: '请输入姓名', trigger: 'blur' },
+            { min: 2, max: 6, message: '请输入 2 到 6 个字符的姓名', trigger: 'blur' }
+          ],
+          roomUserIdCard: [
+            { required: true, message: '请输入身份证号码', trigger: 'blur' },
+            { min: 18, max: 18, message: '请输入 18 位的身份证号码', trigger: 'blur' }
+          ],
+          orderPrice: [
+            { required: true, message: '请输入订单金额', trigger: 'blur' },
+            { min: 1, max: 10, message: '请输入两位数以上的金额', trigger: 'blur' }
+          ],
+          orderState: [
+            { required: true, message: '请输入订单状态', trigger: 'blur' },
+            { min: 3, max: 3, message: '请输入表示订单状态的 3 个字符', trigger: 'blur' }
           ],
         },
 

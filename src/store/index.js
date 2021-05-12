@@ -3,10 +3,36 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+//const state={
+//  userId:null,
+//  userName:null
+//}
+
+//const mutations= {
+//  addCount:function(state,num){
+//   return state.count+=num;
+//  },
+//  reduceCount:function(state,num){
+//   return state.count-=num;
+//  },
+//}
+//
+
+const actions={
+  changeParentTxt({commit},data){
+     commit('changeParentMsg',data);
+  }
+}
+
 export default new Vuex.Store({
   state: {
-    username: 'ABC',
-    userrole: '管理员',
+    userId: JSON.parse(sessionStorage.getItem("MyData")).userId,
+    userName: JSON.parse(sessionStorage.getItem("MyData")).userName,
+    userAge: JSON.parse(sessionStorage.getItem("MyData")).userAge,
+    userPhone: JSON.parse(sessionStorage.getItem("MyData")).userPhone,
+    userEmail: JSON.parse(sessionStorage.getItem("MyData")).userEmail,
+    userIdCard: JSON.parse(sessionStorage.getItem("MyData")).userIdCard,
+    userRole: JSON.parse(sessionStorage.getItem("MyData")).userRole ,
     //phone: sessionStorage.getItem("UserData",JSON.stringify(this.U))     获取数据
   },
   mutations: {
@@ -14,8 +40,7 @@ export default new Vuex.Store({
       state.username = username;
     } 
   },
-  actions: {
-  },
+  actions,
   modules: {
   }
 })

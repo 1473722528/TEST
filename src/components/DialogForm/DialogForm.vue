@@ -10,7 +10,7 @@
 
         <el-form :model="ruleForm" :rules="rules" status-icon ref="ruleForm"  label-position="top" v-for="item in formKey" :key="item.index">
           <el-form-item :label="item.label" :prop="item.data" >
-            <el-input v-model="ruleForm[item.data]"  autocomplete="off" ></el-input>
+            <el-input v-model="ruleForm[item.data]"  autocomplete="off" :disabled="item.disable"></el-input>
           </el-form-item>
         </el-form>
 

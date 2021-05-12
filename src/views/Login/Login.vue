@@ -4,23 +4,23 @@
             <img :src="loginImg" width="100%" height="100%" alt="login" />
         </div>
         <div class="login-page">
-            <el-form :model="ruleForm" :rules="rules"
+            <el-form :model="loginForm" :rules="rules"
                  status-icon
-                 ref="ruleForm" 
+                 ref="loginForm" 
                  label-position="left" 
                  label-width="0px" 
-                 class="demo-ruleForm ">
+                 class="demo-loginForm ">
                     <h3 class="title">酒店预订系统登录</h3>
                     <el-form-item prop="userId">
                         <el-input type="text" 
-                            v-model="ruleForm.userId" 
+                            v-model="loginForm.userId" 
                             auto-complete="off" 
                             placeholder="用户ID"
                         ></el-input>
                     </el-form-item>
                         <el-form-item prop="userPassword">
                             <el-input type="password" 
-                                v-model="ruleForm.userPassword" 
+                                v-model="loginForm.userPassword" 
                                 auto-complete="off" 
                                 placeholder="密码"
                             ></el-input>
@@ -39,35 +39,47 @@
 </template>
 
 <script>
+import {login} from '@/api/authority.js' 
 export default {
     data(){
         return {
             loginImg:require('../../assets/img/login.jpg'),
             logining: false,
-            ruleForm: {
-                userId: '2017001',
+            myData:{},
+            loginForm: {
+                userId: 2017001,
                 userPassword: '123456',
             },
             rules: {
-                username: [{required: true, message: '请输入您的用户ID', trigger: 'blur'}],
-                password: [{required: true, message: '请输入您的密码', trigger: 'blur'}]
+                userId: [{required: true, message: '请输入您的用户ID', trigger: 'blur'}],
+                userPassword: [{required: true, message: '请输入您的密码', trigger: 'blur'}]
             },
             checked: false
         }
     },
     methods: {
+        login(){
+            login(this.loginForm).then(Response=>{
+                this.myData=Response;     
+            })
+        },
         handleSubmit(){
-            this.$refs.ruleForm.validate((valid) => {
+            this.$refs.loginForm.validate((valid) => {
                 if(valid){
                     this.logining = true;
-                    if(this.ruleForm.username === 'admin' && 
-                       this.ruleForm.password === '123456'){
+                    login(this.loginForm).then(Response=>{
+                        this.myData=Response;
+                        sessionStorage.setItem("MyData",JSON.stringify(this.myData)); 
+                        console.log(this.myData);
+                    })
+                    if(this.loginForm.userId === 2017001 && 
+                       this.loginForm.userPassword === '123456'){
                            this.logining = false;
-                           sessionStorage.setItem('user', this.ruleForm2.username);
+                           //sessionStorage.setItem('user', this.ruleForm2.username);
                            this.$router.push({path: '/'});
                     }else{
                         this.logining = false;
-                        this.$alert('username or password wrong!', 'info', {
+                        this.$alert('登录出错！', 'info', {
                             confirmButtonText: 'ok'
                         })
                     }
