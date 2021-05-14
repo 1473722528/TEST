@@ -13,7 +13,7 @@
                     <div style="padding: 14px;">
                         <div class="bottom clearfix">
                             <el-button type="text" class="button" >
-                                <h3>{{item.hotelArea}}</h3>
+                                <h3>{{item.hotelName}}</h3>
                             </el-button>
                         </div>
                     </div>

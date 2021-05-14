@@ -18,12 +18,12 @@
                     <el-input placeholder="请输入搜索内容" v-model="input" class="input-with-select" clearable>
                       <el-select v-model="select" slot="prepend" placeholder="请选择">
                       <el-option label="订单ID" value="orderId"></el-option>
-                      <el-option label="下单人" value="orderOwner"></el-option>
-                      <el-option label="酒店ID" value="orderHotelId"></el-option>
-                      <el-option label="酒店名" value="orderHotelName"></el-option>
-                      <el-option label="房间ID" value="orderRoomId"></el-option>
-                      <el-option label="房间名" value="orderRoomName"></el-option>
-                      <el-option label="房间日期" value="orderRoomDate"></el-option>
+                      <el-option label="用户ID" value="userId"></el-option>
+                      <el-option label="酒店ID" value="hotelId"></el-option>
+                      <el-option label="酒店名" value="hotelName"></el-option>
+                      <el-option label="房间ID" value="roomId"></el-option>
+                      <el-option label="房间名" value="roomName"></el-option>
+                      <el-option label="房间日期" value="roomDate"></el-option>
                       <el-option label="使用者" value="roomUser"></el-option>
                       <el-option label="身份证号" value="roomUserIdCard"></el-option>
                       <el-option label="订单日期" value="orderDate"></el-option>
@@ -80,8 +80,8 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
           data:'orderId',
           disable:true
         },{
-          label:'下单人',
-          data:'orderOwner',
+          label:'用户ID',
+          data:'userId',
           disable:true
         },{
           label:'预定日期',
@@ -89,26 +89,26 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
           disable:true
         },{
           label:'酒店ID',
-          data:'orderHotelId'
+          data:'hotelId'
         },{
           label:'酒店名',
-          data:'orderHotelName'
+          data:'hotelName'
         },{
           label:'房间ID',
-          data:'orderRoomId'
+          data:'roomId'
         },{
           label:'房间名',
-          data:'orderRoomName'
+          data:'roomName'
         },{
           label:'房间数量',
-          data:'orderRoomNum',
+          data:'roomNum',
           disable:true
         },{
           label:'房间日期',
-          data:'orderRoomDate'
+          data:'roomDate'
         },{
           label:'房间单价',
-          data:'orderRoomPrice'
+          data:'roomPrice'
         },{
           label:'房间使用者',
           data:'roomUser'
@@ -126,11 +126,11 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
 
         searchInput:{
           orderId:null,
-          orderOwner:null,
-          orderHotelId:null,
-          orderHotelName:null,
-          orderRoomId:null,
-          orderRoomName:null,
+          userId:null,
+          hotelId:null,
+          hotelName:null,
+          roomId:null,
+          roomName:null,
           roomUser:null,
           roomUserIdCard:null,
           orderRoomDate:null,
@@ -148,27 +148,27 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
           userAge:null
         },
         rules: {
-          orderHotelId: [
+          hotelId: [
             { required: true, message: '请输入酒店ID', trigger: 'blur' },
             { min: 8, max: 9,  message: '请输入 8 位数的数字ID', trigger: 'blur'}
           ],
-          orderHotelName: [
+          hotelName: [
             { required: true, message: '请输入酒店名', trigger: 'blur' },
             { min: 6, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
           ],
-          orderRoomId: [
+          roomId: [
             { required: true, message: '请输入房间ID', trigger: 'blur' },
             { min: 3, max: 4, message: '请输入 4 位数的ID', trigger: 'blur' }
           ],
-          orderRoomName: [
+          roomName: [
             { required: true, message: '请输入房间名', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
-          orderRoomDate: [
+          roomDate: [
             { required: true, message: '请输入YYYY-MM-DD格式的房间日期', trigger: 'blur' },
             { min: 10, max: 10, message: '请输入 10 个字符的日期', trigger: 'blur' }
           ],
-          orderRoomPrice: [
+          roomPrice: [
             { required: true, message: '请输入房间单价', trigger: 'blur' },
             { min: 1, max: 10, message: '请输入两位数以上的金额', trigger: 'blur' }
           ],
@@ -195,35 +195,35 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
           label:'订单ID',
           width:80
         },{
-          prop:'orderOwner',
-          label:'下单人',
+          prop:'userId',
+          label:'用户ID',
           width:90
         },{
-          prop:'orderHotelId',
+          prop:'hotelId',
           label:'酒店ID',
           width:95
         },{
-          prop:'orderHotelName',
+          prop:'hotelName',
           label:'酒店名',
           width:130
         },{
-          prop:'orderRoomId',
+          prop:'roomId',
           label:'房间ID',
           width:80
         },{
-          prop:'orderRoomName',
+          prop:'roomName',
           label:'房间名',
           width:100
         },{
-          prop:'orderRoomDate',
+          prop:'roomDate',
           label:'房间日期',
           width:110
         },{
-          prop:'orderRoomNum',
+          prop:'roomNum',
           label:'房间数量',
           width: 80
         },{
-          prop:'orderRoomPrice',
+          prop:'roomPrice',
           label:'房间单价',
           width:95
         },{
@@ -289,22 +289,22 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
         if(this.select=='orderId'){
           this.searchInput.orderId=parseInt(this.input);
           console.log(this.searchInput.orderId);
-        }else if(this.select=='orderOwner'){
-          this.searchInput.orderOwner=this.input;
-        }else if(this.select=='orderHotelId'){
-          this.searchInput.orderHotelId=this.input;
-        }else if(this.select=='orderHotelName'){
-          this.searchInput.orderHotelName=this.input;
-        }else if(this.select=='orderRoomId'){
+        }else if(this.select=='userId'){
+          this.searchInput.userId=this.input;
+        }else if(this.select=='hotelId'){
+          this.searchInput.hotelId=this.input;
+        }else if(this.select=='hotelName'){
+          this.searchInput.hotelName=this.input;
+        }else if(this.select=='roomId'){
           this.searchInput.orderRoomId=this.input;
-        }else if(this.select=='orderRoomName'){
-          this.searchInput.orderRoomName=this.input;
+        }else if(this.select=='roomName'){
+          this.searchInput.roomName=this.input;
         }else if(this.select=='roomUser'){
           this.searchInput.roomUser=this.input;
         }else if(this.select=='roomUserIdCard'){
           this.searchInput.roomUserIdCard=this.input;
-        }else if(this.select=='orderRoomDate'){
-          this.searchInput.orderRoomDate=this.input;
+        }else if(this.select=='roomDate'){
+          this.searchInput.roomDate=this.input;
         }else if(this.select=='orderDate'){
           this.searchInput.orderDate=this.input;
         }else if(this.select=='orderState'){

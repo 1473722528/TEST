@@ -38,7 +38,7 @@
               type="text"
               @click="deleteData(scope.row)">删除</el-button>
             <DialogForm :openDialogVisible="openEditDialog" :ruleForm="ruleForm" :editfun="postEditForm"  :closefun="editDialogClose"  
-             :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey" :rules='rules'/> 
+             :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey" :rules='rules' :fileList="fileList"/> 
         </template>
       </el-table-column>
     </el-table>
@@ -67,7 +67,7 @@ import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData
     data(){
       return{
         openEditDialog:false,
-        
+        fileList:[{}],
         ruleForm:{
           userId:'',
           userName:''
@@ -75,15 +75,19 @@ import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData
       }
     },
     methods: {
-      editDialogOpen(row){                      //打开编辑按钮
-        this.openEditDialog=true;
+      editDialogOpen(row){      //打开编辑按钮
         this.ruleForm=row;
-        console.log(this.ruleForm);
-        console.log(this.openEditDialog);
+        if(this.ruleForm.hotelView!=''){
+          this.fileList=[{}];
+          this.fileList[0].url=this.ruleForm.hotelView;
+        }else{
+          this.fileList=[];
+        }                  
+        this.openEditDialog=true;
+        console.log(this.fileList);
       },
       editDialogClose(){                        //关闭编辑按钮
         this.openEditDialog=false;
-        console.log(this.openEditDialog);
       }, 
       postEditForm(){
         if(this.dataKey=='user'){
@@ -96,10 +100,12 @@ import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData
         //  delete this.ruleForm.children; 删除子属性
           console.log(this.ruleForm);
           editHotelData(this.ruleForm).then(Response=>{
-            this.$message.success(Response.msg)
+            this.$message.success(Response.msg);
+            this.getData();
           }).catch(error=>{
             console.log(error);
           })
+          
         }else if(this.dataKey=='order'){
           console.log(this.ruleForm);
           editOrderData(this.ruleForm).then(Response=>{

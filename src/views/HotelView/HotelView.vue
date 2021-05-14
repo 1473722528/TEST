@@ -35,7 +35,7 @@
                                     style="width:100%;height:100%"
                                     :hit="true"
                                     effect="plain">
-                                    <el-radio-group v-model="orderRoomName" v-for="item in hotelArray.children" :key="item.index">
+                                    <el-radio-group v-model="orderRoomName" v-for="item in roomData" :key="item.index">
                                         <el-radio-button :label="item.roomName"></el-radio-button>
                                     </el-radio-group>
                                     <el-input-number v-model="orderRoomNum" controls-position="right" @change="handleChange"
@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import {getRoomData,getDateData} from '@/api/authority.js'
 export default {
     data(){
         return{
@@ -102,29 +103,38 @@ export default {
             orderRoomNum:1,
             orderRoomName:'',
             haveRoomNum:0,                     //显示出来的房间数量
-            showRoomPrice:Number,             //显示出来的房间价格
+            showRoomPrice:'',             //显示出来的房间价格
             tempRoomData:[],
             hotelArray:[],
             hotelImg:[],
-            carouselArray:[]
+            carouselArray:[],
+            roomData:[],
+            getDate:{
+                hotelId:20210001,
+                roomId:1001,
+                roomDate:'2021-04-28'
+            },
+            dateData:[]
         }
     },
     created(){
         this.getitem();
-        this.getimg();     
-        this.orderRoomName=this.hotelArray.children[0].roomName;           //设置默认房间名
+        console.log(this.hotelArray);
+        this.getimg();   
+        this.getRoomData();  
+        this.getDateData(); 
     },
     watch:{
         orderRoomName(value){
             if(value!=null){
-                for(let i=0;i<this.hotelArray.childNum;i++){
-                    if(value==this.hotelArray.children[i].roomName){
-                        this.hotelImg[0]=this.hotelArray.children[i].roomImg;
-                        this.tempRoomData=this.hotelArray.children[i];
+                for(let i=0;i<this.roomData.length;i++){
+                    if(value==this.roomData[i].roomName){
+                        this.hotelImg[0]=this.roomData.roomImg;
+                        this.tempRoomData=this.roomData[i];
                         this.showRoomPrice=this.tempRoomData.roomPrice;
                         this.ruleForm.roomId=this.tempRoomData.roomId;
-                        this.ruleForm.hotelId=this.hotelArray.hotelId;
-                        this.ruleForm.hotelName=this.hotelArray.hotelName;
+                        this.ruleForm.hotelId=this.tempRoomData.hotelId;
+                        this.ruleForm.hotelName=this.tempRoomData.hotelName;
                         this.getimg();
                         var dateExist=false;
                         for (var item of this.tempRoomData.roomDate) {
@@ -194,10 +204,20 @@ export default {
             }
         }
     },
-    mounted(){
-
-    },
     methods:{
+        getRoomData(){
+            getRoomData(this.hotelArray).then(Response=>{
+                this.roomData=Response;
+                console.log(this.roomData);
+                this.orderRoomName=this.roomData[0].roomName;           //设置默认房间名
+            })
+        },
+        getDateData(){
+            getDateData(this.getDate).then(Response=>{
+                this.dateData=Response;
+                console.log(this.dateData);
+            })
+        },
         orderFormOpen(){
             this.openOrderForm=true;
             this.ruleForm.roomDate=this.orderDate;

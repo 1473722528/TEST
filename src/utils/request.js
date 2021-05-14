@@ -16,21 +16,20 @@ axios.defaults.baseURL = '/api'
 
 
 // 整理数据
-axios.defaults.transformRequest = function(data) {
-    data = JSON.stringify(data)
-    return data
-}
+// axios.defaults.transformRequest = function(data) {
+//     data = JSON.stringify(data)
+//     return data
+// }
 
 // 路由请求拦截
-axios.interceptors.request.use(
-    config => {
-        config.headers['Content-Type'] = 'application/json;charset=UTF-8'
-
-        return config
-    },
-    error => {
-        return Promise.reject(error.response)
-    })
+// axios.interceptors.request.use(
+//     config => {
+//         config.headers['Content-Type'] = 'multipart/form-data'
+//         return config
+//     },
+//     error => {
+//         return Promise.reject(error.response)
+//     })
 
 // 路由响应拦截
 axios.interceptors.response.use(

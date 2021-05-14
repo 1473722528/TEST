@@ -119,10 +119,34 @@ export function editOrderData(data){
     })
 }
 
+export function getMyOrderData(query){
+    return request({
+        url:'/getMyOrderData',
+        method:'GET',
+        params:query
+    })
+}
+
 export function deleteOrderData(data){
     return request({
         url:'/deleteOrderData',
         method:'POST',
         data
+    })
+}
+
+export function addHotelImage(imgdata){
+    return request({
+        url:'/addHotelImage',
+        method:'POST',
+        data:imgdata
+    })
+}
+
+export function getDateData(query){
+    return request({
+        url:'/getDateData',
+        method:'GET',
+        params:query
     })
 }

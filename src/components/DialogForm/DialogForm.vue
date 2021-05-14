@@ -14,6 +14,18 @@
           </el-form-item>
         </el-form>
 
+        <el-upload
+          class="upload-demo"
+          ref="upload"
+          action=""
+          :file-list="fileList"
+          list-type="picture"
+          :auto-upload="false">
+          <el-button slot="trigger" size="small" type="primary">选取酒店图片</el-button>
+          <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+
         <span slot="footer" class="dialog-footer" >
         <el-button @click="cancelDo('ruleForm')">取消提交</el-button>
         <el-button type="primary" @click="successDo('ruleForm')">确定提交</el-button>
@@ -23,6 +35,7 @@
 </template>
 
 <script>
+import {addHotelImage} from '@/api/authority.js'
   export default {
     props:{
       formKeyNum:Number,
@@ -32,6 +45,7 @@
       formKey:Array,
       formSign:String,
       openDialogVisible:Boolean,
+      fileList:Array,
       editfun:{
         type:Function
       },
@@ -47,6 +61,21 @@
       }
     },
     methods:{
+      submitUpload(){
+        let file = this.$refs.upload.uploadFiles.pop().raw;//这里获取上传的文件对象
+        let name = file.name;
+        console.log(file)
+        let formData = new FormData(); 
+        formData.append("name",name)
+        formData.append("file",file);
+        console.log(formData)
+        addHotelImage(formData).then((Response)=>{
+          var data=Response;
+          console.log(data)
+        }).catch(error=>{
+            console.log(error);
+          })
+      },
       successDo(formName){
         var x=0,y=this.formKeyNum;
         for(let i=0;i<y;i++){
@@ -71,7 +100,8 @@
             this.$refs[formName][i].resetFields()
             }
           }else{
-            this.editfun();
+            this.submitUpload();
+              this.editfun();
           }
           this.$notify({
           title: '提交成功',
@@ -82,6 +112,7 @@
         
       },
       cancelDo(formName){
+        console.log(this.fileList[0]);
         var y=this.formKeyNum;
         this.closefun();
         for(let i=0;i<y;i++){
