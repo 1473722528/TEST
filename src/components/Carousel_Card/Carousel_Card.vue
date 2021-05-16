@@ -16,6 +16,40 @@
 export default {
   props:{
     carouselCardArray : Array
+  },
+  data(){
+    return{
+      select:'',
+      searchData:{
+        hotelArea:''
+      }
+    }
+  },
+  methods:{
+    goSearchView(){
+      this.select='hotelArea';
+      if(this.select=='hotelArea'){
+        this.searchData.hotelArea=this.item.hotelArea;
+        if(this.$route.path!='/searchview'){
+          this.$router.push({
+          path:'/searchview',
+          query:{
+            hotelId:this.searchData.hotelId
+            }
+          });
+        console.log(this.searchData.hotelId);
+        }
+        else{
+          this.$router.push({
+          path:'/searchview',
+          query:{
+            hotelId:this.searchData.hotelId
+            }
+          });window.location.reload();
+          console.log("is searchview");
+        }
+      }
+    }
   }
 }
 

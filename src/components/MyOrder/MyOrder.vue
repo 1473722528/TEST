@@ -8,7 +8,7 @@
                           <h1>我的订单</h1>
                       </el-header>
                       <el-main>
-                            <el-card class="box-card"  v-for="item in myOrder" :key="item.index" shadow="hover">
+                            <el-card class="myorder-card"  v-for="item in myOrder" :key="item.index" shadow="hover">
                                 <div slot="header" class="clearfix">
                                     <span>{{item.hotelName}}</span>
                                     <el-button style="float: right; padding: 3px 0" type="text" @click="openOrderMsg(item.orderId)">查看详情</el-button>
@@ -135,7 +135,7 @@ export default {
     clear: both
   }
 
-  .box-card {
+  .myorder-card {
     width:99%;
     margin-top: 15px;
   }

@@ -15,6 +15,7 @@
         </el-form>
 
         <el-upload
+          v-if="this.dataKey=='hotel'||'room'"
           class="upload-demo"
           ref="upload"
           action=""
@@ -44,6 +45,7 @@ import {addHotelImage} from '@/api/authority.js'
       formTitle:String,
       formKey:Array,
       formSign:String,
+      dataKey:String,       //表示哪一个数据表
       openDialogVisible:Boolean,
       fileList:Array,
       editfun:{

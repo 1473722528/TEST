@@ -18,6 +18,7 @@ import AreaManage from './components/AreaManage/index.js'   //地区管理页面
 import UserManage from './components/UserManage/index.js'   //用户管理页面
 import HotelManage from './components/HotelManage/index.js'   //房间管理页面
 import OrderManage from './components/OrderManage/index.js'   //订单管理页面
+import RoomManage from './components/RoomManage/index.js'     //房间管理页面
 import Pagination from './components/Pagination/index.js'   //分页
 import Link from './components/Link/index.js'   //文字链接
 import DialogForm from './components/DialogForm/index.js'   //对话框表单
@@ -27,6 +28,7 @@ import axios from 'axios'             // 新增
 Vue.prototype.$axios = axios    // 新增
 
 Vue.config.productionTip = false;
+Vue.use(RoomManage);
 Vue.use(OrderForm);
 Vue.use(DialogForm);
 Vue.use(Link);

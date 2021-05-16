@@ -20,7 +20,6 @@
 
       <el-table-column v-for="item in tableKey" :key="item.index"
         align="center"
-       
         :prop="item.prop"
         :label="item.label"
         :width="item.width">
@@ -38,7 +37,7 @@
               type="text"
               @click="deleteData(scope.row)">删除</el-button>
             <DialogForm :openDialogVisible="openEditDialog" :ruleForm="ruleForm" :editfun="postEditForm"  :closefun="editDialogClose"  
-             :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey" :rules='rules' :fileList="fileList"/> 
+             :formKeyNum="formKeyNum" :formTitle="formTitle" :formKey="formKey" :rules='rules' :fileList="fileList" :dataKey='dataKey'/> 
         </template>
       </el-table-column>
     </el-table>
@@ -46,7 +45,7 @@
 </template>
 
 <script>
-import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData,deleteOrderData} from '@/api/authority.js'
+import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData,deleteOrderData,editRoomData,deleteRoomData} from '@/api/authority.js'
   export default {
     props:{
       formTitle:String,           //表单标题
@@ -105,10 +104,16 @@ import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData
           }).catch(error=>{
             console.log(error);
           })
-          
         }else if(this.dataKey=='order'){
           console.log(this.ruleForm);
           editOrderData(this.ruleForm).then(Response=>{
+            this.$message.success(Response.msg)
+          }).catch(error=>{
+            console.log(error);
+          })
+        }else if(this.dataKey=='room'){
+          console.log(this.ruleForm);
+          editRoomData(this.ruleForm).then(Response=>{
             this.$message.success(Response.msg)
           }).catch(error=>{
             console.log(error);
@@ -140,6 +145,13 @@ import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData
             })
           }else if(this.dataKey=='order'){
             deleteOrderData(row).then(()=>{
+              this.getData();
+              console.log(this.dataKey);
+            }).catch(error=>{
+              console.log(error);
+            })
+          }else if(this.dataKey=='room'){
+            deleteRoomData(row).then(()=>{
               this.getData();
               console.log(this.dataKey);
             }).catch(error=>{

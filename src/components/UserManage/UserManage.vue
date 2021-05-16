@@ -34,7 +34,7 @@
                   :formKeyNum='formKeyNum2'  :dataKey='dataKey' :getData='getAllUserData' :rules='rules'/>
                 </el-main>
                 <el-footer style="height:33px">
-                  <Pagination v-model="userData" />
+                  <!-- <Pagination v-model="userData" /> -->
                 </el-footer>
               </el-container>
             </el-container>

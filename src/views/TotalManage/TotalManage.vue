@@ -15,6 +15,7 @@
           <el-menu-item index="3-1" @click="UserManage()">用户管理</el-menu-item>
           <el-menu-item index="3-2" @click="HotelManage()">酒店管理</el-menu-item>
           <el-menu-item index="3-3" @click="OrderManage()">订单管理</el-menu-item>
+          <el-menu-item index="3-4" @click="RoomManage()">房间管理</el-menu-item>
       </el-submenu>
       
     </el-menu>
@@ -73,11 +74,9 @@
       OrderManage(){          //赋予组件值，加载组件
         return this.currentView='OrderManage'
       },
-      load(tree, treeNode, resolve) {   //加载树节点
-        setTimeout(() => {
-          resolve(tree.child)
-        }, 100)
-      }
+      RoomManage(){          //赋予组件值，加载组件
+        return this.currentView='RoomManage'
+      },
     }
   }
 </script>

@@ -10,14 +10,15 @@
                     }
                 }">
                     <el-image :src="item.hotelView" class="cardimg" lazy></el-image>
-                    <div style="padding: 14px;">
+                    <div style="padding: 0px;">
                         <div class="bottom clearfix">
                             <el-button type="text" class="button" >
-                                <h3>{{item.hotelName}}</h3>
+                                <h2>{{item.hotelName}}</h2><h3>地区:{{item.hotelArea}}</h3>   
                             </el-button>
                         </div>
                     </div>
-                </router-link>    
+                </router-link>
+                 
               </el-card>
             </el-col>
         </div>
@@ -40,6 +41,7 @@ export default {
     margin-right: 180px;
 }
 .card{
+    background-color: rgba(213, 214, 214, 0.568);
     margin-left: 30px;
     margin-right: 30px;
     margin-bottom: 30px;

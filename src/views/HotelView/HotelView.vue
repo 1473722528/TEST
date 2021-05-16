@@ -20,7 +20,7 @@
                           </el-aside>
                           <el-container>
                             <el-main class="hotelmain">
-                                <el-card class="box-card2">
+                                <el-card class="box-card">
                                   <div slot="header" class="clearfix">
                                     <span>酒店详情 : </span>
                                   </div>
@@ -38,13 +38,14 @@
                                     <el-radio-group v-model="orderForm.roomName" v-for="item in roomData" :key="item.index">
                                         <el-radio-button :label="item.roomName"></el-radio-button>
                                     </el-radio-group>
-                                    <el-input-number v-model="orderForm.roomNum" controls-position="right" @change="handleChange"
+                                    <!-- <el-input-number v-model="orderForm.roomNum" controls-position="right" @change="handleChange"
                                      :min="1" :max="1" style="width:80px">
-                                     </el-input-number> 
+                                     </el-input-number>     数量选择 -->
                                      <el-tag
                                         type="success"
                                         effect="plain">
-                                        <span>价格 : ￥{{orderForm.roomPrice}} / 间</span>  <span v-if="this.dateData.roomNum!=null"> , 剩余 : {{dateData.roomNum}} 间</span>
+                                        <span>价格 : ￥{{orderForm.roomPrice}} / 间</span>  <span v-if="this.dateData.roomNum!=null&&this.dateData.roomNum!=0">
+                                             , 剩余 : {{dateData.roomNum}} 间</span>
                                         <span v-if="this.dateData.roomNum==0"> , 暂无房间</span>
                                     </el-tag>
                                     <div>
@@ -76,7 +77,7 @@
 </template>
 
 <script>
-import {getRoomData,getDateData} from '@/api/authority.js'
+import {getRoomData,getDateData,addDate} from '@/api/authority.js'
 export default {
     data(){
         return{
@@ -87,7 +88,7 @@ export default {
                 userName:'张三',
                 userAge:18,
                 userIdCard:441226199909090009,
-                roomName:'',
+                roomName:null,
                 roomNum:1,
                 roomPrice:null,
             },
@@ -109,7 +110,11 @@ export default {
             tempRoomData:[],
             hotelArray:[],
             hotelImg:[],
-            carouselArray:[],
+            carouselArray:[ {roomView: require('../../assets/img/h1.jpg')},],
+            dateMsg:{                       //新增日期表单
+                roomDate:null,
+                roomNum:Number
+            },
             roomData:[],
             searchDate:{
                 hotelId:null,
@@ -133,31 +138,25 @@ export default {
     watch:{
         'orderForm.roomName'(value){
                 console.log(value);
-                for(let i=0;i<this.roomData.length;i++){
-                    if(value==this.roomData[i].roomName){
-                        console.log(this.roomData[i]);
+                for(var item in this.roomData){
+                    if(value===this.roomData[item].roomName){
+                        console.log(this.roomData[item]);
                         //this.hotelImg[0]=this.roomData.roomImg;
-                        this.tempRoomData=this.roomData[i];
-                        this.showRoomPrice=this.roomData[i].roomPrice;
-                        this.orderForm.roomId=this.roomData[i].roomId;
-                        this.orderForm.hotelId=this.roomData[i].hotelId;
-                        this.orderForm.roomName=this.roomData[i].roomName;
-                        this.orderForm.roomPrice=this.roomData[i].roomPrice;
-                        //this.getimg();
-                        var dateExist=false;
-                        for (var item of this.tempRoomData.roomDate) {
-                            if(this.orderDate==item.date&&this.orderDate!=null){
-                                this.haveRoomNum=item.roomNum;
-                                dateExist=true;
-                            }
+                        this.tempRoomData=this.roomData[item];
+                        this.showRoomPrice=this.roomData[item].roomPrice;
+                        this.orderForm.roomId=this.roomData[item].roomId;
+                        this.orderForm.hotelId=this.roomData[item].hotelId;
+                        this.orderForm.roomName=this.roomData[item].roomName;
+                        this.orderForm.roomPrice=this.roomData[item].roomPrice;
+                        this.orderForm.orderPrice=this.roomData[item].roomPrice;
+                        //this.carouselArray=this.roomData[item];
+                        this.searchDate.hotelId=this.orderForm.hotelId;
+                        this.searchDate.roomId=this.orderForm.roomId;
+                        this.searchDate.roomDate=this.orderDate;
+                        this.searchDate.roomNum=this.roomData[item].roomNum;
+                        if(this.orderDate!=null){
+                            this.getDateData();
                         }
-                       //if(dateExist==false&&this.orderDate!=null){
-                       //    this.tempRoomData.roomDate.push({roomNum:this.tempRoomData.roomNum,date:this.orderDate});
-                       //    this.haveRoomNum=this.tempRoomData.roomNum;
-                       //}
-                        console.log(dateExist);
-                        console.log(this.orderForm);
-                        console.log(this.tempRoomData);
                     }
                 }
                 this.orderDisableKey1=true;
@@ -171,23 +170,13 @@ export default {
                 var dateExist=false;
                 this.searchDate.hotelId=this.orderForm.hotelId;
                 this.searchDate.roomId=this.orderForm.roomId;
-                this.searchDate.roomDate=value;
+                this.searchDate.roomDate=value;     
                 this.getDateData();
-                //for (var item of this.tempRoomData.roomDate) {
-                //    if(this.orderDate==item.date&&this.orderDate!=null){
-                //        this.haveRoomNum=item.roomNum;
-                //        dateExist=true;
-                //    }
-                //}
-                //if(dateExist==false&&this.orderDate!=null){
-                //    this.tempRoomData.roomDate.push({roomNum:this.tempRoomData.roomNum,date:value});
-                //    this.haveRoomNum=this.tempRoomData.roomNum
-                //}
                 console.log(dateExist);
             }
             else if(value==null){
                 this.orderDisableKey2=false; 
-                this.haveRoomNum=0;
+                this.dateData.roomNum=0;
             }
         },
         orderDisableKey1(value){
@@ -230,19 +219,28 @@ export default {
             console.log(this.searchDate);
             getDateData(this.searchDate).then(Response=>{
                 console.log(Response[0]);
-                this.dateData.hotelId=Response[0].hotelId;
-                this.dateData.roomId=Response[0].roomId;
-                this.dateData.roomDate=Response[0].roomDate;
-                this.dateData.roomNum=Response[0].roomNum;
-                
+                if(Response[0]==undefined){
+                    console.log("date null");
+                    this.dateMsg=this.searchDate;
+                    console.log(this.dateMsg);
+                    addDate(this.dateMsg).then(Response=>{
+                        this.dateData=this.searchDate;
+                        console.log(Response);
+                        
+                    })
+                }else{
+                    this.dateData.hotelId=Response[0].hotelId;
+                    this.dateData.roomId=Response[0].roomId;
+                    this.dateData.roomDate=Response[0].roomDate;
+                    this.dateData.roomNum=Response[0].roomNum;
+                }  
             })
         },
         orderFormOpen(){
             this.openOrderForm=true;
-            this.orderForm.roomDate=this.orderDate;
-            this.orderForm.roomName=this.orderRoomName;
+            this.orderForm.roomDate=this.dateData.roomDate;
             this.orderForm.roomNum=this.orderRoomNum;
-            this.orderForm.orderPrice=this.orderRoomNum*this.showRoomPrice;
+            this.orderForm.hotelName=this.hotelArray.hotelName;
         },
         orderFormClose(){
             this.openOrderForm=false;
@@ -276,7 +274,7 @@ export default {
     padding: 18px 0;
   }
 
-  .box-card2 {
+  .box-card {
     width: 99%;
     margin: 0;
     height: 99%;

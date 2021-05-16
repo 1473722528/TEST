@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <NavHeader v-if="this.$route.path!='/login'"/>
-    <el-divider v-if="this.$route.path!='/login'" class="divider" content-position="right"></el-divider>
+    <NavHeader v-if="this.$route.path!='/login'&&this.$route.path!='/registe'"/>
+    <el-divider v-if="this.$route.path!='/login'&&this.$route.path!='/registe'" class="divider" content-position="right"></el-divider>
     <div>
       <router-view/>
     </div>

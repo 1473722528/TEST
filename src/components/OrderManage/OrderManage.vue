@@ -37,7 +37,7 @@
                   :formKeyNum='formKeyNum1'  :dataKey='dataKey' :getData='getAllOrderData' :rules='rules'/>
                 </el-main>
                 <el-footer style="height:33px">
-                  <Pagination v-model="orderData" />
+                  <!-- <Pagination v-model="orderData" /> -->
                 </el-footer>
               </el-container>
             </el-container>

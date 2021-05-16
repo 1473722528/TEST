@@ -1,7 +1,7 @@
 <template>
   <div>
   <Carousel_Card :carouselCardArray='carouselCardArray'></Carousel_Card>  <!-- 走马灯展示 -->
-  <AreaSelect/> <!--地区选择-->
+  <!-- <AreaSelect/> 地区选择 -->
   <Card :cardArray='hotelArray' />
   
   <!--<ItemBox :itemArray='hotelArray' />   酒店商品 -->  
@@ -20,12 +20,12 @@ export default {
           userRole:''
         },
         carouselCardArray:[    //图片数组
-          {id: 0,hotelView: require('../assets/img/01.jpg'),title: '广东'},
-          {id: 1,hotelView: require('../assets/img/02.jpg'),title: '广西'},
-          {id: 2,hotelView: require('../assets/img/03.jpg'),title: '河南'},
-          {id: 3,hotelView: require('../assets/img/04.jpg'),title: '河北'},
-          {id: 4,hotelView: require('../assets/img/05.jpg'),title: '湖南'},
-          {id: 5,hotelView: require('../assets/img/05.jpg'),title: '湖北'}
+          {id: 0,hotelView: require('../assets/img/01.jpg'),title: '肇庆'},
+          {id: 1,hotelView: require('../assets/img/02.jpg'),title: '肇庆'},
+          {id: 2,hotelView: require('../assets/img/03.jpg'),title: '肇庆'},
+          {id: 3,hotelView: require('../assets/img/04.jpg'),title: '广州'},
+          {id: 4,hotelView: require('../assets/img/05.jpg'),title: '广州'},
+          {id: 5,hotelView: require('../assets/img/05.jpg'),title: '广州'}
         ],
         hotelArray:[]
       }

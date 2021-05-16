@@ -15,9 +15,9 @@
                 <el-tooltip effect="dark" content="点击打开或关闭删除酒店按钮" placement="left">
                   <Link :fun="deleteOpen" :linkTitle='linkTitle3' :linkIcon='linkIcon3'/>
                 </el-tooltip>  
-                <el-tooltip  effect="dark" content="点击打开或关闭酒店房间管理按钮" placement="left">
+                <!-- <el-tooltip  effect="dark" content="点击打开或关闭酒店房间管理按钮" placement="left">
                   <Link :fun="deleteOpen" :linkTitle='linkTitle4' :linkIcon='linkIcon4'/>
-                </el-tooltip> 
+                </el-tooltip>  -->
               </el-aside>
               <el-container>
                 <el-header style="height:40px">
@@ -35,7 +35,7 @@
                    :getData='getAllHotelData' :rules='rules'/>
                 </el-main>
                 <el-footer style="height:33px">
-                  <Pagination v-model="hotelData" />
+                  <!-- <Pagination v-model="hotelData" /> -->
                 </el-footer>
               </el-container>
             </el-container>
@@ -69,8 +69,8 @@ import {getAllHotelData,getRoomData,addHotel} from '@/api/authority.js'
         linkIcon2:'el-icon-edit',
         linkTitle3:'删除酒店',
         linkIcon3:'el-icon-delete',
-        linkTitle4:'房间管理',
-        linkIcon4:'el-icon-setting',
+         //linkTitle4:'房间管理',
+         //linkIcon4:'el-icon-setting',
 
         formTitle1:'添加酒店',
         formKey1:[{
