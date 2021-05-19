@@ -6,13 +6,14 @@
                     <el-container>
                         <el-header>
                             <div >
+                                    <el-page-header @back="goBack" content="酒店详情页">
+                                    </el-page-header>
                                 <h2 >
                                     <el-divider direction="vertical"></el-divider>
                                         {{hotelArray.hotelName}}
                                     <el-divider direction="vertical"></el-divider>
                                 </h2>
                             </div>
-                            
                         </el-header>
                         <el-container>
                           <el-aside width="550px" class="hotelaside" >
@@ -63,7 +64,7 @@
                                   :picker-options="pickerOptions">
                                 </el-date-picker>
                                 <div style="margin:20px" > 
-                                    <el-button type="danger" plain :disabled="orderDisable" @click="orderFormOpen()">立 即 预 定</el-button>
+                                    <el-button type="danger" plain :disabled="orderDisable" @click="orderFormOpen()">立 即 预 订</el-button>
                                 </div> 
                             </el-footer>
                           </el-container>
@@ -83,11 +84,10 @@ export default {
         return{
             openOrderForm:false,
             orderForm:{
-                orderId:200000000,
-                userId:2015002,
-                userName:'张三',
-                userAge:18,
-                userIdCard:441226199909090009,
+                userId:this.$store.state.userId,
+                roomUser:this.$store.state.userName,
+                roomUserIdCard:this.$store.state.userIdCard,
+                userPhone:this.$store.state.userPhone,
                 roomName:null,
                 roomNum:1,
                 roomPrice:null,
@@ -109,8 +109,22 @@ export default {
             showRoomPrice:'',             //显示出来的房间价格
             tempRoomData:[],
             hotelArray:[],
-            hotelImg:[],
-            carouselArray:[ {roomView: require('../../assets/img/h1.jpg')},],
+            hotelImg1:[
+                {roomView: require('../../assets/img/h1.jpg')},
+            ],
+            hotelImg2:[
+                {roomView: require('../../assets/img/h2.jpg')},
+            ],
+            hotelImg3:[
+                {roomView: require('../../assets/img/h3.jpg')},
+            ],
+            hotelImg4:[
+                {roomView: require('../../assets/img/h4.jpg')},
+            ],
+            carouselArray:[ 
+                {roomView: require('../../assets/img/h1.jpg')},
+                {roomView: require('../../assets/img/h2.jpg')},
+            ],
             dateMsg:{                       //新增日期表单
                 roomDate:null,
                 roomNum:Number
@@ -149,6 +163,15 @@ export default {
                         this.orderForm.roomName=this.roomData[item].roomName;
                         this.orderForm.roomPrice=this.roomData[item].roomPrice;
                         this.orderForm.orderPrice=this.roomData[item].roomPrice;
+                        if(this.roomData[item].roomName=='单人房'){
+                            this.carouselArray=this.hotelImg1;
+                        }else if(this.roomData[item].roomName=='双人房'){
+                            this.carouselArray=this.hotelImg2;
+                        }else if(this.roomData[item].roomName=='商务房'){
+                            this.carouselArray=this.hotelImg3;
+                        }else if(this.roomData[item].roomName=='经济房'){
+                            this.carouselArray=this.hotelImg4;
+                        }
                         //this.carouselArray=this.roomData[item];
                         this.searchDate.hotelId=this.orderForm.hotelId;
                         this.searchDate.roomId=this.orderForm.roomId;
@@ -205,6 +228,9 @@ export default {
         }
     },
     methods:{
+        goBack(){
+            this.$router.go(-1);
+        },
         getRoomData(){
             getRoomData(this.hotelArray).then(Response=>{
                 this.roomData=Response;
@@ -248,15 +274,6 @@ export default {
         getHotelMsg(){
             this.hotelArray=this.$route.query.viewArray;               //接收路由数据
         },
-        getimg(){
-            this.carouselArray=this.hotelImg[0];
-        },
-        handleChange(value) {
-            console.log(value);
-        },
-        getdate(){
-            console.log(this.date);
-        }
     }
 }
 </script>
@@ -310,5 +327,7 @@ export default {
 .hotelmain{
     margin-top: 60px;
 }
-
+.hotelmsg{
+    text-align: left;
+}
 </style>

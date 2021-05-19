@@ -9,9 +9,6 @@
         center>
 
         <el-form label-position="right" label-width="80px"  :model="ruleForm" :rules="rules" status-icon ref="ruleForm">
-          <el-form-item label="订单号">
-            <el-input v-model="ruleForm.orderId" :disabled="true"></el-input>
-          </el-form-item>
           <el-form-item label="酒店ID">
             <el-input v-model="ruleForm.hotelId" :disabled="true"></el-input>
           </el-form-item>
@@ -27,17 +24,14 @@
           <el-form-item label="用户ID" prop="userId" >
             <el-input v-model="ruleForm.userId" :clearable="true"></el-input>
           </el-form-item>
-          <el-form-item label="用户名" prop="userName">
-            <el-input v-model="ruleForm.userName" :clearable="true"></el-input>
+          <el-form-item label="使用者" prop="roomUser">
+            <el-input v-model="ruleForm.roomUser" :clearable="true"></el-input>
           </el-form-item>
-          <el-form-item label="身份证号" prop="userIdCard">
-            <el-input v-model="ruleForm.userIdCard" :clearable="true"></el-input>
+          <el-form-item label="身份证号" prop="roomUserIdCard">
+            <el-input v-model="ruleForm.roomUserIdCard" :clearable="true"></el-input>
           </el-form-item>
-          <el-form-item label="手机号码">
+          <el-form-item label="手机号码" prop="userPhone">
             <el-input v-model="ruleForm.userPhone" ></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱" prop="userEmail">
-            <el-input v-model="ruleForm.userEmail" ></el-input>
           </el-form-item>
           <el-form-item label="房间数量">
             <el-input v-model="ruleForm.roomNum" :disabled="true"></el-input>
@@ -59,6 +53,7 @@
 </template>
 
 <script>
+import {validatePhone,validateIdCard} from '../../validator/validator.js'
   export default {
     props:{
       ruleForm:Object,
@@ -69,19 +64,6 @@
 
     },
     data(){
-      var validateEmail = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请正确填写邮箱'));
-        } else {
-          if (value !== '') { 
-            var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-            if(!reg.test(value)){
-              callback(new Error('请输入有效的邮箱'));
-            }
-          }
-          callback();
-        }
-      };
         return{
             formKeyNum:'',
             orderForm:{
@@ -92,19 +74,18 @@
                     { required: true, message: '请输入活动名称', trigger: 'blur' },
                     { min: 8, max: 8, message: '长度在 3 到 5 个字符', trigger: 'blur' }
                 ],
-                userName: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                ],
                 roomUser: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                     { required: true, message: '请输入用户名', trigger: 'blur' },
+                    { min: 2, max: 6, message: '用户名长度在 2 到 6 个字符', trigger: 'blur' }
                 ],
                 roomUserIdCard: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    { required: true, message: '请输入身份证号码', trigger: 'blur' },
+                    { validator: validateIdCard, trigger: 'blur' } 
                 ],
-                userEmail:[{ validator: validateEmail, trigger: 'blur' }],
+                userPhone: [
+                  { required: true, message: '请输入手机号码', trigger: 'blur' },
+                     { validator: validatePhone, trigger: 'blur' }
+                ],
             }
       }
     },

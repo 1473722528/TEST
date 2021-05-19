@@ -44,6 +44,7 @@ export default {
     background-color: rgba(213, 214, 214, 0.568);
     margin-left: 30px;
     margin-right: 30px;
+    
     margin-bottom: 30px;
 }
 .bottom {
@@ -57,6 +58,7 @@ export default {
 .cardimg {
   display: block;
   height:250px;
+  
   width:100%
 }
 .clearfix:before,

@@ -15,7 +15,7 @@
         </el-form>
 
         <el-upload
-          v-if="this.dataKey=='hotel'||'room'"
+          v-if="this.dataKey=='hotel'&&'room'"
           class="upload-demo"
           ref="upload"
           action=""
@@ -23,7 +23,7 @@
           list-type="picture"
           :auto-upload="false">
           <el-button slot="trigger" size="small" type="primary">选取酒店图片</el-button>
-          <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+          <!-- <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
           <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
 
@@ -102,8 +102,10 @@ import {addHotelImage} from '@/api/authority.js'
             this.$refs[formName][i].resetFields()
             }
           }else{
-            this.submitUpload();
-              this.editfun();
+            if(this.dataKey=='hotel'||this.dataKey=='room'){
+              this.submitUpload();
+            }
+            this.editfun();
           }
           this.$notify({
           title: '提交成功',
@@ -114,7 +116,7 @@ import {addHotelImage} from '@/api/authority.js'
         
       },
       cancelDo(formName){
-        console.log(this.fileList[0]);
+       // console.log(this.fileList[0]);
         var y=this.formKeyNum;
         this.closefun();
         for(let i=0;i<y;i++){

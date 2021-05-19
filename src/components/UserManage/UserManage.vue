@@ -48,6 +48,7 @@
 
 <script>
 import { getAllUserData,searchUserData,register} from '@/api/authority.js'
+import {validateIdCard,validateEmail,validatePhone,checkUserId,checkUserAge,checkUserRole} from '../../validator/validator.js'
   export default {
     data() {
       return {
@@ -118,6 +119,9 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
         },{
           label:'年 龄',
           data:'userAge'
+        },{
+          label:'权 限',
+          data:'userRole'
         }],
         formKeyNum2:5,
 
@@ -141,11 +145,11 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
         rules: {
           userId: [
             { required: true, message: '请输入用户ID', trigger: 'blur' },
-            { min: 7, max: 7, message: '请输入 7 个数字长度的ID', trigger: 'blur' }
+             { validator: checkUserId, trigger: 'blur' } 
           ],
           userName: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 2, max: 10, message: '用户名长度在 2 到 10 个字符', trigger: 'blur' }
+            { min: 2, max: 6, message: '用户名长度在 2 到 6 个字符', trigger: 'blur' }
           ],
           userPassword: [
             { required: true, message: '请输入密码', trigger: 'blur' },
@@ -153,19 +157,23 @@ import { getAllUserData,searchUserData,register} from '@/api/authority.js'
           ],
           userPhone: [
             { required: true, message: '请输入手机号码', trigger: 'blur' },
-            { min: 11, max: 11, message: '请输入11位手机号码', trigger: 'blur' }
+             { validator: validatePhone, trigger: 'blur' } 
           ],
           userEmail: [
             { required: true, message: '请输入邮箱', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+             { validator: validateEmail, trigger: 'blur' } 
+          ],
+          userRole: [
+            { required: true, message: '请输入用户权限', trigger: 'blur' },
+            { validator: checkUserRole, trigger: 'blur' } 
           ],
           userIdCard: [
             { required: true, message: '请输入身份证号码', trigger: 'blur' },
-            { min: 18, max: 18, message: '请输入18位的身份证号码', trigger: 'blur' }
+             { validator: validateIdCard, trigger: 'blur' } 
           ],
           userAge: [
             { required: true, message: '请输入年龄', trigger: 'blur' },
-            { min: 2, max: 3, message: '请输入正确年龄段的数字', trigger: 'blur' }
+            { validator: checkUserAge, trigger: 'blur' } 
           ],
         },
 

@@ -43,7 +43,7 @@
         </el-col>
       </el-row>
       <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules" :closefun="addDialogClose" 
-      :formKeyNum="formKeyNum"  :formTitle="formTitle1" :formKey="formKey1" :addfun="addHotel"/> 
+      :formKeyNum="formKeyNum"  :formTitle="formTitle1" :formKey="formKey1" :addfun="addHotel" :dataKey="dataKey"/> 
     </div>
 </template>
 

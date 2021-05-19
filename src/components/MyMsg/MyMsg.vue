@@ -46,16 +46,37 @@
                 </div>           
             </el-col>
         </el-row>
-        <DialogForm :openDialogVisible="openEditPwDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules1" :closefun="editPwDialogClose" 
+        <DialogForm :openDialogVisible="openEditPwDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules" :closefun="editPwDialogClose" 
       :formKeyNum="formKeyNum1"  :formTitle="formTitle1" :formKey="formKey1" /> 
         <DialogForm :openDialogVisible="openEditMsgDialog" :ruleForm="myData" :formSign="formSign" :rules="rules2" :closefun="editMsgDialogClose" 
-      :formKeyNum="formKeyNum2"  :formTitle="formTitle2" :formKey="formKey2" /> 
+      :formKeyNum="formKeyNum2"  :formTitle="formTitle2" :formKey="formKey2" :editfun='editUserData'/> 
     </div>
 </template>
 
 <script>
+import {validatePhone,validateIdCard,validateEmail,checkUserAge} from '../../validator/validator.js'
+import {editUserData} from '@/api/authority.js'
 export default {
     data(){
+        var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.ruleForm.newPassword2!== '') {
+            this.$refs.ruleForm.validateField('newPassword2');
+          }
+          callback();
+        }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.ruleForm.newPassword1) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
         return{
             formTitle1:'修改密码',
             formKey1:[{
@@ -77,18 +98,18 @@ export default {
             },
             formKeyNum1:3,
 
-            rules1:{
+            rules:{
                 oldPassword: [
                     { required: true, message: '请输入旧密码', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
                 ],
                 newPassword1: [
                     { required: true, message: '请输入新密码', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                   { validator: validatePass, trigger: 'blur' } 
                 ],
                 newPassword2: [
                     { required: true, message: '请再次输入新密码', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    { validator: validatePass2, trigger: 'blur' } 
                 ],
             },
 
@@ -102,32 +123,35 @@ export default {
             },{
                 label:'用户手机号',
                 data:'userPhone'
-            }
-            ,{
+            },{
                 label:'用户邮箱',
                 data: 'userEmail'
             },{
                 label:'身份证号码',
                 data:'userIdCard'
             }],
-            formKeyNum2:4,
+            formKeyNum2:5,
             rules2:{
                 userName: [
-                    { required: true, message: '请输入旧密码', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    { required: true, message: '请输入用户名', trigger: 'blur' },
+                    { min: 2, max:6, message: '长度在 2 到 6 个字符', trigger: 'blur' }
                 ],
                 userAge: [
                     { required: true, message: '请输入旧密码', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                ],
-                userPhone: [
-                    { required: true, message: '请输入旧密码', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    { validator: checkUserAge, trigger: 'blur' }
                 ],
                 userIdCard: [
-                    { required: true, message: '请输入旧密码', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                ]
+                    { required: true, message: '请输入身份证号码', trigger: 'blur' },
+                    { validator: validateIdCard, trigger: 'blur' } 
+                ],
+                userPhone: [
+                  { required: true, message: '请输入手机号码', trigger: 'blur' },
+                     { validator: validatePhone, trigger: 'blur' }
+                ],
+               userEmail: [
+                  { required: true, message: '请输入邮箱', trigger: 'blur' },
+                     { validator: validateEmail, trigger: 'blur' }
+                ],
             },
 
             linkTitle1:'修改密码',
@@ -150,6 +174,12 @@ export default {
         this.getMyData()
     },
     methods:{
+        editUserData(){
+            editUserData(this.myData).then(Response=>{
+                sessionStorage.setItem("MyData",JSON.stringify(this.myData));
+                console.log(Response);
+            })
+        },
         getMyData(){
             this.myData=JSON.parse(sessionStorage.getItem("MyData"));
         },

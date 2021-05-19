@@ -18,10 +18,10 @@
           <div style="margin-top: 22px;">
             <el-input placeholder="请输入搜索内容" v-model="input" class="input-with-select" clearable>
               <el-select v-model="select" slot="prepend" placeholder="请选择">
-                <el-option label="酒店ID" value="hotelId"></el-option>
                 <el-option label="酒店名" value="hotelName"></el-option>
                 <el-option label="酒店地区" value="hotelArea"></el-option>
-                <el-option label="酒店介绍" value="hotelInfo"></el-option>
+                <el-option label="酒店特点" value="hotelInfo"></el-option>
+                <el-option label="房间名" value="roomName"></el-option>
               </el-select>
               <el-button slot="append" icon="el-icon-search" @click="goSearchView()"></el-button>
             </el-input>
@@ -54,6 +54,10 @@ export default {
         hotelName:null,
         hotelArea:null,
         hotelInfo:null,
+       
+      },
+      searchRoomData:{
+        roomName:null,
       }
   }
  },
@@ -78,22 +82,22 @@ export default {
     this.userRole=this.$store.state.userRole;
   },
   goSearchView(){
-    if(this.select=='hotelId'){
-      this.searchData.hotelId=this.input;
+    if(this.select=='roomName'){
+      this.searchRoomData.roomName=this.input;
       if(this.$route.path!='/searchview'){
         this.$router.push({
         path:'/searchview',
         query:{
-          hotelId:this.searchData.hotelId
+          roomName:this.searchRoomData.roomName
           }
         });
-        console.log(this.searchData.hotelId);
+        console.log(this.searchRoomData.roomName);
       }
       else{
         this.$router.push({
         path:'/searchview',
         query:{
-          hotelId:this.searchData.hotelId
+          roomName:this.searchRoomData.roomName
           }
         });window.location.reload();
         console.log("is searchview");

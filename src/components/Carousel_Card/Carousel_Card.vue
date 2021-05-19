@@ -1,13 +1,21 @@
 <template>
   <div>
     <el-carousel :interval="4000"  type="card" height="400px">
-    <el-carousel-item v-for="item in carouselCardArray" :key="item.index">
-        <a href=""> <!--图片跳转-->
+      <el-carousel-item v-for="item in carouselCardArray" :key="item.index">
+        <!-- <a href=""> 图片跳转
           <img :src="item.hotelView"  lazy>
-        </a>
-        <span class="homepagetitle" style="position: absolute; top: 10px; left: 10px;color:#FFFFFF" >{{item.title}}</span>
-    </el-carousel-item>
-  </el-carousel>
+        </a> -->
+        <router-link :to="{
+                    name: 'SearchView',     
+                    query: {   
+                        hotelArea: item.hotelArea, 
+                    }
+                }">
+            <el-image style="width:100%;height:100%" :src="item.hotelView" ></el-image>
+         </router-link>
+        <span class="homepagetitle" style="position: absolute; top: 10px; left: 10px;color:#FFFFFF" >{{item.hotelArea}} </span>
+      </el-carousel-item>
+    </el-carousel>
   </div>
 
 </template>
