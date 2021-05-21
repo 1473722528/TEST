@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import {validatePhone,validateIdCard} from '../../validator/validator.js'
+import {validatePhone,validateIdCard, checkUserId} from '../../validator/validator.js'
   export default {
     props:{
       ruleForm:Object,
@@ -72,7 +72,7 @@ import {validatePhone,validateIdCard} from '../../validator/validator.js'
             rules:{
                 userId: [
                     { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 8, max: 8, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    { validator:checkUserId, trigger: 'blur' } 
                 ],
                 roomUser: [
                      { required: true, message: '请输入用户名', trigger: 'blur' },

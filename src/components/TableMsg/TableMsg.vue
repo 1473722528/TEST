@@ -76,9 +76,12 @@ import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData
     methods: {
       editDialogOpen(row){      //打开编辑按钮
         this.ruleForm=row;
-        if(this.ruleForm.hotelView!=''){
+        if(this.ruleForm.hotelView!=null){
           this.fileList=[{}];
-          this.fileList[0].url=this.ruleForm.hotelView;
+          this.fileList[0].url=this.ruleForm.hotelView; 
+        }else if(this.ruleForm.roomView!=null){
+          this.fileList=[{}];
+          this.fileList[0].url=this.ruleForm.roomView;
         }else{
           this.fileList=[];
         }                  

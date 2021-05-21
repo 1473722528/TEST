@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {searchHotelData,searchRoomData} from '@/api/authority.js'
+import {searchHotelData,searchHotelRoomData} from '@/api/authority.js'
   export default {
     data(){
       return{
@@ -52,7 +52,7 @@ import {searchHotelData,searchRoomData} from '@/api/authority.js'
           console.log(Response);
           })
         }else{
-          searchRoomData(this.searchRoomData).then(Response=>{
+          searchHotelRoomData(this.searchRoomData).then(Response=>{
           this.hotelArray=Response;
           console.log(Response);
           })
@@ -74,7 +74,6 @@ import {searchHotelData,searchRoomData} from '@/api/authority.js'
 <style>
 .searchview{
     margin-top: 10px;
-     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 
  .searchmain{

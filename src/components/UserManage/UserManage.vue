@@ -102,9 +102,6 @@ import {validateIdCard,validateEmail,validatePhone,checkUserId,checkUserAge,chec
 
         formTitle2:'编辑用户',
         formKey2:[{
-          label:'用户ID',
-          data:'userId'
-        },{
           label:'用户名',
           data:'userName'
         },{
@@ -123,7 +120,7 @@ import {validateIdCard,validateEmail,validatePhone,checkUserId,checkUserAge,chec
           label:'权 限',
           data:'userRole'
         }],
-        formKeyNum2:5,
+        formKeyNum2:6,
 
         searchInput:{
           userId:null,
@@ -193,6 +190,10 @@ import {validateIdCard,validateEmail,validatePhone,checkUserId,checkUserAge,chec
           prop:'userPhone',
           label:'用户手机号',
           width:120
+        },{
+          prop:'userAge',
+          label:'年 龄',
+          width:70
         },{
           prop:'userEmail',
           label:'用户邮箱',

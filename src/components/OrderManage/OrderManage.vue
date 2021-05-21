@@ -51,6 +51,7 @@
 
 <script>
 import { getAllOrderData,searchOrderData} from '@/api/authority.js'
+import {checkHotelId,checkRoomId,validateIdCard, checkOrderState, checkPrice} from '../../validator/validator.js'
   export default {
     data() {
       return {
@@ -150,7 +151,7 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
         rules: {
           hotelId: [
             { required: true, message: '请输入酒店ID', trigger: 'blur' },
-            { min: 8, max: 9,  message: '请输入 8 位数的数字ID', trigger: 'blur'}
+            { validator: checkHotelId, trigger: 'blur' }
           ],
           hotelName: [
             { required: true, message: '请输入酒店名', trigger: 'blur' },
@@ -158,11 +159,11 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
           ],
           roomId: [
             { required: true, message: '请输入房间ID', trigger: 'blur' },
-            { min: 3, max: 4, message: '请输入 4 位数的ID', trigger: 'blur' }
+            { validator: checkRoomId, trigger: 'blur' } 
           ],
           roomName: [
             { required: true, message: '请输入房间名', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { min: 3, max: 10, message: '房间名长度在 3 到 10 个字符之间', trigger: 'blur' }
           ],
           roomDate: [
             { required: true, message: '请输入YYYY-MM-DD格式的房间日期', trigger: 'blur' },
@@ -170,7 +171,7 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
           ],
           roomPrice: [
             { required: true, message: '请输入房间单价', trigger: 'blur' },
-            { min: 1, max: 10, message: '请输入两位数以上的金额', trigger: 'blur' }
+            {validator:checkPrice, trigger: 'blur' }
           ],
           roomUser: [
             { required: true, message: '请输入姓名', trigger: 'blur' },
@@ -178,15 +179,15 @@ import { getAllOrderData,searchOrderData} from '@/api/authority.js'
           ],
           roomUserIdCard: [
             { required: true, message: '请输入身份证号码', trigger: 'blur' },
-            { min: 18, max: 18, message: '请输入 18 位的身份证号码', trigger: 'blur' }
+            { validator:validateIdCard, trigger: 'blur' }
           ],
           orderPrice: [
             { required: true, message: '请输入订单金额', trigger: 'blur' },
-            { min: 1, max: 10, message: '请输入两位数以上的金额', trigger: 'blur' }
+            { validator:checkPrice, trigger: 'blur' }
           ],
           orderState: [
             { required: true, message: '请输入订单状态', trigger: 'blur' },
-            { min: 3, max: 3, message: '请输入表示订单状态的 3 个字符', trigger: 'blur' }
+            {validator:checkOrderState, trigger: 'blur' }
           ],
         },
 

@@ -43,30 +43,81 @@
 
 
   
-  /*自动检验数值的范围*/
+  /*用户ID*/
   export function checkUserId(rule, value, callback) {
     if (value == '' || value == undefined || value == null) {
       callback();
     } else if (!Number(value)) {
-      callback(new Error('请输入8位数的数字'));
+      callback(new Error('请输入7位数的用户ID'));
+    } else if (value < 1000000 || value > 9999999) {
+      callback(new Error('请输入7位数的用户ID'));
+    } else {
+      callback();
+    }
+  }
+   /*酒店ID*/
+   export function checkHotelId(rule, value, callback) {
+    if (value == '' || value == undefined || value == null) {
+      callback();
+    } else if (!Number(value)) {
+      callback(new Error('请输入8位数的酒店ID'));
     } else if (value < 10000000 || value > 99999999) {
-      callback(new Error('请输入8位数的数字'));
+      callback(new Error('请输入8位数的酒店ID'));
+    } else {
+      callback();
+    }
+  }
+   /*房间ID*/
+   export function checkRoomId(rule, value, callback) {
+    if (value == '' || value == undefined || value == null) {
+      callback();
+    } else if (!Number(value)) {
+      callback(new Error('请输入4位数的房间ID'));
+    } else if (value < 1000 || value > 9999) {
+      callback(new Error('请输入4位数的房间ID'));
     } else {
       callback();
     }
   }
   
-  //验证数字输入框最大数值,32767
-  export function checkUserAge(rule, value, callback) {
-    if (value < 0 || value > 100) {
+  //验证金额
+  export function checkPrice(rule, value, callback) {
+    if (value < 0 ){
+      callback(new Error('请输入正确的金额'));
+    } else {
+      callback();
+    }
+  }
+
+   //验证数量
+   export function checkNum(rule, value, callback) {
+    if (value < 0 ){
+      callback(new Error('请输入正确的数量'));
+    } else {
+      callback();
+    }
+  }
+   //验证年龄
+   export function checkUserAge(rule, value, callback) {
+    if (value < 16 || value > 150) {
       callback(new Error('请输入正确的年龄'));
     } else {
       callback();
     }
   }
+
+  //验证权限输入
   export function checkUserRole(rule, value, callback) {
-    if (value !=='用户' || value!='管理员') {
+    if (value!='用户'&&value!='管理员') {
       callback(new Error('请输入用户或管理员'));
+    } else {
+      callback();
+    }
+  }
+//验证订单状态输入
+  export function checkOrderState(rule, value, callback) {
+    if (value!='预定中'&&value!='已完成') {
+      callback(new Error('请输入预定中或已完成'));
     } else {
       callback();
     }
@@ -111,20 +162,3 @@
   }
 
   
-  // 验证是否是[0-100]的小数
-  export function isBtnZeroToHundred(rule, value, callback) {
-    if (!value) {
-      return callback(new Error('输入不可以为空'));
-    }
-    setTimeout(() => {
-      if (!Number(value)) {
-        callback(new Error('请输入[1,100]之间的数字'));
-      } else {
-        if (value < 0 || value > 100) {
-          callback(new Error('请输入[1,100]之间的数字'));
-        } else {
-          callback();
-        }
-      }
-    }, 100);
-  }

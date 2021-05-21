@@ -72,6 +72,14 @@ export function getAllRoomData(query){           //获取全部房间数据
     })
 }
 
+export function searchHotelRoomData(query){          //搜索房间数据返回酒店数据
+    return request({
+        url:'/searchHotelRoomData',
+        method:'GET',
+        params:query
+    })
+}
+
 export function searchRoomData(query){          //搜索房间数据返回酒店数据
     return request({
         url:'/searchRoomData',
@@ -80,7 +88,14 @@ export function searchRoomData(query){          //搜索房间数据返回酒店
     })
 }
 
-export function deleteRoomData(data){
+export function editRoomData(data){          //搜索房间数据返回酒店数据
+    return request({
+        url:'/editRoomData',
+        method:'POST',
+        data
+    })
+}
+export function deleteRoomData(data){       //删除酒店
     return request({
         url:'/deleteRoomData',
         method:'POST',
@@ -88,7 +103,7 @@ export function deleteRoomData(data){
     })
 }
 
-export function addRoom(data){
+export function addRoom(data){      //添加酒店
     return request({
         url:'/addRoom',
         method:'POST',

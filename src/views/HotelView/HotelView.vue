@@ -203,22 +203,22 @@ export default {
             }
         },
         orderDisableKey1(value){
-            if(value==true&&this.orderDisableKey2==true&&this.haveRoomNum!=0){
+            if(value==true&&this.orderDisableKey2==true&&this.dateData.roomNum!=0){
                 this.orderDisable=false;
             }
-            else if(value==false||this.haveRoomNum==0){
+            else if(value==false||this.dateData.roomNum==0){
                 this.orderDisable=true;
             }
         },
         orderDisableKey2(value){
-            if(value==true&&this.orderDisableKey1==true&&this.haveRoomNum!=0){
+            if(value==true&&this.orderDisableKey1==true&&this.dateData.roomNum!=0){
                 this.orderDisable=false;
             }
-            else if(value==false||this.haveRoomNum==0){
+            else if(value==false||this.dateData.roomNum==0){
                 this.orderDisable=true;
             }
         },
-        haveRoomNum(value){
+        'dateData.roomNum'(value){
             if(value==0){
                 this.orderDisable=true;
             }

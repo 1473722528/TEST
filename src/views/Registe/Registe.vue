@@ -4,12 +4,12 @@
             <img :src="loginImg" width="100%" height="100%" alt="login" />
         </div>
         <div class="login-page">
-            <el-form :model="loginForm" :rules="rules"
+            <el-form :model="registeForm" :rules="rules"
                  
-                 ref="loginForm" 
+                 ref="registeForm" 
                  label-position="left" 
                  label-width="0px" 
-                 class="demo-loginForm ">
+                 class="demo-registeForm ">
                     <h3 class="title">酒店预订系统注册</h3>
                     <el-form-item prop="userId">
                         <el-input type="text" 
@@ -36,7 +36,10 @@
                             </el-input>
                     </el-form-item>
                     <el-form-item style="width:100%;">
-                        <el-button type="primary" style="width:100%;" @click="loginSubmit" :loading="logining">注册</el-button>
+                        <el-button type="primary" style="width:100%;" @click="registerSubmit" :loading="logining">注册</el-button>
+                    </el-form-item>
+                    <el-form-item style="width:100%;">
+                        <el-button type="primary" style="width:100%;" @click="registerSubmit" :loading="logining">转到登录</el-button>
                     </el-form-item>
                 </el-form>
         </div>
@@ -45,7 +48,7 @@
 </template>
 
 <script>
-import {login} from '@/api/authority.js' 
+import {register} from '@/api/authority.js' 
  
 export default {
     data(){
@@ -58,44 +61,40 @@ export default {
                 userPassword: '',
                 userPassword2: '',
             },
+            register:{
+                userId:null,
+                userPassword: '',
+            },
             rules: {
                 userId: [{required: true, message: '请输入您的用户ID', trigger: 'blur'}],
                 userPassword: [{required: true, message: '请输入您的密码', trigger: 'blur'}],
-                userPassword2: [{required: true, message: '请输入您的密码', trigger: 'blur'}]
+                userPassword2: [{required: true, message: '请重新输入您的密码', trigger: 'blur'}]
             },
             checked: false
         }
     },
     methods: {
-        login(){
-            login(this.registeForm).then(Response=>{
-                this.myData=Response;     
-            })
-        },
-        loginSubmit(){
+
+        registerSubmit(){
             this.$refs.registeForm.validate((valid) => {
                 if(valid){
                     this.logining = true;
-                    login(this.registeForm).then(Response=>{
+                    this.register.userId=parseInt(this.registeForm.userId);
+                    this.register.userPassword=this.registeForm.userPassword;
+                    register(this.register).then(Response=>{
                         console.log(Response);
-                        if(Response!=''){
-                            this.myData=Response;
-                            sessionStorage.setItem("MyData",JSON.stringify(this.myData));   //存进sessionStrong
-                            
-                            this.$store.commit('updateUser',this.myData);       //刷新Vuex状态
-                            console.log(this.$store.state.userRole);
-                            this.logining = false;
-                            this.$router.push({path:'/'});
+                        if(Response==''){
+                            this.$router.push({path:'/login'});
                             //window.location.reload();           //刷新页面
-                        }else if(Response==''){
+                        }else if(Response!==''){
                             this.logining = false;
-                            this.$alert('登录出错！', 'info', {
+                            this.$alert('注册出错！', 'info', {
                                 confirmButtonText: 'ok'
                         })
                         }
                     }).catch(error=>{
                         this.logining = false;
-                        this.$alert('登录出错！', 'info', {
+                        this.$alert('注册出错！', 'info', {
                             confirmButtonText: 'ok'
                         })
                         console.log(error);

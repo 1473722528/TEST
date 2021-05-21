@@ -24,7 +24,7 @@
                         <el-option label="房间ID" value="roomId"></el-option>
                         <el-option label="房间名" value="roomName"></el-option>
                     </el-select>
-                    <el-button slot="append" icon="el-icon-search"></el-button>
+                    <el-button slot="append" icon="el-icon-search" @click="searchRoomData"></el-button>
                     </el-input>
                 </el-header>
                 <el-main> 
@@ -41,12 +41,13 @@
         </el-col>
       </el-row>
       <DialogForm :openDialogVisible="openAddDialog" :ruleForm="ruleForm" :formSign="formSign" :rules="rules" :closefun="addDialogClose" 
-      :formKeyNum="formKeyNum"  :formTitle="formTitle1" :formKey="formKey1" :addfun="addRoom"/> 
+      :formKeyNum="formKeyNum"  :formTitle="formTitle1" :formKey="formKey1" :addfun="addRoom" :dataKey="dataKey" /> 
     </div>
 </template>
 
 <script>
-import {getAllRoomData,addRoom} from '@/api/authority.js'
+import {getAllRoomData,addRoom,searchRoomData} from '@/api/authority.js'
+import {checkHotelId, checkPrice,checkNum} from '../../validator/validator.js'
   export default {
     data() {
       return {
@@ -94,7 +95,7 @@ import {getAllRoomData,addRoom} from '@/api/authority.js'
           label:'房间价格',
           data:'roomPrice'
         }],
-        formKeyNum2:4,
+        formKeyNum2:3,
         formKeyNum:4,
         formSign:'add',
 
@@ -109,15 +110,15 @@ import {getAllRoomData,addRoom} from '@/api/authority.js'
           ],
           roomNum: [
             { required: true, message: '请输入房间数', trigger: 'blur' },
-            { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+            {validator:checkNum, trigger: 'blur' }
           ],
           roomPrice: [
-            { required: true, message: '请输入房间价格', trigger: 'blur' },
-            { min: 2, max: 9, message: '长度在 2 到 9 个字符', trigger: 'blur' }
+            { required: true, message: '请输入房间单价', trigger: 'blur' },
+            {validator:checkPrice, trigger: 'blur' }
           ],
           hotelId: [
             { required: true, message: '请输入酒店ID', trigger: 'blur' },
-            { min: 7, max: 8, message: '长度在 10 到 255 个字符', trigger: 'blur' }
+            { valiator:checkHotelId, trigger: 'blur' }
           ],
         },
 
@@ -140,6 +141,11 @@ import {getAllRoomData,addRoom} from '@/api/authority.js'
           prop:'roomNum',
           label:'初始房间数',
         }],
+        searchInput:{
+          hotelId:null,
+          roomId:null,
+          roomName:null,
+        },
         roomData: []
       }
     },
@@ -163,6 +169,19 @@ import {getAllRoomData,addRoom} from '@/api/authority.js'
       this.getAllRoomData();
     },
     methods: {
+      searchRoomData(){
+        if(this.select=='roomId'){
+          this.searchInput.roomId=parseInt(this.input);
+          console.log(this.searchInput.roomId);
+        }else if(this.select=='roomName'){
+          this.searchInput.roomName=this.input;
+        }else if(this.select=='hotelId'){
+          this.searchInput.hotelId=this.input;
+        }
+        searchRoomData(this.searchInput).then(Response=>{
+          this.roomData=Response;
+        })
+      },
       addDialogOpen(){
         this.openAddDialog=true;
         console.log("open");
@@ -173,6 +192,7 @@ import {getAllRoomData,addRoom} from '@/api/authority.js'
       getAllRoomData(){
         getAllRoomData().then(Response=>{
           this.roomData=Response;  
+          console.log(this.roomData);
         })
       },
       addRoom(){

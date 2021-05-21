@@ -23,10 +23,13 @@
                 <el-header style="height:40px">
                     <el-input placeholder="请输入搜索内容" v-model="input" class="input-with-select" clearable>
                       <el-select v-model="select" slot="prepend" placeholder="请选择">
-                      <el-option label="酒店ID" value="1"></el-option>
-                      <el-option label="酒店名" value="2"></el-option>
+                      <el-option label="酒店ID" value="hotelId"></el-option>
+                      <el-option label="酒店名" value="hotelName"></el-option>
+                      <el-option label="酒店地区" value="hotelArea"></el-option>
+                      <el-option label="酒店地址" value="hotelAddress"></el-option>
+                      <el-option label="酒店介绍" value="hotelInfo"></el-option>
                     </el-select>
-                    <el-button slot="append" icon="el-icon-search"></el-button>
+                    <el-button slot="append" icon="el-icon-search" @click="searchHotelData"></el-button>
                     </el-input>
                 </el-header>
                 <el-main> 
@@ -48,7 +51,7 @@
 </template>
 
 <script>
-import {getAllHotelData,getRoomData,addHotel} from '@/api/authority.js'
+import {getAllHotelData,getRoomData,addHotel,searchHotelData} from '@/api/authority.js'
   export default {
     data() {
       return {
@@ -113,19 +116,19 @@ import {getAllHotelData,getRoomData,addHotel} from '@/api/authority.js'
         rules: {
           hotelName: [
             { required: true, message: '请输入酒店名', trigger: 'blur' },
-            { min: 5, max: 10, message: '长度在 5 到 10 个字符', trigger: 'blur' }
+            { min: 5, max: 10, message: '酒店名长度在 5 到 10 个字符', trigger: 'blur' }
           ],
           hotelArea: [
             { required: true, message: '请输入酒店地区', trigger: 'blur' },
-            { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+            { min: 2, max: 5, message: '酒店地区长度在 2 到 5 个字符', trigger: 'blur' }
           ],
           hotelAddress: [
             { required: true, message: '请输入酒店地址', trigger: 'blur' },
-            { min: 6, max: 30, message: '长度在 6 到 30 个字符', trigger: 'blur' }
+            { min: 6, max: 30, message: '酒店地址长度在 6 到 30 个字符', trigger: 'blur' }
           ],
           hotelInfo: [
             { required: true, message: '请输入酒店详情', trigger: 'blur' },
-            { min: 10, max: 255, message: '长度在 10 到 255 个字符', trigger: 'blur' }
+            { min: 10, max: 255, message: '酒店详情长度在 10 到 255 个字符', trigger: 'blur' }
           ],
         },
 
@@ -158,7 +161,13 @@ import {getAllHotelData,getRoomData,addHotel} from '@/api/authority.js'
           label:'房间数量',
           data:'roomNum'
         }],
-        
+        searchInput:{
+          hotelId:null,
+          hotelName:null,
+          hotelArea:null,
+          hotelAddress:null,
+          hotelInfo:null,
+        },
         hotelData: []
       }
     },
@@ -188,6 +197,30 @@ import {getAllHotelData,getRoomData,addHotel} from '@/api/authority.js'
       },
       addDialogClose(){
         this.openAddDialog=false;
+      },
+      searchHotelData(){
+        if(this.select=='hotelId'){
+          this.searchInput.userId=parseInt(this.input);
+          console.log(this.searchInput.hotelId);
+        }else if(this.select=='hotelName'){
+          this.searchInput.hotelName=this.input;
+        }else if(this.select=='hotelArea'){
+          this.searchInput.hotelArea=this.input;
+        }else if(this.select=='hotelAddress'){
+          this.searchInput.hotelAddress=this.input;
+        }else if(this.select=='hotelInfo'){
+          this.searchInput.hotelInfo=this.input;
+        }
+        searchHotelData(this.searchInput).then(Response=>{
+          this.hotelData=Response;
+          for(let i=0;i<this.hotelData.length;i++){
+            console.log(this.hotelData[i]);
+            getRoomData(this.hotelData[i]).then(Response=>{
+              this.hotelData[i].children=Response;
+              console.log(this.hotelData[i].children);
+            })
+          } 
+        })
       },
       getAllHotelData(){
         getAllHotelData().then(Response=>{

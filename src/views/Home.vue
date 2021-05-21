@@ -20,11 +20,11 @@ export default {
           userRole:''
         },
         carouselCardArray:[    //图片数组
-          {id: 0,hotelView: require('../assets/img/01.jpg'),hotelArea: '肇庆'},
+          {id: 0,hotelView: require('../assets/img/01.jpg'),hotelArea: '广州'},
           {id: 1,hotelView: require('../assets/img/02.jpg'),hotelArea: '北京'},
           {id: 2,hotelView: require('../assets/img/03.jpg'),hotelArea: '梧州'},
-          {id: 3,hotelView: require('../assets/img/04.jpg'),hotelArea: '广州'},
-          {id: 4,hotelView: require('../assets/img/05.jpg'),hotelArea: '深圳'},
+          {id: 3,hotelView: require('../assets/img/04.jpg'),hotelArea: '肇庆'},
+          {id: 4,hotelView: require('../assets/img/05.jpg'),hotelArea: '哈尔滨'},
           {id: 5,hotelView: require('../assets/img/06.jpg'),hotelArea: '东莞'}
         ],
         hotelArray:[]
