@@ -13,7 +13,7 @@
                 }">
             <el-image style="width:100%;height:100%" :src="item.hotelView" ></el-image>
          </router-link>
-        <span class="homepagetitle" style="position: absolute; top: 10px; left: 10px;color:#FFFFFF" >{{item.hotelArea}} </span>
+        <span class="homepagetitle" style="position: absolute; top: 10px; left: 10px;color:#FFFFFF" >{{item.hotelArea}}酒店</span>
       </el-carousel-item>
     </el-carousel>
   </div>

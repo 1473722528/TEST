@@ -61,6 +61,9 @@ import {validatePhone,validateIdCard, checkUserId} from '../../validator/validat
       fun:{
         type:Function
       },
+      addfun:{
+        type:Function
+      }
 
     },
     data(){
@@ -93,6 +96,7 @@ import {validatePhone,validateIdCard, checkUserId} from '../../validator/validat
       successDo(formName){
         this.$refs[formName].validate((valid) => {
           if (valid) {
+              this.addfun();
               this.fun();
               this.$notify({
               title: '提交成功',

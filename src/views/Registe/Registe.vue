@@ -39,7 +39,7 @@
                         <el-button type="primary" style="width:100%;" @click="registerSubmit" :loading="logining">注册</el-button>
                     </el-form-item>
                     <el-form-item style="width:100%;">
-                        <el-button type="primary" style="width:100%;" @click="registerSubmit" :loading="logining">转到登录</el-button>
+                        <el-button type="primary" style="width:100%;" @click="goLogin" :loading="logining">转到登录</el-button>
                     </el-form-item>
                 </el-form>
         </div>
@@ -74,7 +74,9 @@ export default {
         }
     },
     methods: {
-
+        goLogin(){
+            this.$router.push({path:'/login'});
+        },
         registerSubmit(){
             this.$refs.registeForm.validate((valid) => {
                 if(valid){

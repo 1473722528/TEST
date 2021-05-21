@@ -18,6 +18,7 @@
                         <el-container>
                           <el-aside width="550px" class="hotelaside" >
                               <Carousel :carouselArray='carouselArray' />
+                              <h3>{{orderForm.roomName}}</h3>
                           </el-aside>
                           <el-container>
                             <el-main class="hotelmain">
@@ -73,12 +74,12 @@
                 </div>
             </el-col>
         </el-row>
-        <OrderForm :openDialogVisible="openOrderForm"  :ruleForm="orderForm" :fun="orderFormClose"/>
+        <OrderForm :openDialogVisible="openOrderForm"  :ruleForm="orderForm" :fun="orderFormClose" :addfun="addOrder"/>
     </div>
 </template>
 
 <script>
-import {getRoomData,getDateData,addDate} from '@/api/authority.js'
+import {getRoomData,getDateData,addDate,addOrder} from '@/api/authority.js'
 export default {
     data(){
         return{
@@ -91,6 +92,7 @@ export default {
                 roomName:null,
                 roomNum:1,
                 roomPrice:null,
+                orderDate:'2021-05-21'
             },
 
             
@@ -164,13 +166,13 @@ export default {
                         this.orderForm.roomPrice=this.roomData[item].roomPrice;
                         this.orderForm.orderPrice=this.roomData[item].roomPrice;
                         if(this.roomData[item].roomName=='单人房'){
-                            this.carouselArray=this.hotelImg1;
+                            this.carouselArray=this.hotelImg4;
                         }else if(this.roomData[item].roomName=='双人房'){
                             this.carouselArray=this.hotelImg2;
                         }else if(this.roomData[item].roomName=='商务房'){
                             this.carouselArray=this.hotelImg3;
                         }else if(this.roomData[item].roomName=='经济房'){
-                            this.carouselArray=this.hotelImg4;
+                            this.carouselArray=this.hotelImg1;
                         }
                         //this.carouselArray=this.roomData[item];
                         this.searchDate.hotelId=this.orderForm.hotelId;
@@ -230,6 +232,12 @@ export default {
     methods:{
         goBack(){
             this.$router.go(-1);
+        },
+        addOrder(){
+            addOrder(this.orderForm).then(Response=>{
+                console.log(this.orderForm);
+                console.log(Response);
+            })
         },
         getRoomData(){
             getRoomData(this.hotelArray).then(Response=>{

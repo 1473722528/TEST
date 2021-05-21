@@ -34,7 +34,8 @@
           <router-link to='/registe'>注册</router-link>
         </div>
         <div class="head-content" v-if="this.$store.state.userId!=''">
-          <router-link to='/totalmanage'>{{manageTitle}}</router-link>
+          <router-link to='/totalmanage'>{{manageTitle}}</router-link> |
+          <router-link to='/login'>返回登录</router-link>
         </div>
       </el-col>
     </el-row>   

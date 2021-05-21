@@ -165,7 +165,13 @@ export function editOrderData(data){
         data
     })
 }
-
+export function addOrder(data){
+    return request({
+        url:'/addOrder',
+        method:'POST',
+        data
+    })
+}
 export function getMyOrderData(query){
     return request({
         url:'/getMyOrderData',
