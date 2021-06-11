@@ -99,8 +99,6 @@ import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData
             console.log(error);
           })
         }else if(this.dataKey=='hotel'){
-        //  delete this.ruleForm.children; 删除子属性
-          console.log(this.ruleForm);
           editHotelData(this.ruleForm).then(Response=>{
             this.$message.success(Response.msg);
             this.getData();
@@ -108,14 +106,12 @@ import { editUserData,deleteUserData,editHotelData,deleteHotelData,editOrderData
             console.log(error);
           })
         }else if(this.dataKey=='order'){
-          console.log(this.ruleForm);
           editOrderData(this.ruleForm).then(Response=>{
             this.$message.success(Response.msg)
           }).catch(error=>{
             console.log(error);
           })
         }else if(this.dataKey=='room'){
-          console.log(this.ruleForm);
           editRoomData(this.ruleForm).then(Response=>{
             this.$message.success(Response.msg)
           }).catch(error=>{

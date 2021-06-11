@@ -92,7 +92,6 @@ import {addHotelImage} from '@/api/authority.js'
           this.$refs[formName][i].validate((valid) => {
           if (valid) {  
             x++;
-            console.log(x);
           } else {
             console.log('error submit!!');
             return false;
@@ -110,9 +109,9 @@ import {addHotelImage} from '@/api/authority.js'
             this.$refs[formName][i].resetFields()
             }
           }else{
-            // if(this.dataKey=='hotel'||this.dataKey=='room'){
-            //   this.submitUpload();
-            // }
+             if(this.dataKey=='hotel'||this.dataKey=='room'){
+               this.submitUpload();
+             }
             this.editfun();
           }
           this.$notify({

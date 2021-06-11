@@ -69,12 +69,10 @@ export default {
                         if(Response!=''){
                             this.myData=Response;
                             sessionStorage.setItem("MyData",JSON.stringify(this.myData));   //存进sessionStrong
-                            
                             this.$store.commit('updateUser',this.myData);       //刷新Vuex状态
                             console.log(this.$store.state.userRole);
                             this.logining = false;
                             this.$router.push({path:'/'});
-                            //window.location.reload();           //刷新页面
                         }else if(Response==''){
                             this.logining = false;
                             this.$alert('登录出错！', 'info', {
